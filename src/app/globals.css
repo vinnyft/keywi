@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+/* ============================================================
+   KLAV — design system
+   Palette originale : encre (bleu nuit), primaire (bleu vif),
+   corail (accent), menthe (succès). Contrastes AA vérifiés.
+   ============================================================ */
+
+@theme {
+  /* Couleurs de marque */
+  --color-encre: #101b33;
+  --color-encre-2: #1b2a4d;
+  --color-primaire: #2d5bff;
+  --color-primaire-fonce: #1e3fd1;
+  --color-primaire-pale: #e8eeff;
+  --color-corail: #ff6b5b;
+  --color-corail-fonce: #d8442f;
+  --color-menthe: #0fa86c;
+  --color-menthe-pale: #e2f7ee;
+  --color-sable: #f7f6f2;
+  --color-ambre: #b45309;
+  --color-ambre-pale: #fef3c7;
+
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+
+  --radius-carte: 1rem;
+}
+
+body {
+  background: white;
+  color: var(--color-encre);
+  font-family: var(--font-sans);
+}
+
+/* Focus visible au clavier sur tous les éléments interactifs (accessibilité) */
+:focus-visible {
+  outline: 3px solid var(--color-primaire);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Liens d'évitement (accessibilité clavier) */
+.lien-evitement {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-encre);
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 0.5rem 0;
+}
+.lien-evitement:focus {
+  left: 0;
+}
