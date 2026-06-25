@@ -1,16 +1,12 @@
-"use client";
-
-import { useCallback, useEffect, useState } from "react";
 import { PackagePlus, PackageMinus, RotateCcw } from "lucide-react";
-import { createClient } from "@/lib/supabase/client";
-import { useRealtime } from "@/hooks/useRealtime";
 
 /**
- * Mouvements du jour d'un point relais, rafraîchis en temps réel
- * (Supabase Realtime sur la table `movements`).
+ * Liste présentationnelle des mouvements du jour d'un point relais.
+ * Les données sont chargées côté serveur par la page et rafraîchies
+ * en temps réel via <RafraichirTempsReel> (router.refresh).
  */
 
-interface Mouvement {
+export interface Mouvement {
   id: string;
   type: "depot" | "retrait" | "retour";
   created_at: string;
@@ -27,30 +23,7 @@ const CONFIG = {
   retour: { libelle: "Retour", icone: RotateCcw, classe: "bg-ambre-pale text-ambre" },
 } as const;
 
-export function HistoriqueJour({ relayPointId }: { relayPointId: string }) {
-  const [mouvements, setMouvements] = useState<Mouvement[]>([]);
-  const [charge, setCharge] = useState(false);
-
-  const recharger = useCallback(async () => {
-    const supabase = createClient();
-    const debut = new Date();
-    debut.setHours(0, 0, 0, 0);
-    const { data } = await supabase
-      .from("movements")
-      .select("id, type, created_at, details")
-      .eq("relay_point_id", relayPointId)
-      .gte("created_at", debut.toISOString())
-      .order("created_at", { ascending: false });
-    setMouvements((data ?? []) as unknown as Mouvement[]);
-    setCharge(true);
-  }, [relayPointId]);
-
-  useEffect(() => {
-    recharger();
-  }, [recharger]);
-
-  useRealtime("movements", recharger, `relay_point_id=eq.${relayPointId}`);
-
+export function HistoriqueJour({ mouvements }: { mouvements: Mouvement[] }) {
   return (
     <div>
       <h1 className="text-xl font-bold">Historique du jour</h1>
@@ -58,7 +31,7 @@ export function HistoriqueJour({ relayPointId }: { relayPointId: string }) {
         Tous les mouvements enregistrés à votre comptoir aujourd&apos;hui.
       </p>
 
-      {charge && mouvements.length === 0 ? (
+      {mouvements.length === 0 ? (
         <p className="mt-5 rounded-2xl border border-gray-200 bg-white p-8 text-center text-gray-600">
           Aucun mouvement aujourd&apos;hui. Les dépôts et retraits scannés
           apparaîtront ici en direct.
