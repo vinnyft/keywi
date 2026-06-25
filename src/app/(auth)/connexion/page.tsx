@@ -1,169 +1,60 @@
 "use client";
 
-import { Suspense, useActionState, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { actionConnexion, actionLienMagique } from "@/lib/actions/auth";
+import { createClient } from "@/lib/supabase/client";
 
-/** Page de connexion : mot de passe ou lien magique */
-function FormulaireConnexion() {
-  const searchParams = useSearchParams();
-  const suivant = searchParams.get("suivant") ?? "";
-  const [methode, setMethode] = useState<"mot_de_passe" | "lien">("mot_de_passe");
+export default function ConnexionPage() {
+  const [email, setEmail] = useState("");
+  const [mdp, setMdp] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [erreur, setErreur] = useState("");
+  const router = useRouter();
 
-  const [etatMdp, soumettreMdp, attenteMdp] = useActionState(actionConnexion, {
-    erreur: null,
-  });
-  const [etatLien, soumettreLien, attenteLien] = useActionState(actionLienMagique, {
-    erreur: null,
-    envoye: false,
-  });
+  async function connexion(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setErreur("");
+    const supabase = createClient();
+    const { error } = await supabase.auth.signInWithPassword({ email, password: mdp });
+    if (error) {
+      setErreur("Email ou mot de passe incorrect.");
+    } else {
+      router.push("/compte");
+      router.refresh();
+    }
+    setLoading(false);
+  }
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold">Connexion</h1>
-      <p className="mt-1 text-sm text-gray-600">
-        Heureux de vous revoir sur Keywi.
-      </p>
-
-      {/* Bascule mot de passe / lien magique */}
-      <div
-        className="mt-6 grid grid-cols-2 gap-1 rounded-lg bg-gray-100 p-1"
-        role="tablist"
-        aria-label="Méthode de connexion"
-      >
-        <button
-          role="tab"
-          aria-selected={methode === "mot_de_passe"}
-          className={`rounded-md px-3 py-2 text-sm font-medium transition ${
-            methode === "mot_de_passe" ? "bg-white shadow-sm" : "text-gray-600"
-          }`}
-          onClick={() => setMethode("mot_de_passe")}
-        >
-          Mot de passe
-        </button>
-        <button
-          role="tab"
-          aria-selected={methode === "lien"}
-          className={`rounded-md px-3 py-2 text-sm font-medium transition ${
-            methode === "lien" ? "bg-white shadow-sm" : "text-gray-600"
-          }`}
-          onClick={() => setMethode("lien")}
-        >
-          Lien magique
-        </button>
+    <form onSubmit={connexion} className="space-y-5">
+      <h1 className="text-xl font-black tracking-[-0.03em] text-center">Connexion</h1>
+      <div>
+        <label className="block text-xs font-medium text-[#6b6b6b] mb-1">Email</label>
+        <input
+          type="email" required value={email} onChange={(e) => setEmail(e.target.value)}
+          className="w-full border border-[#e5e5e5] rounded px-3 py-2 text-sm focus:outline-none focus:border-[#1a56db]"
+        />
       </div>
-
-      {methode === "mot_de_passe" ? (
-        <form action={soumettreMdp} className="mt-6 space-y-4">
-          <input type="hidden" name="suivant" value={suivant} />
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium">
-              Adresse email
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2"
-              placeholder="vous@exemple.fr"
-            />
-          </div>
-          <div>
-            <label htmlFor="mot_de_passe" className="block text-sm font-medium">
-              Mot de passe
-            </label>
-            <input
-              id="mot_de_passe"
-              name="mot_de_passe"
-              type="password"
-              required
-              autoComplete="current-password"
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2"
-            />
-          </div>
-          {etatMdp.erreur && (
-            <p role="alert" className="text-sm font-medium text-red-700">
-              {etatMdp.erreur}
-            </p>
-          )}
-          <button
-            type="submit"
-            disabled={attenteMdp}
-            className="w-full rounded-lg bg-primaire px-4 py-2.5 font-semibold text-white transition hover:bg-primaire-fonce disabled:opacity-60"
-          >
-            {attenteMdp ? "Connexion…" : "Se connecter"}
-          </button>
-        </form>
-      ) : (
-        <form action={soumettreLien} className="mt-6 space-y-4">
-          <div>
-            <label htmlFor="email-lien" className="block text-sm font-medium">
-              Adresse email
-            </label>
-            <input
-              id="email-lien"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2"
-              placeholder="vous@exemple.fr"
-            />
-          </div>
-          {etatLien.envoye ? (
-            <p
-              role="status"
-              className="rounded-lg bg-menthe-pale px-3 py-2 text-sm font-medium text-menthe"
-            >
-              Lien envoyé ! Vérifiez votre boîte mail
-              {process.env.NODE_ENV === "development" && (
-                <>
-                  {" "}
-                  (en local :{" "}
-                  <a href="http://localhost:54324" className="underline" target="_blank">
-                    Mailpit
-                  </a>
-                  )
-                </>
-              )}
-              .
-            </p>
-          ) : (
-            <>
-              {etatLien.erreur && (
-                <p role="alert" className="text-sm font-medium text-red-700">
-                  {etatLien.erreur}
-                </p>
-              )}
-              <button
-                type="submit"
-                disabled={attenteLien}
-                className="w-full rounded-lg bg-primaire px-4 py-2.5 font-semibold text-white transition hover:bg-primaire-fonce disabled:opacity-60"
-              >
-                {attenteLien ? "Envoi…" : "Recevoir un lien de connexion"}
-              </button>
-            </>
-          )}
-        </form>
-      )}
-
-      <p className="mt-6 text-center text-sm text-gray-600">
+      <div>
+        <label className="block text-xs font-medium text-[#6b6b6b] mb-1">Mot de passe</label>
+        <input
+          type="password" required value={mdp} onChange={(e) => setMdp(e.target.value)}
+          className="w-full border border-[#e5e5e5] rounded px-3 py-2 text-sm focus:outline-none focus:border-[#1a56db]"
+        />
+      </div>
+      {erreur && <p className="text-xs text-[#c0392b]">{erreur}</p>}
+      <button
+        type="submit" disabled={loading}
+        className="w-full py-3 text-sm font-semibold text-white bg-[#0a0a0a] rounded-sm hover:bg-[#1c1c1c] transition-colors disabled:opacity-50"
+      >
+        {loading ? "Connexion…" : "Se connecter"}
+      </button>
+      <p className="text-center text-xs text-[#6b6b6b]">
         Pas encore de compte ?{" "}
-        <Link href="/inscription" className="font-semibold text-primaire underline">
-          Créer un compte
-        </Link>
+        <Link href="/inscription" className="text-[#1a56db] underline">Créer un compte</Link>
       </p>
-    </div>
-  );
-}
-
-export default function PageConnexion() {
-  return (
-    <Suspense>
-      <FormulaireConnexion />
-    </Suspense>
+    </form>
   );
 }

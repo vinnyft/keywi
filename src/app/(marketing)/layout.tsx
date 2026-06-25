@@ -1,16 +1,11 @@
-import { EnTete } from "@/components/marketing/EnTete";
-import { PiedDePage } from "@/components/marketing/PiedDePage";
+import { Navigation } from "@/components/ui/Navigation";
+import { PiedDePage } from "@/components/ui/PiedDePage";
 
-/** Gabarit du site public : en-tête + contenu + pied de page */
-export default function MarketingLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <EnTete />
-      <main id="contenu" className="flex-1">
+      <Navigation />
+      <main id="contenu" className="pt-16">
         {children}
       </main>
       <PiedDePage />

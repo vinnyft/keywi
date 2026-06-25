@@ -1,28 +1,12 @@
 import { Logo } from "@/components/ui/Logo";
-import Link from "next/link";
 
-/** Gabarit des pages d'authentification : carte centrée, fond sable */
-export default function AuthLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <main
-      id="contenu"
-      className="flex min-h-screen flex-col items-center justify-center bg-sable px-4 py-12"
-    >
-      <div className="mb-8">
-        <Logo taille={40} />
-      </div>
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-[#f5f5f5] px-4">
+      <Logo className="text-3xl mb-12" />
+      <div className="w-full max-w-sm bg-white border border-[#e5e5e5] rounded p-8">
         {children}
       </div>
-      <p className="mt-6 text-sm text-gray-600">
-        <Link href="/" className="underline hover:text-encre">
-          ← Retour au site
-        </Link>
-      </p>
-    </main>
+    </div>
   );
 }
