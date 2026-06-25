@@ -1,5 +1,5 @@
 -- ============================================================
--- KLAV — Migration 0002 : Row Level Security
+-- Keywi — Migration 0002 : Row Level Security
 -- Un commerçant ne voit que son point relais, un hôte ne voit
 -- que ses clés. Le journal des mouvements est en lecture seule.
 -- ============================================================

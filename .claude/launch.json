@@ -2,7 +2,7 @@
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "klav",
+      "name": "keywi",
       "runtimeExecutable": "/bin/zsh",
       "runtimeArgs": [
         "-c",

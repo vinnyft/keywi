@@ -67,7 +67,7 @@ export default async function CommercantLayout({
         ) : (
           <p className="rounded-xl bg-ambre-pale p-4 text-ambre">
             Votre compte commerçant n&apos;est rattaché à aucun point relais.
-            Contactez l&apos;équipe KLAV.
+            Contactez l&apos;équipe Keywi.
           </p>
         )}
       </main>

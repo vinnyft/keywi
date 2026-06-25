@@ -4,7 +4,7 @@ import { Check } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Tarifs",
-  description: "Le dépôt de clés KLAV à l'unité ou en abonnement hôte.",
+  description: "Le dépôt de clés Keywi à l'unité ou en abonnement hôte.",
 };
 
 const OFFRES = [

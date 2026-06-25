@@ -47,7 +47,7 @@ export function PartageCode({
 
   function messagePartage(code: string) {
     return encodeURIComponent(
-      `Bonjour ! Voici votre code KLAV pour récupérer les clés de « ${logement} »` +
+      `Bonjour ! Voici votre code Keywi pour récupérer les clés de « ${logement} »` +
         (commerce ? ` chez ${commerce}` : "") +
         ` : ${code}`
     );

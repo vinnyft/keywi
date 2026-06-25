@@ -92,7 +92,7 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
 
             <div className="rounded-xl bg-sable p-4 text-sm">
               <div className="flex items-center justify-between">
-                <span>Dépôt de clés KLAV (à l&apos;unité)</span>
+                <span>Dépôt de clés Keywi (à l&apos;unité)</span>
                 <span className="font-bold">7,90 €</span>
               </div>
               <p className="mt-1 text-xs text-gray-500">

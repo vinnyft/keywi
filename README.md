@@ -1,4 +1,4 @@
-# KLAV — Vos clés, en lieu sûr, près de chez vous
+# Keywi — Vos clés, en lieu sûr, près de chez vous
 
 Plateforme française de gestion de clés par points relais (commerces
 partenaires). Deux produits reliés par une même base temps réel :
@@ -73,21 +73,21 @@ Ouvrir <http://localhost:3000>.
 
 ## Comptes de démonstration
 
-Mot de passe commun : **`klav123456`** (la connexion par lien magique
+Mot de passe commun : **`keywi123456`** (la connexion par lien magique
 fonctionne aussi : les emails locaux sont capturés par Mailpit sur
 <http://localhost:54324>).
 
 | Rôle        | Email                                  | Espace        |
 | ----------- | -------------------------------------- | ------------- |
-| Hôte        | `hote1@klav.fr` … `hote5@klav.fr`      | `/espace`     |
-| Voyageur    | `voyageur@klav.fr`                     | `/espace`     |
-| Commerçant  | `commerce1@klav.fr` … `commerce12@klav.fr` | `/commercant` |
-| Admin       | `admin@klav.fr`                        | `/admin`      |
+| Hôte        | `hote1@keywi.fr` … `hote5@keywi.fr`      | `/espace`     |
+| Voyageur    | `voyageur@keywi.fr`                     | `/espace`     |
+| Commerçant  | `commerce1@keywi.fr` … `commerce12@keywi.fr` | `/commercant` |
+| Admin       | `admin@keywi.fr`                        | `/admin`      |
 
-Repères utiles du seed : `commerce3@klav.fr` tient la **Librairie du
-Marais**, où la clé « Appartement Bretagne » (badge `KLVQ9R4T`) attend
+Repères utiles du seed : `commerce3@keywi.fr` tient la **Librairie du
+Marais**, où la clé « Appartement Bretagne » (badge `KWIQ9R4T`) attend
 d'être déposée ; le code de retrait actif `H7KM2P` permet de tester un
-retrait au **Café du Canal** (`commerce1@klav.fr`).
+retrait au **Café du Canal** (`commerce1@keywi.fr`).
 
 ## Scan RFID/NFC : trois modes
 
@@ -100,7 +100,7 @@ Le hook [`useRfidScan`](src/hooks/useRfidScan.ts) abstrait la lecture du badge :
 | Manuel     | partout (et en démo sans matériel) | saisie du code à 8 caractères imprimé sur le badge |
 
 En local sans matériel, choisissez l'onglet **« Saisie code »** et entrez le
-code badge affiché dans l'espace hôte (ex. `KLVQ9R4T`).
+code badge affiché dans l'espace hôte (ex. `KWIQ9R4T`).
 
 ## Architecture
 

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Les réponses aux questions les plus fréquentes sur KLAV.",
+  description: "Les réponses aux questions les plus fréquentes sur Keywi.",
 };
 
 const QUESTIONS = [

@@ -5,7 +5,7 @@ import { RechercheRelais } from "@/components/marketing/RechercheRelais";
 export const metadata: Metadata = {
   title: "Trouver un point relais",
   description:
-    "Carte des commerces partenaires KLAV où déposer et récupérer des clés.",
+    "Carte des commerces partenaires Keywi où déposer et récupérer des clés.",
 };
 
 /** Carte publique des points relais actifs + disponibilité des cases */

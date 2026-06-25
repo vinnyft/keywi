@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Casiers connectés (bientôt)",
   description:
-    "Les casiers connectés KLAV arrivent : un accès aux clés 24 h/24, sans comptoir.",
+    "Les casiers connectés Keywi arrivent : un accès aux clés 24 h/24, sans comptoir.",
 };
 
 /** Page teaser : casiers connectés à venir */
@@ -14,18 +14,18 @@ export default function PageCasiers() {
       <p className="inline-block rounded-full bg-ambre-pale px-3 py-1 text-sm font-bold text-ambre">
         🚧 Bientôt disponible
       </p>
-      <h1 className="mt-5 text-3xl font-black sm:text-4xl">Casiers connectés KLAV</h1>
+      <h1 className="mt-5 text-3xl font-black sm:text-4xl">Casiers connectés Keywi</h1>
       <p className="mx-auto mt-4 max-w-xl text-lg text-gray-600">
         Pour les clés qui n&apos;attendent pas : des casiers automatiques
         accessibles 24 h/24 dans les halls d&apos;immeubles, gares et
-        commerces, déverrouillés par le même code KLAV que vos points relais.
+        commerces, déverrouillés par le même code Keywi que vos points relais.
       </p>
       <ul className="mx-auto mt-8 max-w-md space-y-3 text-left text-gray-700">
         <li className="rounded-xl border border-gray-200 p-4">
           ⏰ <strong>Accès 24 h/24</strong> — plus de contrainte d&apos;horaires
         </li>
         <li className="rounded-xl border border-gray-200 p-4">
-          🔐 <strong>Même code, même appli</strong> — l&apos;expérience KLAV, sans comptoir
+          🔐 <strong>Même code, même appli</strong> — l&apos;expérience Keywi, sans comptoir
         </li>
         <li className="rounded-xl border border-gray-200 p-4">
           🏢 <strong>Pensé pour les immeubles</strong> — proposez-le à votre copropriété

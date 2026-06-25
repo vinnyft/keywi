@@ -5,7 +5,7 @@ import { MapPin, ScanLine, Bell, ShieldCheck } from "lucide-react";
 export const metadata: Metadata = {
   title: "Points relais",
   description:
-    "Le réseau public de points relais KLAV : des commerces de quartier équipés pour garder et remettre vos clés en toute sécurité.",
+    "Le réseau public de points relais Keywi : des commerces de quartier équipés pour garder et remettre vos clés en toute sécurité.",
 };
 
 /** Produit phare : le réseau public de points relais */
@@ -16,7 +16,7 @@ export default function PageProduitPointsRelais() {
         <div className="mx-auto max-w-4xl px-4 py-16 text-center">
           <h1 className="text-3xl font-black sm:text-4xl">Le réseau de points relais</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">
-            Des commerces de quartier sélectionnés et équipés par KLAV pour
+            Des commerces de quartier sélectionnés et équipés par Keywi pour
             garder vos trousseaux et les remettre aux bonnes personnes, sur
             présentation d&apos;un code.
           </p>

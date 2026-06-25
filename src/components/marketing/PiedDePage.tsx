@@ -43,9 +43,9 @@ export function PiedDePage() {
           </ul>
         </nav>
 
-        <nav aria-label="KLAV">
+        <nav aria-label="Keywi">
           <h2 className="text-sm font-bold uppercase tracking-wider text-white/50">
-            KLAV
+            Keywi
           </h2>
           <ul className="mt-3 space-y-2 text-sm">
             <li><Link className="hover:underline" href="/a-propos">À propos</Link></li>
@@ -57,7 +57,7 @@ export function PiedDePage() {
         </nav>
       </div>
       <div className="border-t border-white/10 py-4 text-center text-xs text-white/50">
-        © {new Date().getFullYear()} KLAV — Tous droits réservés. Fait avec ♥ à Paris.
+        © {new Date().getFullYear()} Keywi — Tous droits réservés. Fait avec ♥ à Paris.
       </div>
     </footer>
   );

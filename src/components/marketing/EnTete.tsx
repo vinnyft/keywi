@@ -16,7 +16,7 @@ export function EnTete() {
   const [menuOuvert, setMenuOuvert] = useState<string | null>(null);
 
   const produits = [
-    { href: "/produits/points-relais", libelle: "Points relais", note: "Le réseau public KLAV" },
+    { href: "/produits/points-relais", libelle: "Points relais", note: "Le réseau public Keywi" },
     { href: "/produits/casiers", libelle: "Casiers connectés", note: "Bientôt disponible" },
     { href: "/produits/logiciel-suivi", libelle: "Logiciel de suivi de clés", note: "Bientôt disponible" },
   ];

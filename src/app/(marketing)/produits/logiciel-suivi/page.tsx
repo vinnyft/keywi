@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Logiciel de suivi de clés (bientôt)",
   description:
-    "KLAV Pro : le logiciel de suivi de clés pour conciergeries, agences et hôtels. Bientôt disponible.",
+    "Keywi Pro : le logiciel de suivi de clés pour conciergeries, agences et hôtels. Bientôt disponible.",
 };
 
 /** Page teaser : logiciel de suivi de clés à venir */
@@ -15,7 +15,7 @@ export default function PageLogicielSuivi() {
         🚧 Bientôt disponible
       </p>
       <h1 className="mt-5 text-3xl font-black sm:text-4xl">
-        KLAV Pro — le logiciel de suivi de clés
+        Keywi Pro — le logiciel de suivi de clés
       </h1>
       <p className="mx-auto mt-4 max-w-xl text-lg text-gray-600">
         Le back-office des professionnels qui gèrent des dizaines de

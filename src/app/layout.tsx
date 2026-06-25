@@ -1,37 +1,44 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Police d'affichage (titres, monogramme) — identité Keywi
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-display",
   subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+// Police de texte courant
+const dmSans = DM_Sans({
+  variable: "--font-body",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "KLAV — Vos clés, en lieu sûr, près de chez vous",
-    template: "%s | KLAV",
+    default: "Keywi — Vos clés, en lieu sûr, près de chez vous",
+    template: "%s | Keywi",
   },
   description:
     "Déposez vos clés dans un commerce partenaire près de chez vous et gérez les accès à distance. Le réseau français de points relais pour clés.",
   // Installation en application (PWA) sur iOS / Android / desktop
   appleWebApp: {
     capable: true,
-    title: "KLAV",
+    title: "Keywi",
     statusBarStyle: "black-translucent",
   },
   icons: {
-    apple: "/icone-apple.png",
+    icon: "/brand/app-icon.svg",
+    apple: "/brand/app-icon.svg",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#101B33",
+  themeColor: "#15331E",
 };
 
 export default function RootLayout({
@@ -42,7 +49,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${bricolage.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <a href="#contenu" className="lien-evitement">

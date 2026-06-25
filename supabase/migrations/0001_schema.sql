@@ -1,5 +1,5 @@
 -- ============================================================
--- KLAV — Migration 0001 : schéma de base
+-- Keywi — Migration 0001 : schéma de base
 -- Tables, enums et triggers de la plateforme de gestion de
 -- clés par points relais.
 -- ============================================================

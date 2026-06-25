@@ -39,7 +39,7 @@ export async function actionTraiterCandidature(formData: FormData) {
     .select("email, nom_contact, nom_commerce")
     .single();
 
-  // Réponse automatique au commerçant, aux couleurs KLAV
+  // Réponse automatique au commerçant, aux couleurs Keywi
   if (candidature) {
     await emailReponseCandidature({
       email: candidature.email,

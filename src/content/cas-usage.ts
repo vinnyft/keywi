@@ -24,7 +24,7 @@ export const CAS_USAGE: CasUsage[] = [
     accroche:
       "Fini les allers-retours pour remettre les clés. Vos voyageurs les récupèrent à deux pas du logement, à l'heure qui les arrange.",
     description:
-      "Déposez votre trousseau dans un commerce partenaire KLAV proche de votre logement. Chaque voyageur reçoit un code de retrait unique : il récupère les clés pendant les horaires d'ouverture du commerce, vous êtes notifié à chaque mouvement, en temps réel.",
+      "Déposez votre trousseau dans un commerce partenaire Keywi proche de votre logement. Chaque voyageur reçoit un code de retrait unique : il récupère les clés pendant les horaires d'ouverture du commerce, vous êtes notifié à chaque mouvement, en temps réel.",
     benefices: [
       {
         titre: "Check-in autonome",
@@ -44,7 +44,7 @@ export const CAS_USAGE: CasUsage[] = [
     ],
     temoignage: {
       citation:
-        "Je gère deux studios à distance. Depuis KLAV, je n'ai plus jamais traversé Paris pour une remise de clés.",
+        "Je gère deux studios à distance. Depuis Keywi, je n'ai plus jamais traversé Paris pour une remise de clés.",
       auteur: "Camille, hôte à Paris 10ᵉ",
     },
   },
@@ -56,7 +56,7 @@ export const CAS_USAGE: CasUsage[] = [
     accroche:
       "Un trousseau par logement, un badge par trousseau, un journal d'audit complet. Votre parc de clés enfin sous contrôle.",
     description:
-      "KLAV remplace le tiroir à clés et le tableur. Chaque trousseau est identifié par un badge RFID scanné à chaque mouvement : vous savez qui a quoi, où, depuis quand. Vos équipes terrain et prestataires récupèrent les clés au point relais le plus proche, avec leur propre code.",
+      "Keywi remplace le tiroir à clés et le tableur. Chaque trousseau est identifié par un badge RFID scanné à chaque mouvement : vous savez qui a quoi, où, depuis quand. Vos équipes terrain et prestataires récupèrent les clés au point relais le plus proche, avec leur propre code.",
     benefices: [
       {
         titre: "Multi-logements",
@@ -88,7 +88,7 @@ export const CAS_USAGE: CasUsage[] = [
     accroche:
       "Diagnostiqueurs, photographes, artisans, confrères : donnez accès au bien sans immobiliser un négociateur.",
     description:
-      "Déposez les clés du bien dans le commerce KLAV le plus proche. Chaque intervenant reçoit un code valable le temps de sa mission. Vous suivez les retraits et retours en direct, et le badge RFID garantit que le bon trousseau revient toujours dans la bonne case.",
+      "Déposez les clés du bien dans le commerce Keywi le plus proche. Chaque intervenant reçoit un code valable le temps de sa mission. Vous suivez les retraits et retours en direct, et le badge RFID garantit que le bon trousseau revient toujours dans la bonne case.",
     benefices: [
       {
         titre: "Zéro déplacement inutile",
@@ -119,7 +119,7 @@ export const CAS_USAGE: CasUsage[] = [
     accroche:
       "Baux mobilité, étudiants, professionnels en mission : gérez les rotations sans rendez-vous de remise de clés.",
     description:
-      "Entre deux locataires, les clés passent par votre point relais KLAV : le sortant les redépose, l'entrant les récupère avec son code. Vous validez chaque étape à distance et gardez un historique complet de la rotation.",
+      "Entre deux locataires, les clés passent par votre point relais Keywi : le sortant les redépose, l'entrant les récupère avec son code. Vous validez chaque étape à distance et gardez un historique complet de la rotation.",
     benefices: [
       {
         titre: "Rotations sans friction",
@@ -151,7 +151,7 @@ export const CAS_USAGE: CasUsage[] = [
     accroche:
       "Annexes, appart'hôtels, arrivées hors horaires : déléguez la remise de clés sans embaucher de veilleur.",
     description:
-      "Pour vos chambres annexes ou vos suites en dehors du bâtiment principal, KLAV joue le rôle de réception déportée. Le client reçoit son code à la réservation, récupère ses clés au commerce partenaire et votre équipe suit tout depuis le back-office.",
+      "Pour vos chambres annexes ou vos suites en dehors du bâtiment principal, Keywi joue le rôle de réception déportée. Le client reçoit son code à la réservation, récupère ses clés au commerce partenaire et votre équipe suit tout depuis le back-office.",
     benefices: [
       {
         titre: "Réception 7j/7",
@@ -183,7 +183,7 @@ export const CAS_USAGE: CasUsage[] = [
     accroche:
       "Clés oubliées, enfants qui rentrent seuls, voisin qui arrose les plantes : votre double vous attend au commerce d'en bas.",
     description:
-      "Déposez un double de vos clés dans le point relais KLAV de votre quartier. En cas de besoin, générez un code pour vous-même ou un proche : plus besoin de serrurier à 150 € quand la porte claque.",
+      "Déposez un double de vos clés dans le point relais Keywi de votre quartier. En cas de besoin, générez un code pour vous-même ou un proche : plus besoin de serrurier à 150 € quand la porte claque.",
     benefices: [
       {
         titre: "Anti-galère",
@@ -202,7 +202,7 @@ export const CAS_USAGE: CasUsage[] = [
     ],
     temoignage: {
       citation:
-        "Ma fille de 12 ans a un code KLAV en cas d'oubli. La boulangerie est sur le chemin de l'école.",
+        "Ma fille de 12 ans a un code Keywi en cas d'oubli. La boulangerie est sur le chemin de l'école.",
       auteur: "Aïcha, maman dans le 11ᵉ",
     },
   },
@@ -234,7 +234,7 @@ export const CAS_USAGE: CasUsage[] = [
     ],
     temoignage: {
       citation:
-        "Je fais six logements par jour. Les badges KLAV m'évitent une heure de logistique quotidienne.",
+        "Je fais six logements par jour. Les badges Keywi m'évitent une heure de logistique quotidienne.",
       auteur: "Rosa, auto-entrepreneuse ménage",
     },
   },

@@ -10,9 +10,9 @@ import Stripe from "stripe";
 
 export const TARIFS = {
   /** Dépôt à l'unité : 7,90 € TTC */
-  depotUnitaire: { centimes: 790, libelle: "Dépôt de clés KLAV (à l'unité)" },
+  depotUnitaire: { centimes: 790, libelle: "Dépôt de clés Keywi (à l'unité)" },
   /** Abonnement hôte : 5,49 €/mois (sous KeyNest, ~5,95 £) */
-  abonnementHote: { centimes: 549, libelle: "Abonnement hôte KLAV (mensuel)" },
+  abonnementHote: { centimes: 549, libelle: "Abonnement hôte Keywi (mensuel)" },
 } as const;
 
 export function stripeDisponible(): boolean {

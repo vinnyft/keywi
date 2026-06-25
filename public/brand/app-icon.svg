@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Keywi app icon">
+  
+  <defs>
+    <clipPath id="squircle">
+      <rect x="0" y="0" width="512" height="512" rx="115"></rect>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#squircle)">
+    
+    <rect x="0" y="0" width="512" height="512" fill="#8A7252"></rect>
+    
+    <rect x="34" y="34" width="444" height="444" rx="92" fill="#6FA82C"></rect>
+    
+    <g fill="#21340F">
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(0 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(36 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(72 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(108 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(144 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(180 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(216 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(252 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(288 256 256)"></ellipse>
+      <ellipse cx="256" cy="92" rx="6.6" ry="15.4" transform="rotate(324 256 256)"></ellipse>
+    </g>
+    
+    <text x="256" y="268" text-anchor="middle" dominant-baseline="central" font-family="&#39;Bricolage Grotesque&#39;, sans-serif" font-weight="800" font-size="282" letter-spacing="-8" fill="#F3F1DC">K</text>
+  </g>
+</svg>

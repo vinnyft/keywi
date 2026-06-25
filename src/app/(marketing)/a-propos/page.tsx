@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "À propos",
-  description: "La mission de KLAV : rendre la remise de clés simple et sûre.",
+  description: "La mission de Keywi : rendre la remise de clés simple et sûre.",
 };
 
 export default function PageAPropos() {
   return (
     <article className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="text-4xl font-black">À propos de KLAV</h1>
+      <h1 className="text-4xl font-black">À propos de Keywi</h1>
       <div className="mt-6 space-y-4 text-lg text-gray-700">
         <p>
-          KLAV est né d&apos;un constat simple : remettre des clés ne devrait
+          Keywi est né d&apos;un constat simple : remettre des clés ne devrait
           jamais être un casse-tête. Boîtes à clés fragiles, rendez-vous ratés,
           allers-retours interminables… il fallait une alternative de confiance,
           ancrée dans le quartier.
@@ -27,7 +27,7 @@ export default function PageAPropos() {
           supplémentaire, sans matériel coûteux ni formation lourde.
         </p>
         <p>
-          KLAV est conçu et opéré en France, dans le respect de vos données et de
+          Keywi est conçu et opéré en France, dans le respect de vos données et de
           la confiance que vous nous accordez.
         </p>
       </div>

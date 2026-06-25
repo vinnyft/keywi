@@ -1,5 +1,5 @@
 -- ============================================================
--- KLAV — Migration 0003 : fonctions métier (RPC)
+-- Keywi — Migration 0003 : fonctions métier (RPC)
 -- Toute la logique critique (attribution de case, dépôt,
 -- retrait) vit ici, en transactions atomiques côté Postgres.
 -- Les fonctions retournent du jsonb : { ok: bool, erreur?, ... }
@@ -31,7 +31,7 @@ end;
 $$;
 
 -- ------------------------------------------------------------
--- Génération d'un code badge imprimé à 8 caractères (KLV + 5)
+-- Génération d'un code badge imprimé à 8 caractères (KWI + 5)
 -- ------------------------------------------------------------
 create or replace function public.generer_code_badge()
 returns text
@@ -43,7 +43,7 @@ declare
   v_code text;
 begin
   loop
-    select 'KLV' || string_agg(
+    select 'KWI' || string_agg(
       substr(alphabet, 1 + floor(random() * length(alphabet))::int, 1), ''
     ) into v_code
     from generate_series(1, 5);
@@ -135,7 +135,7 @@ begin
   v_key := public.trouver_cle_par_badge(p_badge_uid);
   if v_key.id is null then
     return jsonb_build_object('ok', false, 'erreur', 'BADGE_INCONNU',
-      'message', 'Ce badge n''est rattaché à aucune clé KLAV.');
+      'message', 'Ce badge n''est rattaché à aucune clé Keywi.');
   end if;
 
   if v_key.paiement_statut not in ('paye', 'offert') then
@@ -324,7 +324,7 @@ begin
         'nom', v_code.beneficiaire_nom,
         'code_6', v_code.code_6);
 
-      -- Notification in-app si le bénéficiaire a un compte KLAV
+      -- Notification in-app si le bénéficiaire a un compte Keywi
       select * into v_benef_profile from public.profiles
       where email = v_code.beneficiaire_email limit 1;
       if v_benef_profile.id is not null then
@@ -356,7 +356,7 @@ $$;
 
 -- ------------------------------------------------------------
 -- RETRAIT — étape 1 : recherche par code à 6 caractères (ou
--- payload QR « KLAV:XXXXXX »). Affiche la case et le logement.
+-- payload QR « KEYWI:XXXXXX »). Affiche la case et le logement.
 -- ------------------------------------------------------------
 create or replace function public.chercher_retrait(p_code text)
 returns jsonb
@@ -376,8 +376,8 @@ begin
     return jsonb_build_object('ok', false, 'erreur', 'PAS_COMMERCANT');
   end if;
 
-  -- Normalisation : accepte « KLAV:ABC123 », minuscules, espaces
-  v_code_norm := replace(upper(trim(p_code)), 'KLAV:', '');
+  -- Normalisation : accepte « KEYWI:ABC123 », minuscules, espaces
+  v_code_norm := replace(upper(trim(p_code)), 'KEYWI:', '');
 
   select * into v_ac from public.access_codes
   where code_6 = v_code_norm and statut = 'actif';
@@ -518,7 +518,7 @@ begin
   v_code := public.generer_code_retrait();
 
   insert into public.access_codes (key_id, code_6, qr_payload, beneficiaire_email, beneficiaire_nom, expire_at)
-  values (p_key_id, v_code, 'KLAV:' || v_code, p_beneficiaire_email, p_beneficiaire_nom, p_expire_at)
+  values (p_key_id, v_code, 'KEYWI:' || v_code, p_beneficiaire_email, p_beneficiaire_nom, p_expire_at)
   returning * into v_ac;
 
   -- Une clé déposée devient « prête au retrait » dès qu'un code actif existe

@@ -20,23 +20,23 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const EXPEDITEUR = process.env.EMAIL_FROM ?? "KLAV <notifications@klav.fr>";
+const EXPEDITEUR = process.env.EMAIL_FROM ?? "Keywi <notifications@keywi.fr>";
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 /* ------------------------------------------------------------------
    Identité visuelle (mêmes jetons que src/app/globals.css)
    ------------------------------------------------------------------ */
 const COULEURS = {
-  encre: "#101B33",
-  primaire: "#2D5BFF",
-  primaireFonce: "#1E3FD1",
-  primairePale: "#E8EEFF",
-  corail: "#FF6B5B",
+  encre: "#14331E",
+  primaire: "#6FA82C",
+  primaireFonce: "#5A8A22",
+  primairePale: "#ECF6D8",
+  corail: "#8A7252",
   menthe: "#0FA86C",
   menthePale: "#E2F7EE",
-  sable: "#F7F6F2",
-  texte: "#101B33",
-  texteSecondaire: "#5B6472",
+  sable: "#FBFAF3",
+  texte: "#14331E",
+  texteSecondaire: "#6B7A6B",
 } as const;
 
 export interface ContenuEmail {
@@ -144,11 +144,11 @@ function gabarit(titre: string, corps: string): string {
                     <!-- Dimensions fixées par un bloc interne : la cellule
                          s'étire avec la ligne, pas le logo -->
                     <div style="background:${COULEURS.primaire};border-radius:10px;width:38px;height:38px;
-                                text-align:center;font-size:19px;line-height:38px">🔑</div>
+                                text-align:center;font-size:19px;line-height:38px">🥝</div>
                   </td>
                   <td style="padding-left:12px">
                     <span style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:22px;
-                                 font-weight:800;letter-spacing:.04em;color:#ffffff">KLAV</span><br>
+                                 font-weight:800;letter-spacing:.04em;color:#ffffff">Keywi</span><br>
                     <span style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
                                  color:rgba(255,255,255,.65)">Vos clés, en lieu sûr, près de chez vous</span>
                   </td>
@@ -175,14 +175,14 @@ function gabarit(titre: string, corps: string): string {
             <td style="padding:20px 28px;text-align:center;
                        font-family:system-ui,-apple-system,'Segoe UI',sans-serif">
               <p style="margin:0 0 6px;font-size:12px;color:${COULEURS.texteSecondaire}">
-                <a href="${SITE}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">klav.fr</a>
+                <a href="${SITE}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">keywi.fr</a>
                 &nbsp;·&nbsp;
                 <a href="${SITE}/faq" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">FAQ</a>
                 &nbsp;·&nbsp;
                 <a href="${SITE}/contact" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">Contact</a>
               </p>
               <p style="margin:0;font-size:12px;color:${COULEURS.texteSecondaire}">
-                KLAV — le réseau français de points relais pour clés.<br>
+                Keywi — le réseau français de points relais pour clés.<br>
                 Email envoyé automatiquement, merci de ne pas y répondre.
               </p>
             </td>
@@ -338,7 +338,7 @@ export function contenuCodeRetrait(params: {
   return {
     sujet: `Votre code de retrait pour « ${params.logement} »`,
     html: gabarit(
-      "Votre code de retrait KLAV 🔑",
+      "Votre code de retrait Keywi 🔑",
       `<p style="margin:0 0 12px">Bonjour ${params.beneficiaireNom ?? ""},</p>
        <p style="margin:0 0 12px">Un code de retrait vous a été partagé pour les clés du logement
        <strong>${params.logement}</strong> :</p>
@@ -364,12 +364,12 @@ export function contenuCandidatureValidee(params: {
   nomCommerce: string;
 }): ContenuEmail {
   return {
-    sujet: `Bienvenue dans le réseau KLAV, ${params.nomCommerce} 🎉`,
+    sujet: `Bienvenue dans le réseau Keywi, ${params.nomCommerce} 🎉`,
     html: gabarit(
       "Votre candidature est acceptée 🎉",
       `<p style="margin:0 0 12px">Bonjour ${params.nomContact},</p>
        <p style="margin:0 0 12px">Excellente nouvelle : <strong>${params.nomCommerce}</strong>
-       rejoint le réseau de points relais KLAV. Toute l'équipe vous souhaite la bienvenue !</p>
+       rejoint le réseau de points relais Keywi. Toute l'équipe vous souhaite la bienvenue !</p>
        ${encadre(
          `<strong>Les prochaines étapes :</strong><br>
           1️⃣ Un membre de l'équipe vous appelle sous 48 h pour convenir d'un rendez-vous.<br>
@@ -389,12 +389,12 @@ export function contenuCandidatureRefusee(params: {
   nomCommerce: string;
 }): ContenuEmail {
   return {
-    sujet: `Votre candidature KLAV — ${params.nomCommerce}`,
+    sujet: `Votre candidature Keywi — ${params.nomCommerce}`,
     html: gabarit(
       "Merci pour votre candidature",
       `<p style="margin:0 0 12px">Bonjour ${params.nomContact},</p>
        <p style="margin:0 0 12px">Merci d'avoir proposé <strong>${params.nomCommerce}</strong>
-       comme point relais KLAV. Après étude, nous ne sommes malheureusement pas en mesure
+       comme point relais Keywi. Après étude, nous ne sommes malheureusement pas en mesure
        d'intégrer votre commerce au réseau pour le moment.</p>
        ${encadre(
          `Les raisons les plus fréquentes : une zone non encore couverte par nos tournées

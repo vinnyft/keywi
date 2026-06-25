@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240" role="img" aria-label="Keywi">
+  
+  <g fill="#C6F03A">
+    <rect x="94" y="150" width="11" height="86" rx="5.5"></rect>
+    <rect x="91" y="158" width="17" height="6" rx="3"></rect>
+    <rect x="103" y="200" width="20" height="8" rx="4"></rect>
+    <rect x="103" y="216" width="13" height="8" rx="4"></rect>
+  </g>
+  <circle cx="100" cy="84" r="66" fill="#6FA82C"></circle>
+  <circle cx="100" cy="84" r="69" fill="none" stroke="#C6F03A" stroke-width="7"></circle>
+  <g fill="#15331E">
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(0 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(36 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(72 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(108 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(144 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(180 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(216 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(252 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(288 100 84)"></ellipse>
+    <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(324 100 84)"></ellipse>
+  </g>
+  <text x="100" y="85" text-anchor="middle" dominant-baseline="central" font-family="&#39;Bricolage Grotesque&#39;, sans-serif" font-weight="800" font-size="58" letter-spacing="-2" fill="#F3F1DC">K</text>
+</svg>

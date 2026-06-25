@@ -3,7 +3,7 @@ import type { Database } from "@/lib/supabase/types";
 type KeyStatus = Database["public"]["Enums"]["key_status"];
 
 /**
- * Badge d'état d'une clé, aux couleurs du design system KLAV.
+ * Badge d'état d'une clé, aux couleurs du design system Keywi.
  */
 const CONFIG: Record<KeyStatus, { libelle: string; classe: string }> = {
   en_attente: { libelle: "En attente de dépôt", classe: "bg-gray-100 text-gray-600" },

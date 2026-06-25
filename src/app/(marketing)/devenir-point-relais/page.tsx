@@ -5,7 +5,7 @@ import { FormulaireCandidature } from "@/components/marketing/FormulaireCandidat
 export const metadata: Metadata = {
   title: "Devenir point relais",
   description:
-    "Transformez votre commerce en point relais KLAV : un revenu complémentaire à chaque mouvement de clés.",
+    "Transformez votre commerce en point relais Keywi : un revenu complémentaire à chaque mouvement de clés.",
 };
 
 const ATOUTS = [
@@ -41,7 +41,7 @@ export default function PageDevenirPointRelais() {
     <>
       <section className="bg-encre text-white">
         <div className="mx-auto max-w-4xl px-4 py-16 text-center">
-          <h1 className="text-4xl font-black">Devenez point relais KLAV</h1>
+          <h1 className="text-4xl font-black">Devenez point relais Keywi</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">
             Votre comptoir a déjà tout ce qu&apos;il faut. Rejoignez le réseau et
             rendez service à votre quartier — tout en arrondissant vos fins de

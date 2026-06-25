@@ -1,0 +1,35 @@
+/* Keywi — design tokens
+   Importer ce fichier, puis utiliser les variables var(--kw-...). */
+
+:root {
+  /* Couleurs signature */
+  --kw-green:        #7CB518; /* Chair du kiwi — couleur principale, CTA */
+  --kw-green-deep:   #6FA82C; /* Vert plus mûr — survol, bordures */
+  --kw-lime:         #C6F03A; /* Accent punchy — highlights sur fond sombre */
+  --kw-skin:         #8A7252; /* Peau du kiwi — confiance, sécurité */
+  --kw-skin-light:   #B6A88E; /* Peau claire — texte secondaire sur crème */
+
+  /* Neutres */
+  --kw-cream:        #FBFAF3; /* Fond clair de l'app */
+  --kw-cream-2:      #EDEBD6; /* Cartes / chips sur fond crème */
+  --kw-ink:          #14331E; /* Texte principal (vert très sombre) */
+  --kw-ink-soft:     #2C4733; /* Texte courant */
+  --kw-muted:        #6B7A6B; /* Texte tertiaire */
+  --kw-forest:       #15331E; /* Fond sombre (cartes, mode nuit) */
+  --kw-forest-2:     #1E4329; /* Surface sur fond sombre */
+  --kw-seed:         #21340F; /* Graines / détails sombres */
+
+  /* Rayons */
+  --kw-radius-sm: 12px;
+  --kw-radius-md: 18px;
+  --kw-radius-lg: 24px;
+  --kw-radius-xl: 28px;
+
+  /* Ombres */
+  --kw-shadow-card: 0 2px 20px rgba(20,51,30,.06);
+  --kw-shadow-pop:  0 14px 40px rgba(20,51,30,.18);
+
+  /* Typographie */
+  --kw-font-display: 'Bricolage Grotesque', system-ui, sans-serif; /* titres */
+  --kw-font-body:    'DM Sans', system-ui, sans-serif;             /* texte */
+}

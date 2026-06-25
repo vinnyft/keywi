@@ -44,7 +44,7 @@ export function FluxDepot() {
         nom: "erreur",
         message:
           (resultat.message as string) ??
-          "Badge refusé — vérifiez qu'il s'agit d'un badge KLAV valide.",
+          "Badge refusé — vérifiez qu'il s'agit d'un badge Keywi valide.",
       });
       return;
     }

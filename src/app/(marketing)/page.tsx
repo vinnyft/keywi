@@ -10,7 +10,7 @@ import {
 import { createClient } from "@/lib/supabase/server";
 import { CAS_USAGE } from "@/content/cas-usage";
 
-/** Accueil du site public KLAV */
+/** Accueil du site public Keywi */
 export default async function PageAccueil() {
   const supabase = await createClient();
   const { data } = await supabase.rpc("stats_publiques");
@@ -25,7 +25,7 @@ export default async function PageAccueil() {
       icone: MapPin,
       titre: "Déposez près de chez vous",
       texte:
-        "Choisissez un commerce partenaire sur la carte et déposez votre trousseau muni d'un badge KLAV.",
+        "Choisissez un commerce partenaire sur la carte et déposez votre trousseau muni d'un badge Keywi.",
     },
     {
       icone: KeyRound,
@@ -53,7 +53,7 @@ export default async function PageAccueil() {
             <h1 className="mt-4 text-4xl font-black leading-tight sm:text-5xl">
               Vos clés, en lieu sûr,
               <br />
-              <span className="text-corail">près de chez vous.</span>
+              <span className="text-lime">près de chez vous.</span>
             </h1>
             <p className="mt-4 max-w-md text-lg text-white/80">
               Déposez vos clés dans un commerce de confiance et gérez les accès à
@@ -86,7 +86,7 @@ export default async function PageAccueil() {
                 key={s.l}
                 className="rounded-2xl bg-white/5 p-5 text-center ring-1 ring-white/10"
               >
-                <dd className="text-3xl font-black text-corail">{s.v}</dd>
+                <dd className="text-3xl font-black text-lime">{s.v}</dd>
                 <dt className="mt-1 text-sm text-white/70">{s.l}</dt>
               </div>
             ))}
@@ -149,7 +149,7 @@ export default async function PageAccueil() {
         <div className="flex flex-col items-center gap-6 rounded-3xl bg-primaire px-6 py-12 text-center text-white sm:px-12">
           <Smartphone size={40} aria-hidden="true" />
           <h2 className="text-3xl font-black">
-            Commerçant ? Rejoignez le réseau KLAV.
+            Commerçant ? Rejoignez le réseau Keywi.
           </h2>
           <p className="max-w-xl text-white/80">
             Transformez votre comptoir en point relais : un revenu complémentaire

@@ -96,13 +96,13 @@ export async function GET(request: Request) {
     .map(
       ([cle, g]) =>
         `<li style="margin:8px 0"><a href="/api/dev/apercu-email?type=${cle}"
-           style="color:#2D5BFF;font-weight:600">${g.libelle}</a>
+           style="color:#6FA82C;font-weight:600">${g.libelle}</a>
            <code style="color:#5B6472">?type=${cle}</code></li>`
     )
     .join("");
   return new NextResponse(
-    `<body style="font-family:system-ui;max-width:560px;margin:40px auto;color:#101B33">
-       <h1 style="font-size:20px">📧 Aperçu des emails KLAV (dev)</h1>
+    `<body style="font-family:system-ui;max-width:560px;margin:40px auto;color:#14331E">
+       <h1 style="font-size:20px">📧 Aperçu des emails Keywi (dev)</h1>
        <ul style="padding-left:18px">${liens}</ul>
      </body>`,
     { headers: { "Content-Type": "text/html; charset=utf-8" } }

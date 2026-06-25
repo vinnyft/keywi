@@ -91,7 +91,7 @@ export function FluxRetrait() {
           <h2 className="text-lg font-bold">Code de retrait du client</h2>
           <p className="mt-1 text-sm text-gray-600">
             Le client vous présente un code à 6 caractères ou un QR code
-            (contenu « KLAV:XXXXXX »).
+            (contenu « Keywi:XXXXXX »).
           </p>
           <form
             className="mt-4 space-y-3"

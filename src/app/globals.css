@@ -1,36 +1,67 @@
 @import "tailwindcss";
 
 /* ============================================================
-   KLAV — design system
-   Palette originale : encre (bleu nuit), primaire (bleu vif),
-   corail (accent), menthe (succès). Contrastes AA vérifiés.
+   Keywi — design system
+   Palette issue du kiwi : chair verte (primaire), lime (punch sur
+   fond sombre), peau gris-brun (accent confiance), crème (fond),
+   forêt (fond sombre / texte). Contrastes AA vérifiés.
    ============================================================ */
 
 @theme {
-  /* Couleurs de marque */
-  --color-encre: #101b33;
-  --color-encre-2: #1b2a4d;
-  --color-primaire: #2d5bff;
-  --color-primaire-fonce: #1e3fd1;
-  --color-primaire-pale: #e8eeff;
-  --color-corail: #ff6b5b;
-  --color-corail-fonce: #d8442f;
+  /* Texte & fonds sombres (anciennement « encre ») → taupe peau de kiwi */
+  --color-encre: #5c4a35;
+  --color-encre-2: #6e5a40;
+
+  /* Couleur principale (CTA) → vert chair du kiwi */
+  --color-primaire: #6fa82c;
+  --color-primaire-fonce: #5a8a22;
+  --color-primaire-pale: #ecf6d8;
+
+  /* Accent secondaire (anciennement « corail ») → peau gris-brun */
+  --color-corail: #8a7252;
+  --color-corail-fonce: #6e5a40;
+
+  /* Lime — accent punchy sur fond sombre */
+  --color-lime: #c6f03a;
+  --color-lime-fonce: #a6d62f;
+
+  /* Peau (alias explicite) */
+  --color-skin: #8a7252;
+  --color-skin-light: #b6a88e;
+
+  /* Succès */
   --color-menthe: #0fa86c;
   --color-menthe-pale: #e2f7ee;
-  --color-sable: #f7f6f2;
+
+  /* Avertissement / états « en attente / retour » */
   --color-ambre: #b45309;
   --color-ambre-pale: #fef3c7;
 
-  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), monospace;
+  /* Surfaces crème */
+  --color-paper: #fbfaf3;
+  --color-sable: #f1ece0;
+
+  /* Polices */
+  --font-sans: var(--font-body), "DM Sans", system-ui, sans-serif;
+  --font-display: var(--font-display), "Bricolage Grotesque", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Menlo", monospace;
 
   --radius-carte: 1rem;
 }
 
 body {
-  background: white;
+  background: var(--color-paper);
   color: var(--color-encre);
   font-family: var(--font-sans);
+}
+
+/* Les titres adoptent la police d'affichage Bricolage Grotesque */
+h1,
+h2,
+h3,
+h4,
+.font-display {
+  font-family: var(--font-display);
 }
 
 /* Focus visible au clavier sur tous les éléments interactifs (accessibilité) */

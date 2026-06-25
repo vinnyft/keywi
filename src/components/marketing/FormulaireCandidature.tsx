@@ -17,7 +17,7 @@ export function FormulaireCandidature() {
         className="mt-6 rounded-2xl bg-menthe-pale p-6 text-center font-medium text-menthe"
       >
         ✅ Candidature bien reçue ! Notre équipe vous recontacte sous 48 h
-        ouvrées pour finaliser votre adhésion au réseau KLAV.
+        ouvrées pour finaliser votre adhésion au réseau Keywi.
       </p>
     );
   }

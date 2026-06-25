@@ -4,7 +4,7 @@ import { Mail, MessageSquare, Store } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Une question ? L'équipe KLAV vous répond.",
+  description: "Une question ? L'équipe Keywi vous répond.",
 };
 
 export default function PageContact() {
@@ -18,7 +18,7 @@ export default function PageContact() {
 
       <div className="mt-8 space-y-4">
         <a
-          href="mailto:bonjour@klav.fr"
+          href="mailto:bonjour@keywi.fr"
           className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 hover:border-primaire"
         >
           <span className="inline-flex size-11 items-center justify-center rounded-xl bg-primaire-pale text-primaire-fonce">
@@ -26,7 +26,7 @@ export default function PageContact() {
           </span>
           <span>
             <span className="block font-bold">Par email</span>
-            <span className="text-gray-600">bonjour@klav.fr — réponse sous 24 h ouvrées</span>
+            <span className="text-gray-600">bonjour@keywi.fr — réponse sous 24 h ouvrées</span>
           </span>
         </a>
 

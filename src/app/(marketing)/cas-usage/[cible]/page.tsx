@@ -94,7 +94,7 @@ export default async function PageCasUsage({
 
       {/* Maillage vers les autres cas */}
       <section className="mx-auto max-w-5xl px-4 pb-16" aria-label="Autres cas d'usage">
-        <h2 className="text-center text-xl font-bold">KLAV s&apos;adapte aussi à…</h2>
+        <h2 className="text-center text-xl font-bold">Keywi s&apos;adapte aussi à…</h2>
         <ul className="mt-5 flex flex-wrap justify-center gap-2">
           {CAS_USAGE.filter((c) => c.slug !== cas.slug).map((c) => (
             <li key={c.slug}>

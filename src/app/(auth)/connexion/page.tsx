@@ -23,7 +23,7 @@ function FormulaireConnexion() {
     <div>
       <h1 className="text-2xl font-bold">Connexion</h1>
       <p className="mt-1 text-sm text-gray-600">
-        Heureux de vous revoir sur KLAV.
+        Heureux de vous revoir sur Keywi.
       </p>
 
       {/* Bascule mot de passe / lien magique */}

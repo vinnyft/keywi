@@ -1,5 +1,5 @@
 -- ============================================================
--- KLAV — Migration 0004 : vue Guest
+-- Keywi — Migration 0004 : vue Guest
 -- Un bénéficiaire (Guest) ne possède ni les clés ni les codes :
 -- cette fonction security definer lui expose uniquement ce qui
 -- lui a été partagé (codes actifs rattachés à son email), avec

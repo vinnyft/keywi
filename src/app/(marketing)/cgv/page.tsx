@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Conditions générales de vente",
-  description: "Conditions générales de vente et d'utilisation du service KLAV.",
+  description: "Conditions générales de vente et d'utilisation du service Keywi.",
 };
 
 export default function PageCgv() {
@@ -17,14 +17,14 @@ export default function PageCgv() {
         <section>
           <h2 className="text-xl font-bold">1. Objet</h2>
           <p className="mt-2">
-            Les présentes conditions régissent l&apos;utilisation du service KLAV
+            Les présentes conditions régissent l&apos;utilisation du service Keywi
             de dépôt et de remise de clés via un réseau de commerces partenaires.
           </p>
         </section>
         <section>
           <h2 className="text-xl font-bold">2. Service</h2>
           <p className="mt-2">
-            KLAV met en relation des déposants et des points relais. Le déposant
+            Keywi met en relation des déposants et des points relais. Le déposant
             reste responsable des clés confiées et des accès qu&apos;il partage
             via les codes de retrait.
           </p>
@@ -40,7 +40,7 @@ export default function PageCgv() {
         <section>
           <h2 className="text-xl font-bold">4. Responsabilité</h2>
           <p className="mt-2">
-            KLAV s&apos;engage à assurer la traçabilité de chaque mouvement. La
+            Keywi s&apos;engage à assurer la traçabilité de chaque mouvement. La
             remise des clés est conditionnée à la présentation d&apos;un code de
             retrait valide et à la vérification du badge.
           </p>

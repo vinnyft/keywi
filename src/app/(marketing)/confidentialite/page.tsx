@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Politique de confidentialité",
-  description: "Comment KLAV protège et traite vos données personnelles.",
+  description: "Comment Keywi protège et traite vos données personnelles.",
 };
 
 export default function PageConfidentialite() {
@@ -43,7 +43,7 @@ export default function PageConfidentialite() {
           <p className="mt-2">
             Conformément au RGPD, vous pouvez accéder à vos données, les
             rectifier ou en demander la suppression en nous écrivant à
-            bonjour@klav.fr.
+            bonjour@keywi.fr.
           </p>
         </section>
 

@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 
 /**
  * Carte Leaflet + OpenStreetMap des points relais.
- * Marqueur original KLAV (SVG inline — pas d'assets externes,
+ * Marqueur original Keywi (SVG inline — pas d'assets externes,
  * évite aussi les soucis d'icônes Leaflet avec les bundlers).
  */
 
@@ -28,7 +28,7 @@ function marqueur(selectionne: boolean) {
     className: "",
     html: `<svg width="36" height="44" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg">
       <path d="M18 0C8 0 0 8 0 18c0 12 18 26 18 26s18-14 18-26C36 8 28 0 18 0z"
-            fill="${selectionne ? "#FF6B5B" : "#2D5BFF"}"/>
+            fill="${selectionne ? "#15331E" : "#6FA82C"}"/>
       <circle cx="15" cy="16" r="4.5" stroke="white" stroke-width="2.8" fill="none"/>
       <path d="M18.5 19.5 L26 27 M23 24 L26 21" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
     </svg>`,
@@ -87,7 +87,7 @@ export default function CarteRelais({
                   onClick={() => surSelection(p)}
                   style={{
                     marginTop: 6,
-                    background: "#2D5BFF",
+                    background: "#6FA82C",
                     color: "white",
                     border: 0,
                     borderRadius: 8,

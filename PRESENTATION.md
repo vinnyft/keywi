@@ -1,4 +1,4 @@
-# KLAV — Présentation du projet
+# Keywi — Présentation du projet
 
 > Document de prise en main destiné à un nouvel associé / développeur.
 > Tu as ici **tout** pour comprendre le projet, le lancer et le déployer.
@@ -7,7 +7,7 @@
 
 ## 1. Le projet en une phrase
 
-**KLAV est une plateforme française de gestion de clés par points relais** :
+**Keywi est une plateforme française de gestion de clés par points relais** :
 on dépose ses clés dans un commerce de quartier partenaire (café, librairie,
 pressing…), et on gère les accès à distance grâce à des codes de retrait —
 une alternative française à KeyNest.
@@ -96,13 +96,13 @@ npm run dev
 Ouvrir <http://localhost:3000>.
 
 ### Comptes de démonstration
-Mot de passe commun : **`klav123456`**
+Mot de passe commun : **`keywi123456`**
 | Rôle | Email |
 |------|-------|
-| Hôte (KeyHost & Guest) | `hote1@klav.fr` |
-| Voyageur (Guest) | `voyageur@klav.fr` |
-| Commerçant | `commerce3@klav.fr` |
-| Admin | `admin@klav.fr` |
+| Hôte (KeyHost & Guest) | `hote1@keywi.fr` |
+| Voyageur (Guest) | `voyageur@keywi.fr` |
+| Commerçant | `commerce3@keywi.fr` |
+| Admin | `admin@keywi.fr` |
 
 👉 Le scénario de test complet est dans **TESTS.md**.
 
@@ -112,14 +112,14 @@ Mot de passe commun : **`klav123456`**
 
 Tout est expliqué dans **DEPLOIEMENT.md** : déploiement gratuit sur
 **Vercel** (le site) + **Supabase Cloud** (la base), avec une URL publique
-type `klav.vercel.app`.
+type `keywi.vercel.app`.
 
 ---
 
 ## 6. Structure du code
 
 ```
-KLAV/
+Keywi/
 ├── README.md            # doc technique de référence
 ├── DEPLOIEMENT.md       # guide de mise en ligne
 ├── TESTS.md             # scénario de test de bout en bout

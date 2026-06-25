@@ -56,7 +56,7 @@ export default async function AccueilCommercant() {
         <span>
           <span className="block text-xl font-bold">Scanner une clé</span>
           <span className="text-white/80">
-            Un client dépose un trousseau muni d&apos;un badge KLAV
+            Un client dépose un trousseau muni d&apos;un badge Keywi
           </span>
         </span>
       </Link>

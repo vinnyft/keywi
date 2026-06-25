@@ -97,7 +97,7 @@ export function ScannerBadge({
               autoComplete="off"
               maxLength={24}
               className="w-full rounded-lg border border-gray-300 px-3 py-3 text-center font-mono text-xl tracking-[0.3em] uppercase"
-              placeholder="KLV•••••"
+              placeholder="KWI•••••"
             />
             <button
               type="submit"
