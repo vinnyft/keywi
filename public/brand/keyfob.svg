@@ -1,8 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="120" height="152" viewBox="0 0 120 152" role="img" aria-label="Keywi porte-clés">
   
   <circle cx="60" cy="30" r="12" fill="none" stroke="#C2BEB2" stroke-width="3.5"></circle>
-  <circle cx="60" cy="90" r="48" fill="#8A7252"></circle>
-  <circle cx="60" cy="90" r="40" fill="#6FA82C"></circle>
+  <circle cx="60" cy="90" r="48" fill="#AEC98A"></circle>
+  <circle cx="60" cy="90" r="40" fill="#5C7A4A"></circle>
   <circle cx="60" cy="58" r="6.5" fill="#FBFAF3"></circle>
   <text x="60" y="92" text-anchor="middle" dominant-baseline="central" font-family="&#39;Bricolage Grotesque&#39;, sans-serif" font-weight="800" font-size="46" letter-spacing="-2" fill="#F3F1DC">K</text>
 </svg>

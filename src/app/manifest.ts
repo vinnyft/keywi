@@ -15,7 +15,7 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/espace",
     display: "standalone",
     background_color: "#FBFAF3",
-    theme_color: "#15331E",
+    theme_color: "#3A5230",
     categories: ["business", "travel", "utilities"],
     icons: [
       { src: "/brand/app-icon.svg", sizes: "any", type: "image/svg+xml" },

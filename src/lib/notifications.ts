@@ -27,15 +27,15 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
    Identité visuelle (mêmes jetons que src/app/globals.css)
    ------------------------------------------------------------------ */
 const COULEURS = {
-  encre: "#14331E",
-  primaire: "#6FA82C",
-  primaireFonce: "#5A8A22",
-  primairePale: "#ECF6D8",
-  corail: "#8A7252",
+  encre: "#3A5230",
+  primaire: "#5C7A4A",
+  primaireFonce: "#4C6A3C",
+  primairePale: "#D9E3C2",
+  corail: "#AEC98A",
   menthe: "#0FA86C",
   menthePale: "#E2F7EE",
   sable: "#FBFAF3",
-  texte: "#14331E",
+  texte: "#3A5230",
   texteSecondaire: "#6B7A6B",
 } as const;
 

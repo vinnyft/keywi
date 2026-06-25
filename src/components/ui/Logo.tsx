@@ -8,9 +8,9 @@ import Link from "next/link";
  */
 
 function MarqueKiwi({ taille, sombre }: { taille: number; sombre: boolean }) {
-  const keyFill = sombre ? "#C6F03A" : "#6FA82C";
-  const ringFill = sombre ? "#C6F03A" : "#8A7252";
-  const seedFill = sombre ? "#15331E" : "#21340F";
+  const keyFill = sombre ? "#AEC98A" : "#5C7A4A";
+  const ringFill = sombre ? "#AEC98A" : "#AEC98A";
+  const seedFill = sombre ? "#3A5230" : "#21340F";
   const seeds = Array.from({ length: 10 }, (_, i) => i * 36);
 
   return (
@@ -28,7 +28,7 @@ function MarqueKiwi({ taille, sombre }: { taille: number; sombre: boolean }) {
         <rect x="103" y="200" width="20" height="8" rx="4" />
         <rect x="103" y="216" width="13" height="8" rx="4" />
       </g>
-      <circle cx="100" cy="84" r="66" fill="#6FA82C" />
+      <circle cx="100" cy="84" r="66" fill="#5C7A4A" />
       <circle cx="100" cy="84" r="69" fill="none" stroke={ringFill} strokeWidth="7" />
       <g fill={seedFill}>
         {seeds.map((deg) => (

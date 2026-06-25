@@ -28,7 +28,7 @@ function marqueur(selectionne: boolean) {
     className: "",
     html: `<svg width="36" height="44" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg">
       <path d="M18 0C8 0 0 8 0 18c0 12 18 26 18 26s18-14 18-26C36 8 28 0 18 0z"
-            fill="${selectionne ? "#15331E" : "#6FA82C"}"/>
+            fill="${selectionne ? "#3A5230" : "#5C7A4A"}"/>
       <circle cx="15" cy="16" r="4.5" stroke="white" stroke-width="2.8" fill="none"/>
       <path d="M18.5 19.5 L26 27 M23 24 L26 21" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
     </svg>`,
@@ -87,7 +87,7 @@ export default function CarteRelais({
                   onClick={() => surSelection(p)}
                   style={{
                     marginTop: 6,
-                    background: "#6FA82C",
+                    background: "#5C7A4A",
                     color: "white",
                     border: 0,
                     borderRadius: 8,

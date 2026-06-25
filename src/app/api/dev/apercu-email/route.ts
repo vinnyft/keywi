@@ -96,12 +96,12 @@ export async function GET(request: Request) {
     .map(
       ([cle, g]) =>
         `<li style="margin:8px 0"><a href="/api/dev/apercu-email?type=${cle}"
-           style="color:#6FA82C;font-weight:600">${g.libelle}</a>
+           style="color:#5C7A4A;font-weight:600">${g.libelle}</a>
            <code style="color:#5B6472">?type=${cle}</code></li>`
     )
     .join("");
   return new NextResponse(
-    `<body style="font-family:system-ui;max-width:560px;margin:40px auto;color:#14331E">
+    `<body style="font-family:system-ui;max-width:560px;margin:40px auto;color:#3A5230">
        <h1 style="font-size:20px">📧 Aperçu des emails Keywi (dev)</h1>
        <ul style="padding-left:18px">${liens}</ul>
      </body>`,

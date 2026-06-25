@@ -1,15 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240" role="img" aria-label="Keywi">
   
-  <g fill="#6FA82C">
+  <g fill="#5C7A4A">
     <rect x="94" y="150" width="11" height="86" rx="5.5"></rect>
     <rect x="91" y="158" width="17" height="6" rx="3"></rect>
     <rect x="103" y="200" width="20" height="8" rx="4"></rect>
     <rect x="103" y="216" width="13" height="8" rx="4"></rect>
   </g>
   
-  <circle cx="100" cy="84" r="66" fill="#6FA82C"></circle>
+  <circle cx="100" cy="84" r="66" fill="#5C7A4A"></circle>
   
-  <circle cx="100" cy="84" r="69" fill="none" stroke="#8A7252" stroke-width="7"></circle>
+  <circle cx="100" cy="84" r="69" fill="none" stroke="#AEC98A" stroke-width="7"></circle>
   
   <g fill="#21340F">
     <ellipse cx="100" cy="41" rx="2" ry="4.6" transform="rotate(0 100 84)"></ellipse>

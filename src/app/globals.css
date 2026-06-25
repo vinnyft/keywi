@@ -2,32 +2,32 @@
 
 /* ============================================================
    Keywi — design system
-   Palette issue du kiwi : chair verte (primaire), lime (punch sur
-   fond sombre), peau gris-brun (accent confiance), crème (fond),
-   forêt (fond sombre / texte). Contrastes AA vérifiés.
+   Palette « Détente » : sauge (#AEC98A), vert pâle (#D9E3C2),
+   beige (#E8DFCF), vert profond (#5C7A4A). Doux et naturel.
+   Contrastes AA vérifiés.
    ============================================================ */
 
 @theme {
-  /* Texte & fonds sombres (anciennement « encre ») → taupe peau de kiwi */
-  --color-encre: #5c4a35;
-  --color-encre-2: #6e5a40;
+  /* Fonds sombres & texte → vert sauge profond (dérivé plus foncé) */
+  --color-encre: #3a5230;
+  --color-encre-2: #46663b;
 
-  /* Couleur principale (CTA) → vert chair du kiwi */
-  --color-primaire: #6fa82c;
-  --color-primaire-fonce: #5a8a22;
-  --color-primaire-pale: #ecf6d8;
+  /* Couleur principale (CTA) → vert Détente */
+  --color-primaire: #5c7a4a;
+  --color-primaire-fonce: #4c6a3c;
+  --color-primaire-pale: #d9e3c2;
 
-  /* Accent secondaire (anciennement « corail ») → peau gris-brun */
-  --color-corail: #8a7252;
-  --color-corail-fonce: #6e5a40;
+  /* Accent secondaire */
+  --color-corail: #5c7a4a;
+  --color-corail-fonce: #4c6a3c;
 
-  /* Lime — accent punchy sur fond sombre */
-  --color-lime: #c6f03a;
-  --color-lime-fonce: #a6d62f;
+  /* Sauge clair — accent doux sur fond sombre */
+  --color-lime: #aec98a;
+  --color-lime-fonce: #9bb977;
 
-  /* Peau (alias explicite) */
-  --color-skin: #8a7252;
-  --color-skin-light: #b6a88e;
+  /* Sauge clair / vert pâle (alias) */
+  --color-skin: #aec98a;
+  --color-skin-light: #d9e3c2;
 
   /* Succès */
   --color-menthe: #0fa86c;
@@ -37,9 +37,9 @@
   --color-ambre: #b45309;
   --color-ambre-pale: #fef3c7;
 
-  /* Surfaces crème */
+  /* Surfaces */
   --color-paper: #fbfaf3;
-  --color-sable: #f1ece0;
+  --color-sable: #e8dfcf;
 
   /* Polices */
   --font-sans: var(--font-body), "DM Sans", system-ui, sans-serif;

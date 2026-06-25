@@ -3,17 +3,17 @@
     <path id="ba-top" d="M 38 120 A 82 82 0 0 1 202 120"></path>
     <path id="ba-bot" d="M 42 120 A 78 78 0 0 0 198 120"></path>
   </defs>
-  <circle cx="120" cy="120" r="116" fill="#8A7252"></circle>
+  <circle cx="120" cy="120" r="116" fill="#AEC98A"></circle>
   <circle cx="120" cy="120" r="105" fill="#FBFAF3"></circle>
-  <circle cx="120" cy="120" r="96" fill="none" stroke="#8A7252" stroke-width="1.5" stroke-dasharray="1.5 5"></circle>
-  <text fill="#8A7252" font-family="&#39;DM Sans&#39;, sans-serif" font-weight="600" font-size="13" letter-spacing="2.5"><textPath href="#ba-top" startOffset="50%" text-anchor="middle">POINT RELAIS AGRÉÉ</textPath></text>
-  <text fill="#8A7252" font-family="&#39;DM Sans&#39;, sans-serif" font-weight="600" font-size="11.5" letter-spacing="2"><textPath href="#ba-bot" startOffset="50%" text-anchor="middle">DÉPÔT · GARDE · RETRAIT</textPath></text>
-  <g fill="#6FA82C">
+  <circle cx="120" cy="120" r="96" fill="none" stroke="#AEC98A" stroke-width="1.5" stroke-dasharray="1.5 5"></circle>
+  <text fill="#AEC98A" font-family="&#39;DM Sans&#39;, sans-serif" font-weight="600" font-size="13" letter-spacing="2.5"><textPath href="#ba-top" startOffset="50%" text-anchor="middle">POINT RELAIS AGRÉÉ</textPath></text>
+  <text fill="#AEC98A" font-family="&#39;DM Sans&#39;, sans-serif" font-weight="600" font-size="11.5" letter-spacing="2"><textPath href="#ba-bot" startOffset="50%" text-anchor="middle">DÉPÔT · GARDE · RETRAIT</textPath></text>
+  <g fill="#5C7A4A">
     <rect x="32.5" y="115" width="9" height="9" rx="1.5" transform="rotate(45 37 119.5)"></rect>
     <rect x="198.5" y="115" width="9" height="9" rx="1.5" transform="rotate(45 203 119.5)"></rect>
   </g>
-  <circle cx="120" cy="103" r="29" fill="#6FA82C"></circle>
-  <circle cx="120" cy="103" r="30.5" fill="none" stroke="#8A7252" stroke-width="3.5"></circle>
+  <circle cx="120" cy="103" r="29" fill="#5C7A4A"></circle>
+  <circle cx="120" cy="103" r="30.5" fill="none" stroke="#AEC98A" stroke-width="3.5"></circle>
   <g fill="#21340F">
     <ellipse cx="120" cy="84" rx="1.3" ry="3" transform="rotate(0 120 103)"></ellipse>
     <ellipse cx="120" cy="84" rx="1.3" ry="3" transform="rotate(45 120 103)"></ellipse>
@@ -25,5 +25,5 @@
     <ellipse cx="120" cy="84" rx="1.3" ry="3" transform="rotate(315 120 103)"></ellipse>
   </g>
   <text x="120" y="104" text-anchor="middle" dominant-baseline="central" font-family="&#39;Bricolage Grotesque&#39;, sans-serif" font-weight="800" font-size="27" letter-spacing="-1" fill="#F3F1DC">K</text>
-  <text x="120" y="156" text-anchor="middle" font-family="&#39;Bricolage Grotesque&#39;, sans-serif" font-weight="800" font-size="23" letter-spacing="-.5" fill="#14331E">KEYWI</text>
+  <text x="120" y="156" text-anchor="middle" font-family="&#39;Bricolage Grotesque&#39;, sans-serif" font-weight="800" font-size="23" letter-spacing="-.5" fill="#3A5230">KEYWI</text>
 </svg>
