@@ -1,8 +1,9 @@
 // Génération des instances de carreaux pour le rendu 3D « zellige ».
 //
-// Chaque carreau est une vraie boîte biseautée (RoundedBox) posée en relief sur
-// un noyau de joint : les écarts entre carreaux laissent voir le noyau en
-// contrebas → joints creux et ombrés. Un jitter déterministe (seed) donne le
+// Chaque carreau est une vraie boîte biseautée (RoundedBox) posée en relief.
+// Les joints sont remplis par des dalles de ciment qui montent presque jusqu'au
+// sommet des carreaux : ceux-ci ne dépassent que d'un léger retrait → joints
+// pleins et mats, pas de canaux creux. Un jitter déterministe (seed) donne le
 // côté fait-main : micro-rotation, micro-décalage de hauteur, variation
 // d'échelle et de teinte par carreau.
 //
@@ -76,6 +77,14 @@ export interface TileBuildParams {
   motif?: MotifMosaique;
 }
 
+// Une dalle de ciment qui remplit les creux entre carreaux d'une face. Elle
+// monte presque jusqu'au sommet des carreaux (joint légèrement en retrait) au
+// lieu de laisser un canal vide et profond.
+export interface GroutSlab {
+  center: [number, number, number];
+  size: [number, number, number];
+}
+
 export interface TileBuildResult {
   count: number;
   matrices: Float32Array; // count × 16
@@ -83,7 +92,8 @@ export interface TileBuildResult {
   footprint: number; // côté du carreau (unités) — pour la géométrie partagée
   thickness: number; // épaisseur du carreau (unités)
   radius: number; // rayon de biseau (unités)
-  core: { x: number; y: number; z: number }; // dimensions du noyau de joint
+  core: { x: number; y: number; z: number }; // dimensions du noyau de joint (backing)
+  groutSlabs: GroutSlab[]; // dalles de ciment qui remplissent les joints, par face
   contactY: number; // y du bas du meuble (placement de l'ombre de contact)
 }
 
@@ -104,6 +114,11 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
   const footprint = pitch - gap;
   const thickness = Math.max(pitch * 0.3, 0.004);
   const radius = Math.min(footprint, thickness) * 0.16;
+
+  // Le ciment monte jusqu'à `thickness - jointRecess` : un joint peu profond
+  // qui remplit l'espace, les carreaux ne dépassent que de `jointRecess`.
+  const jointRecess = thickness * 0.3;
+  const slabThick = thickness * 1.3; // épais → recouvre le noyau, pas de vide
 
   const Lx = nbLongueur * pitch; // X
   const Hy = nbHauteur * pitch; // Y
@@ -134,6 +149,7 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
 
   const matrices = new Float32Array(total * 16);
   const colors = new Float32Array(total * 3);
+  const groutSlabs: GroutSlab[] = [];
 
   const m = new THREE.Matrix4();
   const basis = new THREE.Matrix4();
@@ -155,6 +171,23 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
 
     const halfU = (f.countU * pitch) / 2;
     const halfV = (f.countV * pitch) / 2;
+
+    // Dalle de ciment de la face : étendue = emprise des carreaux (− gap), elle
+    // affleure sous le sommet des carreaux pour remplir les joints.
+    {
+      const uExt = f.countU * pitch - gap;
+      const vExt = f.countV * pitch - gap;
+      const surface = f.coreHalf + thickness - jointRecess;
+      const centerN = surface - slabThick / 2;
+      const n = f.normal;
+      // Axes alignés sur le repère monde → tailles/positions composantes.
+      const size: [number, number, number] = [
+        Math.abs(f.u.x) * uExt + Math.abs(v.x) * vExt + Math.abs(n.x) * slabThick,
+        Math.abs(f.u.y) * uExt + Math.abs(v.y) * vExt + Math.abs(n.y) * slabThick,
+        Math.abs(f.u.z) * uExt + Math.abs(v.z) * vExt + Math.abs(n.z) * slabThick,
+      ];
+      groutSlabs.push({ center: [n.x * centerN, n.y * centerN, n.z * centerN], size });
+    }
 
     for (let i = 0; i < f.countU; i++) {
       for (let j = 0; j < f.countV; j++) {
@@ -206,6 +239,7 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
     radius,
     // Noyau de joint légèrement plus petit pour que les carreaux débordent.
     core: { x: Lx - gap, y: Hy - gap, z: Wz - gap },
+    groutSlabs,
     contactY: -Hy / 2,
   };
 }

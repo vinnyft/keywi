@@ -116,6 +116,79 @@ function createRoughnessMap(): THREE.Texture {
   return t;
 }
 
+// ─── Ciment des joints : grain fin et mat. Bruit haute fréquence pour le
+// relief granuleux + nuage basse fréquence pour les taches d'humidité.
+function createCementNormalMap(): THREE.Texture {
+  const S = 256;
+  const cv = document.createElement("canvas");
+  cv.width = S; cv.height = S;
+  const ctx = cv.getContext("2d")!;
+  const img = ctx.createImageData(S, S);
+  const d = img.data;
+  const hash = (px: number, py: number) => {
+    const n = Math.sin(px * 127.1 + py * 311.7) * 43758.5453;
+    return n - Math.floor(n);
+  };
+  for (let y = 0; y < S; y++) {
+    for (let x = 0; x < S; x++) {
+      const i = (y * S + x) * 4;
+      // dérivée du bruit → pente locale (grain de sable du ciment)
+      const dx = (hash(x + 1, y) - hash(x - 1, y)) * 90;
+      const dy = (hash(x, y + 1) - hash(x, y - 1)) * 90;
+      d[i]   = Math.min(255, Math.max(0, 128 + Math.round(dx)));
+      d[i+1] = Math.min(255, Math.max(0, 128 + Math.round(dy)));
+      d[i+2] = 255;
+      d[i+3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  const t = new THREE.CanvasTexture(cv);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+}
+
+// ─── Carte de teinte/rugosité du ciment : taches claires/sombres irrégulières
+// (sable, humidité) pour casser l'uniformité. Sert de map (assombrissement) et
+// roughnessMap (mat partout, légèrement variable).
+function createCementMottleMap(): THREE.Texture {
+  const S = 256;
+  const cv = document.createElement("canvas");
+  cv.width = S; cv.height = S;
+  const ctx = cv.getContext("2d")!;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, S, S);
+  // taches douces aléatoires (déterministe via sin-hash)
+  const rnd = (k: number) => {
+    const n = Math.sin(k * 12.9898) * 43758.5453;
+    return n - Math.floor(n);
+  };
+  for (let k = 0; k < 220; k++) {
+    const cx = rnd(k + 1) * S;
+    const cy = rnd(k + 99) * S;
+    const r = 4 + rnd(k + 7) * 22;
+    const dark = rnd(k + 3) > 0.5;
+    const a = 0.04 + rnd(k + 5) * 0.10;
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+    const c = dark ? "0,0,0" : "255,255,255";
+    g.addColorStop(0, `rgba(${c},${a})`);
+    g.addColorStop(1, `rgba(${c},0)`);
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  // fines granules sombres (grains de sable)
+  for (let k = 0; k < 1400; k++) {
+    const gx = rnd(k + 1000) * S;
+    const gy = rnd(k + 2000) * S;
+    ctx.fillStyle = `rgba(0,0,0,${0.05 + rnd(k + 3000) * 0.12})`;
+    ctx.fillRect(gx, gy, 1, 1);
+  }
+  const t = new THREE.CanvasTexture(cv);
+  t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  return t;
+}
+
 // ─── clearcoatRoughness selon la clarté (L) de la palette choisie.
 // Clair/pastel → reflets laiteux diffus (0.10–0.18).
 // Sombre/saturé → glaçure vitreuse, flaques nettes (0.04–0.10).
@@ -181,6 +254,14 @@ function CubeRelief(props: CubeKubeProps) {
     () => (typeof window !== "undefined" ? createRoughnessMap() : null),
     []
   );
+  const cementNormalMap = useMemo(
+    () => (typeof window !== "undefined" ? createCementNormalMap() : null),
+    []
+  );
+  const cementMottleMap = useMemo(
+    () => (typeof window !== "undefined" ? createCementMottleMap() : null),
+    []
+  );
 
   // Matériau PBR glaçure — clearcoatRoughness et clearcoatNormalScale sont
   // mis à jour dynamiquement (sans recréer le matériau) selon les couleurs.
@@ -215,11 +296,30 @@ function CubeRelief(props: CubeKubeProps) {
     () => new THREE.BoxGeometry(build.core.x, build.core.y, build.core.z),
     [build]
   );
-  // Joint blanc cassé mat — pas de clearcoat (spec).
+  // Ciment mat des joints : grain (normalMap), taches (map + roughnessMap),
+  // entièrement mat, aucun clearcoat → aspect mortier.
   const groutMat = useMemo(
-    () => new THREE.MeshStandardMaterial({ color: props.couleurJoint, roughness: 0.90, metalness: 0 }),
-    [props.couleurJoint]
+    () =>
+      new THREE.MeshStandardMaterial({
+        color: props.couleurJoint,
+        roughness: 0.97,
+        metalness: 0,
+        normalMap: cementNormalMap ?? undefined,
+        normalScale: new THREE.Vector2(0.7, 0.7),
+        map: cementMottleMap ?? undefined,
+        roughnessMap: cementMottleMap ?? undefined,
+      }),
+    [props.couleurJoint, cementNormalMap, cementMottleMap]
   );
+
+  // Densité du grain : ~1 motif tous les 2 cm, stable quelle que soit la taille.
+  useLayoutEffect(() => {
+    const maxDim = Math.max(build.core.x, build.core.y, build.core.z);
+    const rep = THREE.MathUtils.clamp(Math.round(maxDim / 0.04), 2, 16);
+    for (const t of [cementNormalMap, cementMottleMap]) {
+      if (t) { t.repeat.set(rep, rep); t.needsUpdate = true; }
+    }
+  }, [build, cementNormalMap, cementMottleMap]);
 
   // Application des matrices + couleurs sans remount.
   useLayoutEffect(() => {
@@ -245,10 +345,19 @@ function CubeRelief(props: CubeKubeProps) {
   useEffect(() => () => clearcoatNormalMap?.dispose(), [clearcoatNormalMap]);
   useEffect(() => () => bodyNormalMap?.dispose(), [bodyNormalMap]);
   useEffect(() => () => roughnessMap?.dispose(), [roughnessMap]);
+  useEffect(() => () => cementNormalMap?.dispose(), [cementNormalMap]);
+  useEffect(() => () => cementMottleMap?.dispose(), [cementMottleMap]);
 
   return (
     <group>
+      {/* Noyau de ciment (backing : aucune transparence aux arêtes) */}
       <mesh geometry={groutGeo} material={groutMat} castShadow receiveShadow />
+      {/* Dalles de ciment qui remplissent les joints entre carreaux, par face */}
+      {build.groutSlabs.map((slab, i) => (
+        <mesh key={i} position={slab.center} material={groutMat} receiveShadow>
+          <boxGeometry args={slab.size} />
+        </mesh>
+      ))}
       <instancedMesh
         ref={meshRef}
         args={[tileGeo, tileMat, build.count]}
