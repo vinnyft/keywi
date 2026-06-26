@@ -1,57 +1,33 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Conditions générales de vente",
-  description: "Conditions générales de vente et d'utilisation du service Keywi.",
-};
+export const metadata: Metadata = { title: "Conditions générales de vente" };
 
-export default function PageCgv() {
+export default function CGVPage() {
   return (
-    <article className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="text-4xl font-black">Conditions générales</h1>
-      <p className="mt-2 text-sm text-gray-500">
-        Dernière mise à jour : {new Date().getFullYear()}
-      </p>
-
-      <div className="mt-8 space-y-6 text-gray-700">
+    <div className="max-w-3xl mx-auto px-6 py-24">
+      <h1 className="text-4xl font-black tracking-[-0.04em] mb-8">Conditions générales de vente</h1>
+      <div className="space-y-6 text-[#1c1c1c] leading-relaxed text-sm">
         <section>
-          <h2 className="text-xl font-bold">1. Objet</h2>
-          <p className="mt-2">
-            Les présentes conditions régissent l&apos;utilisation du service Keywi
-            de dépôt et de remise de clés via un réseau de commerces partenaires.
-          </p>
+          <h2 className="text-lg font-bold mb-2">Article 1 — Objet</h2>
+          <p>Les présentes CGV régissent les ventes de mobilier mosaïque sur-mesure réalisées sur le site KUBE. Toute commande implique l'acceptation sans réserve de ces conditions.</p>
         </section>
         <section>
-          <h2 className="text-xl font-bold">2. Service</h2>
-          <p className="mt-2">
-            Keywi met en relation des déposants et des points relais. Le déposant
-            reste responsable des clés confiées et des accès qu&apos;il partage
-            via les codes de retrait.
-          </p>
+          <h2 className="text-lg font-bold mb-2">Article 2 — Produits</h2>
+          <p>Les produits KUBE sont fabriqués sur-mesure à partir de votre configuration. Les dimensions, couleurs et finitions correspondent exactement au rendu du configurateur 3D au moment de la commande.</p>
         </section>
         <section>
-          <h2 className="text-xl font-bold">3. Tarifs et paiement</h2>
-          <p className="mt-2">
-            Les dépôts sont facturés à l&apos;unité ou via un abonnement, aux
-            tarifs indiqués sur la page Tarifs. Les paiements sont traités de
-            façon sécurisée.
-          </p>
+          <h2 className="text-lg font-bold mb-2">Article 3 — Prix</h2>
+          <p>Les prix sont indiqués TTC (TVA 20 %). Le prix final est calculé côté serveur à partir de votre configuration et validé avant paiement.</p>
         </section>
         <section>
-          <h2 className="text-xl font-bold">4. Responsabilité</h2>
-          <p className="mt-2">
-            Keywi s&apos;engage à assurer la traçabilité de chaque mouvement. La
-            remise des clés est conditionnée à la présentation d&apos;un code de
-            retrait valide et à la vérification du badge.
-          </p>
+          <h2 className="text-lg font-bold mb-2">Article 4 — Délais de fabrication</h2>
+          <p>La fabrication est lancée dès réception du paiement. Le délai standard est de 6 à 8 semaines. Vous serez informé par email à chaque changement de statut.</p>
         </section>
-
-        <p className="rounded-xl bg-sable p-4 text-sm text-gray-500">
-          Document fourni à titre d&apos;exemple dans le cadre de cette
-          démonstration. À remplacer par vos conditions juridiques définitives
-          avant toute mise en production.
-        </p>
+        <section>
+          <h2 className="text-lg font-bold mb-2">Article 5 — Droit de rétractation</h2>
+          <p>Conformément à l'article L121-21-8 du Code de la consommation, les produits fabriqués sur-mesure sont exclus du droit de rétractation. Toute commande confirmée est définitive.</p>
+        </section>
       </div>
-    </article>
+    </div>
   );
 }

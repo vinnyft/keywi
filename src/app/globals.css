@@ -1,87 +1,87 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Keywi — design system
-   Palette « Détente » : sauge (#AEC98A), vert pâle (#D9E3C2),
-   beige (#E8DFCF), vert profond (#5C7A4A). Doux et naturel.
-   Contrastes AA vérifiés.
+   KUBE — design system
+   Blanc pur, quasi-noir, accent électrique discret.
    ============================================================ */
 
 @theme {
-  /* Fonds sombres & texte → vert sauge profond (dérivé plus foncé) */
-  --color-encre: #3a5230;
-  --color-encre-2: #46663b;
+  /* Base */
+  --color-blanc: #ffffff;
+  --color-noir: #0a0a0a;
+  --color-graphite: #1c1c1c;
+  --color-gris: #6b6b6b;
+  --color-gris-clair: #e5e5e5;
+  --color-gris-pale: #f5f5f5;
 
-  /* Couleur principale (CTA) → vert Détente */
-  --color-primaire: #5c7a4a;
-  --color-primaire-fonce: #4c6a3c;
-  --color-primaire-pale: #d9e3c2;
+  /* Accent unique — bleu électrique sobre */
+  --color-accent: #1a56db;
+  --color-accent-fonce: #1447b4;
+  --color-accent-pale: #eff4ff;
 
-  /* Accent secondaire */
-  --color-corail: #5c7a4a;
-  --color-corail-fonce: #4c6a3c;
-
-  /* Sauge clair — accent doux sur fond sombre */
-  --color-lime: #aec98a;
-  --color-lime-fonce: #9bb977;
-
-  /* Sauge clair / vert pâle (alias) */
-  --color-skin: #aec98a;
-  --color-skin-light: #d9e3c2;
-
-  /* Succès */
-  --color-menthe: #0fa86c;
-  --color-menthe-pale: #e2f7ee;
-
-  /* Avertissement / états « en attente / retour » */
-  --color-ambre: #b45309;
-  --color-ambre-pale: #fef3c7;
-
-  /* Surfaces */
-  --color-paper: #fbfaf3;
-  --color-sable: #e8dfcf;
+  /* Sémantique */
+  --color-succes: #0e7a5c;
+  --color-succes-pale: #e8f9f3;
+  --color-erreur: #c0392b;
+  --color-erreur-pale: #fdecea;
+  --color-ambre: #d97706;
+  --color-ambre-pale: #fffbeb;
 
   /* Polices */
-  --font-sans: var(--font-body), "DM Sans", system-ui, sans-serif;
-  --font-display: var(--font-display), "Bricolage Grotesque", sans-serif;
-  --font-mono: ui-monospace, "SF Mono", "Menlo", monospace;
+  --font-sans: var(--font-body), "Inter", system-ui, sans-serif;
+  --font-display: var(--font-display), "Inter", system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", monospace;
 
-  --radius-carte: 1rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
 }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
 
 body {
-  background: var(--color-paper);
-  color: var(--color-encre);
+  background: #ffffff;
+  color: #0a0a0a;
   font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Les titres adoptent la police d'affichage Bricolage Grotesque */
-h1,
-h2,
-h3,
-h4,
-.font-display {
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
+  letter-spacing: -0.02em;
 }
 
-/* Focus visible au clavier sur tous les éléments interactifs (accessibilité) */
 :focus-visible {
-  outline: 3px solid var(--color-primaire);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 3px;
 }
 
-/* Liens d'évitement (accessibilité clavier) */
 .lien-evitement {
   position: absolute;
   left: -9999px;
   top: 0;
-  z-index: 100;
-  background: var(--color-encre);
-  color: white;
+  z-index: 9999;
+  background: var(--color-noir);
+  color: #fff;
   padding: 0.75rem 1.25rem;
   border-radius: 0 0 0.5rem 0;
 }
-.lien-evitement:focus {
-  left: 0;
+.lien-evitement:focus { left: 0; }
+
+/* Animations douces globales */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
 }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-float { animation: float 4s ease-in-out infinite; }
+.animate-fade-in { animation: fade-in 0.6s ease forwards; }

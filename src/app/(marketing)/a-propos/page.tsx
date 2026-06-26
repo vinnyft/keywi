@@ -1,36 +1,33 @@
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "À propos",
-  description: "La mission de Keywi : rendre la remise de clés simple et sûre.",
-};
+export const metadata: Metadata = { title: "Concept" };
 
-export default function PageAPropos() {
+export default function AProposPage() {
   return (
-    <article className="mx-auto max-w-3xl px-4 py-16">
-      <h1 className="text-4xl font-black">À propos de Keywi</h1>
-      <div className="mt-6 space-y-4 text-lg text-gray-700">
-        <p>
-          Keywi est né d&apos;un constat simple : remettre des clés ne devrait
-          jamais être un casse-tête. Boîtes à clés fragiles, rendez-vous ratés,
-          allers-retours interminables… il fallait une alternative de confiance,
-          ancrée dans le quartier.
+    <div className="max-w-3xl mx-auto px-6 py-24">
+      <h1 className="text-5xl font-black tracking-[-0.04em] mb-8">Le concept KUBE</h1>
+      <div className="space-y-6 text-[#1c1c1c] leading-relaxed">
+        <p className="text-xl font-light">
+          KUBE est née d'une obsession : le mobilier devrait être aussi précis qu'une conviction.
         </p>
         <p>
-          Notre réponse : un réseau de <strong>commerces partenaires</strong>{" "}
-          qui gardent vos clés en lieu sûr, à deux pas de chez vous. Vous déposez
-          un trousseau muni d&apos;un badge, vous partagez un code de retrait, et
-          vous suivez chaque mouvement en temps réel.
+          Nos meubles sont des pavés — formes pures, angles droits, proportions maîtrisées.
+          Pas de détail superflu. Juste la matière, la couleur, et la lumière qui joue sur les joints.
         </p>
         <p>
-          Côté commerçants, c&apos;est un revenu complémentaire et du passage
-          supplémentaire, sans matériel coûteux ni formation lourde.
+          La mosaïque n'est pas un habillage. C'est la structure même de l'objet : chaque carreau
+          posé à la main, chaque joint tracé au millimètre, chaque surface pensée pour durer des décennies.
         </p>
         <p>
-          Keywi est conçu et opéré en France, dans le respect de vos données et de
-          la confiance que vous nous accordez.
+          Le configurateur 3D n'est pas un outil de vente. C'est le plan de fabrication.
+          Ce que vous composez à l'écran, c'est exactement ce que nos artisans réalisent.
+        </p>
+        <h2 className="text-2xl font-bold mt-12 mb-4">Fabriqué en France</h2>
+        <p>
+          Notre atelier est en France. Les matériaux sont sourcés en Europe.
+          Les délais sont de 6 à 8 semaines.
         </p>
       </div>
-    </article>
+    </div>
   );
 }

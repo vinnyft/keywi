@@ -1,476 +1,76 @@
---
--- PostgreSQL database dump
---
-
-
--- Dumped from database version 17.6
--- Dumped by pg_dump version 17.6
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-
---
--- Data for Name: users; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
---
-
-SET SESSION AUTHORIZATION DEFAULT;
-
-
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000001', 'authenticated', 'authenticated', 'commerce1@keywi.fr', '$2a$06$ALKM9URNpL4OaZA9ekiLfeWO6330wnkSfBYxSb1hdfzAEF1UH6PlS', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Nadia Bensimon", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000002', 'authenticated', 'authenticated', 'commerce2@keywi.fr', '$2a$06$6HEESaUzcLfUDR9oGa8kd.CCeqLhXI7FyZX.feJIylOelyKy/RuCK', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Pierre Garnier", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000004', 'authenticated', 'authenticated', 'commerce4@keywi.fr', '$2a$06$fp6wTptyqG5gMvKUvo506emPQ3VK.Xm91j0I1rinRbFFEu0spmuDq', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Minh Nguyen", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000005', 'authenticated', 'authenticated', 'commerce5@keywi.fr', '$2a$06$fFnt4NEyPTBgLp0YnuvqU.mdnMIHfSPFf9sMp/9sH/eEtSEIPlu9i', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Karim Haddad", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000006', 'authenticated', 'authenticated', 'commerce6@keywi.fr', '$2a$06$VatjMSke3TIG3BQj6eCqSually2vBrMGwXj0PCZndqRSgBSWwKQuu', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Élodie Mercier", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000007', 'authenticated', 'authenticated', 'commerce7@keywi.fr', '$2a$06$0sEfmzh4gSYm/kVCAKu1dOTw8yLpkumgDUDj.vS9ORRgRGNAHrpaa', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Hassan Cherkaoui", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000008', 'authenticated', 'authenticated', 'commerce8@keywi.fr', '$2a$06$jd/49DKwl1SuSeNDWwaRleeGwP73x1UKF7Yw7ocXiUK0Z5PL78j0.', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Lucie Berthier", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000009', 'authenticated', 'authenticated', 'commerce9@keywi.fr', '$2a$06$TvpERXOlbg67oNfS9pya2.jUSMe8fdS0tXg0JGdPuwaTyQlbgSrDu', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Antoine Da Silva", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000010', 'authenticated', 'authenticated', 'commerce10@keywi.fr', '$2a$06$cxE7r3/MQzYADFsokme41OUEph6qmPL/VCv3wOpc6rJXTco./dKpa', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Rosa Delgado", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000011', 'authenticated', 'authenticated', 'commerce11@keywi.fr', '$2a$06$OztryAizqs/xy6nd024CperL7shtlg8KcmEBRZ9I/fqQu0JSRw.Zq', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Yann Le Goff", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000012', 'authenticated', 'authenticated', 'commerce12@keywi.fr', '$2a$06$nMCC1G2QZkJqq8HUw64OR.2eIA0A5hcW7A5EknqeDXa8jfOax24RS', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Fatou Diallo", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '20000000-0000-4000-a000-000000000002', 'authenticated', 'authenticated', 'hote2@keywi.fr', '$2a$06$NJWVQy8hBpq9VN4vdn19ueBswLUhuew0b79fp3t21qkgQNMfTZ39K', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Julien Lefèvre", "role": "hote"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '20000000-0000-4000-a000-000000000003', 'authenticated', 'authenticated', 'hote3@keywi.fr', '$2a$06$6t2dC3Q8jGGFey1hkDmhPOjyUQgXUx..Hs1oIe50AX5mBZsVOhi0.', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Aïcha Benali", "role": "hote"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '20000000-0000-4000-a000-000000000004', 'authenticated', 'authenticated', 'hote4@keywi.fr', '$2a$06$C2.RAWbdAyM6yneK7oiCxOONJr6C0puBS1SaxlHKQnHNCb7f5JwYi', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Marc Dupont", "role": "hote"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '20000000-0000-4000-a000-000000000005', 'authenticated', 'authenticated', 'hote5@keywi.fr', '$2a$06$398hJghIFvNhrXoRAuoSquX1dXrz78oUwb9i6Y41GZtVVsz5Ayk.y', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, NULL, '{"provider": "email", "providers": ["email"]}', '{"nom": "Sofia Almeida", "role": "hote"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '30000000-0000-4000-a000-000000000001', 'authenticated', 'authenticated', 'voyageur@keywi.fr', '$2a$06$HhOksLQ6dkoWTW3N9s0SOO8ZJvp3baCtik6mFDGKwWzdiN9Qrosci', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, '2026-06-12 22:17:31.892722+00', '{"provider": "email", "providers": ["email"]}', '{"nom": "Léa Martin", "role": "voyageur"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-15 08:40:53.950795+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '10000000-0000-4000-a000-000000000003', 'authenticated', 'authenticated', 'commerce3@keywi.fr', '$2a$06$jIOlV.C9QgCQkrYMn/J6cup8gBsaA8053T25wcBVmd7KNuxPjR7jm', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, '2026-06-25 05:29:57.801725+00', '{"provider": "email", "providers": ["email"]}', '{"nom": "Claire Fontaine", "role": "commercant"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-25 05:29:57.805973+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '20000000-0000-4000-a000-000000000001', 'authenticated', 'authenticated', 'hote1@keywi.fr', '$2a$06$8VVzobTOhjCYIk/Ltt0oUub9bD5jiN.Ckbpl1Yb2X1lq601fejgZ6', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, '', NULL, '', '', NULL, '2026-06-25 05:58:05.615798+00', '{"provider": "email", "providers": ["email"]}', '{"nom": "Vincent Meli", "role": "hote"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-25 05:58:05.618084+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-INSERT INTO auth.users (instance_id, id, aud, role, email, encrypted_password, email_confirmed_at, invited_at, confirmation_token, confirmation_sent_at, recovery_token, recovery_sent_at, email_change_token_new, email_change, email_change_sent_at, last_sign_in_at, raw_app_meta_data, raw_user_meta_data, is_super_admin, created_at, updated_at, phone, phone_confirmed_at, phone_change, phone_change_token, phone_change_sent_at, email_change_token_current, email_change_confirm_status, banned_until, reauthentication_token, reauthentication_sent_at, is_sso_user, deleted_at, is_anonymous) VALUES ('00000000-0000-0000-0000-000000000000', '40000000-0000-4000-a000-000000000001', 'authenticated', 'authenticated', 'admin@keywi.fr', '$2a$06$tm/9ajOuhHzJeK4iM0tYMuwvedaGPzzGWBKqDoVNszuB3KSLRgXDa', '2026-06-12 22:11:23.031547+00', NULL, '', NULL, 'pkce_98910baca1a87a8339d667e7fbf7721fee9bec4b592754946203be61', '2026-06-15 08:45:16.405339+00', '', '', NULL, '2026-06-15 08:45:31.742956+00', '{"provider": "email", "providers": ["email"]}', '{"nom": "Admin Keywi", "role": "admin"}', NULL, '2026-06-12 22:11:23.031547+00', '2026-06-25 05:55:43.231491+00', NULL, NULL, '', '', NULL, '', 0, NULL, '', NULL, false, NULL, false);
-
-
-
---
--- Data for Name: identities; Type: TABLE DATA; Schema: auth; Owner: supabase_auth_admin
---
-
-
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000001', '10000000-0000-4000-a000-000000000001', '{"sub": "10000000-0000-4000-a000-000000000001", "email": "commerce1@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'e6b6bb16-672c-4327-9281-26376333fbe8');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000002', '10000000-0000-4000-a000-000000000002', '{"sub": "10000000-0000-4000-a000-000000000002", "email": "commerce2@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'ded5811b-e2ea-4943-a68a-23add1e28c18');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000003', '10000000-0000-4000-a000-000000000003', '{"sub": "10000000-0000-4000-a000-000000000003", "email": "commerce3@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '6141cd88-36d9-4b86-8acb-a055667f5e24');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000004', '10000000-0000-4000-a000-000000000004', '{"sub": "10000000-0000-4000-a000-000000000004", "email": "commerce4@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'a4595495-a047-4d92-ba78-f9e4e144335e');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000005', '10000000-0000-4000-a000-000000000005', '{"sub": "10000000-0000-4000-a000-000000000005", "email": "commerce5@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'aaaede87-8c05-425b-972c-7cf5f607134c');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000006', '10000000-0000-4000-a000-000000000006', '{"sub": "10000000-0000-4000-a000-000000000006", "email": "commerce6@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'f5deabae-49ce-45d8-b76e-1217508d1e59');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000007', '10000000-0000-4000-a000-000000000007', '{"sub": "10000000-0000-4000-a000-000000000007", "email": "commerce7@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '50645c7a-3d21-4b7c-affa-b12cc48f9c6f');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000008', '10000000-0000-4000-a000-000000000008', '{"sub": "10000000-0000-4000-a000-000000000008", "email": "commerce8@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '3407c62d-39a1-448a-8873-a18351c83b6c');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000009', '10000000-0000-4000-a000-000000000009', '{"sub": "10000000-0000-4000-a000-000000000009", "email": "commerce9@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'bd5b7608-4850-4b31-bfb7-b159cf9cdbfc');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000010', '10000000-0000-4000-a000-000000000010', '{"sub": "10000000-0000-4000-a000-000000000010", "email": "commerce10@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '875ccb6f-7809-4a13-9d4c-b6241b272e28');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000011', '10000000-0000-4000-a000-000000000011', '{"sub": "10000000-0000-4000-a000-000000000011", "email": "commerce11@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '98db824c-81ce-4841-8142-f7a1cfe46630');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('10000000-0000-4000-a000-000000000012', '10000000-0000-4000-a000-000000000012', '{"sub": "10000000-0000-4000-a000-000000000012", "email": "commerce12@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '7027c047-1a25-4ae0-b0cd-52db21ed2c9b');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('20000000-0000-4000-a000-000000000001', '20000000-0000-4000-a000-000000000001', '{"sub": "20000000-0000-4000-a000-000000000001", "email": "hote1@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '21e3c581-ac8e-4d9f-a39e-96536cba029b');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('20000000-0000-4000-a000-000000000002', '20000000-0000-4000-a000-000000000002', '{"sub": "20000000-0000-4000-a000-000000000002", "email": "hote2@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '0ec4272d-d3f7-4d19-b432-11eafb07bb6c');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('20000000-0000-4000-a000-000000000003', '20000000-0000-4000-a000-000000000003', '{"sub": "20000000-0000-4000-a000-000000000003", "email": "hote3@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '32c249ec-ff6d-4eac-bb36-3caef2d2ee14');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('20000000-0000-4000-a000-000000000004', '20000000-0000-4000-a000-000000000004', '{"sub": "20000000-0000-4000-a000-000000000004", "email": "hote4@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'd0bfd78a-af4d-4fd3-aac8-f529e84f13d4');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('20000000-0000-4000-a000-000000000005', '20000000-0000-4000-a000-000000000005', '{"sub": "20000000-0000-4000-a000-000000000005", "email": "hote5@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'da531fb6-707f-4e80-85a0-e793370cd50a');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('30000000-0000-4000-a000-000000000001', '30000000-0000-4000-a000-000000000001', '{"sub": "30000000-0000-4000-a000-000000000001", "email": "voyageur@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '9aac3baf-1cb0-4025-a14f-b99881a48db8');
-INSERT INTO auth.identities (provider_id, user_id, identity_data, provider, last_sign_in_at, created_at, updated_at, id) VALUES ('40000000-0000-4000-a000-000000000001', '40000000-0000-4000-a000-000000000001', '{"sub": "40000000-0000-4000-a000-000000000001", "email": "admin@keywi.fr", "email_verified": true, "phone_verified": false}', 'email', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', '2026-06-12 22:11:23.031547+00', 'ba6f403f-07a3-48aa-a3cd-879222772959');
-
-
-
---
--- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.profiles DISABLE TRIGGER USER;
-
-
-
-ALTER TABLE public.profiles ENABLE TRIGGER USER;
-
---
--- Data for Name: relay_points; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.relay_points DISABLE TRIGGER USER;
-
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000001', 'Café du Canal', '89 quai de Valmy', '75010', 'Paris', 48.8721, 2.3658, '{"dim": "09:00-18:00", "sam": "08:30-20:00", "lun-ven": "07:30-20:00"}', 24, '10000000-0000-4000-a000-000000000001', 'actif', NULL, 'Café de quartier au bord du canal Saint-Martin.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000002', 'Le Fournil des Arts', '57 rue de Turbigo', '75003', 'Paris', 48.8655, 2.358, '{"dim": "07:00-13:30", "mar-sam": "07:00-20:00"}', 16, '10000000-0000-4000-a000-000000000002', 'actif', NULL, 'Boulangerie artisanale à deux pas d''Arts-et-Métiers.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000003', 'Librairie du Marais', '24 rue de Bretagne', '75003', 'Paris', 48.8629, 2.3622, '{"lun-sam": "10:00-19:30"}', 12, '10000000-0000-4000-a000-000000000003', 'actif', NULL, 'Librairie indépendante du haut Marais.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000004', 'Pressing République', '18 avenue de la République', '75011', 'Paris', 48.8672, 2.3701, '{"sam": "09:00-18:00", "lun-ven": "08:00-19:30"}', 20, '10000000-0000-4000-a000-000000000004', 'actif', NULL, 'Pressing familial proche de la place de la République.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000005', 'Tabac Le Faubourg', '75 rue du Faubourg-Saint-Denis', '75010', 'Paris', 48.8736, 2.3547, '{"lun-dim": "07:00-22:00"}', 30, '10000000-0000-4000-a000-000000000005', 'actif', NULL, 'Tabac-presse ouvert 7j/7, large amplitude horaire.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000006', 'Fleurs d''Oberkampf', '41 rue Oberkampf', '75011', 'Paris', 48.8649, 2.3729, '{"dim": "10:00-14:00", "mar-sam": "09:30-19:30"}', 12, '10000000-0000-4000-a000-000000000006', 'actif', NULL, 'Fleuriste créatif au cœur d''Oberkampf.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000007', 'Supérette du Temple', '102 rue du Temple', '75003', 'Paris', 48.8621, 2.3556, '{"lun-dim": "08:00-23:00"}', 25, '10000000-0000-4000-a000-000000000007', 'actif', NULL, 'Épicerie de proximité ouverte tard le soir.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000008', 'Cave Bastille', '9 rue de la Roquette', '75011', 'Paris', 48.8538, 2.3735, '{"dim": "10:00-13:30", "mar-sam": "10:00-20:30"}', 18, '10000000-0000-4000-a000-000000000008', 'actif', NULL, 'Caviste conseil à la Bastille.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000009', 'Comptoir Magenta', '33 boulevard de Magenta', '75010', 'Paris', 48.873, 2.359, '{"lun-dim": "07:00-21:00"}', 22, '10000000-0000-4000-a000-000000000009', 'actif', NULL, 'Brasserie de quartier entre République et Gare de l''Est.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000010', 'Cordonnerie Voltaire', '130 boulevard Voltaire', '75011', 'Paris', 48.859, 2.3804, '{"sam": "09:30-13:00", "lun-ven": "09:00-19:00"}', 14, '10000000-0000-4000-a000-000000000010', 'actif', NULL, 'Cordonnerie multiservice, duplication de clés sur place.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000011', 'Épicerie Saint-Maur', '112 rue Saint-Maur', '75011', 'Paris', 48.8654, 2.3796, '{"lun-dim": "09:00-22:00"}', 16, '10000000-0000-4000-a000-000000000011', 'actif', NULL, 'Épicerie fine et produits du quotidien.', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.relay_points (id, nom, adresse, code_postal, ville, lat, lng, horaires, capacite, owner_id, statut, photo_url, description, created_at) VALUES ('a0000000-0000-4000-a000-000000000012', 'Kiosque Château d''Eau', '41 rue du Château-d''Eau', '75010', 'Paris', 48.8717, 2.3563, '{"lun-sam": "06:30-20:00"}', 10, '10000000-0000-4000-a000-000000000012', 'actif', NULL, 'Kiosque presse et services au pied du métro.', '2026-06-12 22:11:23.031547+00');
-
-
-ALTER TABLE public.relay_points ENABLE TRIGGER USER;
-
---
--- Data for Name: slots; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.slots DISABLE TRIGGER USER;
-
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('60b5ed2c-6538-4b66-bde2-667d2ab9a6e8', 'a0000000-0000-4000-a000-000000000001', 20, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('03d9d445-7b15-46ad-ae2c-2ad071dbeeab', 'a0000000-0000-4000-a000-000000000001', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c2c88edb-1bba-46ea-b61e-15617c350eb2', 'a0000000-0000-4000-a000-000000000001', 17, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ed61a6ea-9f3b-4518-ac63-357bffbe4a91', 'a0000000-0000-4000-a000-000000000001', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('2a77ea02-ceee-4f57-be5f-045935d104de', 'a0000000-0000-4000-a000-000000000001', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ae83d52c-5d6b-4445-bdcb-49ea531720a4', 'a0000000-0000-4000-a000-000000000001', 18, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a72eff09-9b0f-494a-aac0-ceb2bd5f949f', 'a0000000-0000-4000-a000-000000000001', 15, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('0c84fcdd-669a-44ca-aa0f-15ebadb080ca', 'a0000000-0000-4000-a000-000000000001', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('117c0a32-a063-4798-9c15-af36eb4d6883', 'a0000000-0000-4000-a000-000000000001', 21, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('91bcf54f-e0a8-4b8d-943d-0fc37775d253', 'a0000000-0000-4000-a000-000000000001', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('7ecdabc6-a02f-4184-ad68-31028f17a144', 'a0000000-0000-4000-a000-000000000001', 19, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8ae36d52-0e62-4c68-ae69-174356153292', 'a0000000-0000-4000-a000-000000000001', 24, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9c7ea0cc-1eb5-41be-8c84-def5b806f9f4', 'a0000000-0000-4000-a000-000000000001', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8f90a964-4d3d-4ca1-a985-4fcdb4e26036', 'a0000000-0000-4000-a000-000000000001', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('070faa25-bdfe-4f9d-bdc4-8a14eb7b74c5', 'a0000000-0000-4000-a000-000000000001', 16, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f3d16a35-0465-4234-9265-f212e5781b39', 'a0000000-0000-4000-a000-000000000001', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('0422b671-1222-404e-aa66-35b9f1794ea4', 'a0000000-0000-4000-a000-000000000001', 23, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('388b4ec2-fad5-4a96-af72-6612b4af2d61', 'a0000000-0000-4000-a000-000000000001', 22, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9599d9c7-eab7-43d0-a4f0-a4cb9e337989', 'a0000000-0000-4000-a000-000000000001', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('1a7e5ac8-faee-4b24-bdb8-1d3773af8a18', 'a0000000-0000-4000-a000-000000000001', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('1d03b212-a2b9-480f-ad80-4131a38fcf55', 'a0000000-0000-4000-a000-000000000001', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c718dbe1-29a8-42fb-a3e9-e16cb58d4c1d', 'a0000000-0000-4000-a000-000000000001', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('6a1e67cb-8497-4b2d-87cc-4d89d7032011', 'a0000000-0000-4000-a000-000000000002', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('405dc9e8-ac16-47b2-af83-dbfb63dccb15', 'a0000000-0000-4000-a000-000000000002', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('d7f70222-6deb-4108-8604-7adf296a59e5', 'a0000000-0000-4000-a000-000000000002', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('af009a69-552b-4eb1-bb39-ad5c5940c67a', 'a0000000-0000-4000-a000-000000000002', 15, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('2338a112-e069-4438-8ed2-b94b1f1e2ed0', 'a0000000-0000-4000-a000-000000000002', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('81858c02-dbd8-48e3-b135-f115bed8e47c', 'a0000000-0000-4000-a000-000000000002', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('fae49ddf-9760-42d2-9a9c-07508a908e85', 'a0000000-0000-4000-a000-000000000002', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9c99019b-4658-493a-89fb-120ea2d5c2be', 'a0000000-0000-4000-a000-000000000002', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c293db82-86c7-4ba1-b28b-89aaf27a119a', 'a0000000-0000-4000-a000-000000000002', 16, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('e426075a-9d00-46c1-ae58-191b56daad1a', 'a0000000-0000-4000-a000-000000000002', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('6dca007c-ed77-4173-ae4d-2aa6b78fbccb', 'a0000000-0000-4000-a000-000000000002', 1, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('295d31c1-9801-40e2-bda8-ebd66d93c82b', 'a0000000-0000-4000-a000-000000000002', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('95948c91-3f43-4342-8697-e9ca87dfdeeb', 'a0000000-0000-4000-a000-000000000002', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('d8623a04-af00-4c2c-ada9-3aa338da6e81', 'a0000000-0000-4000-a000-000000000002', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8845d3e5-5073-4530-a419-5fda210b7a4a', 'a0000000-0000-4000-a000-000000000002', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8cabba07-6e0b-4d3e-b8f2-80f92e3857be', 'a0000000-0000-4000-a000-000000000003', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('00559736-0c2b-4504-a991-166988921165', 'a0000000-0000-4000-a000-000000000003', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('5f4aba36-7bab-45dc-85d8-6c525d5fba59', 'a0000000-0000-4000-a000-000000000003', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('23124265-12c0-49fd-a5c1-768e0d716fa4', 'a0000000-0000-4000-a000-000000000003', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('fa491dca-5fc8-4df0-9227-07dcd3b3e309', 'a0000000-0000-4000-a000-000000000003', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8c9380b7-1179-46e3-ba83-5b6b931c2a5c', 'a0000000-0000-4000-a000-000000000003', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('bbd13649-0d15-40d4-a3f8-d90117f3ec02', 'a0000000-0000-4000-a000-000000000003', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('28d13165-af14-4a83-b300-b60925567815', 'a0000000-0000-4000-a000-000000000003', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9f780d46-4b4c-4ebc-a34b-54de066cf006', 'a0000000-0000-4000-a000-000000000003', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('50a4323a-a19d-43ff-84cf-451981f2262c', 'a0000000-0000-4000-a000-000000000003', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('b57bffca-453b-4db0-8c3e-3e9656dabe1b', 'a0000000-0000-4000-a000-000000000003', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9f2cd0be-b28c-4f33-a5ce-2140ebb261c6', 'a0000000-0000-4000-a000-000000000004', 20, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('415f18ce-9fe5-43cf-925c-c374b4a6d83e', 'a0000000-0000-4000-a000-000000000004', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3b24357d-e42d-4ec2-a599-146a01a8df28', 'a0000000-0000-4000-a000-000000000004', 17, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('41c89d4a-6565-4e77-8110-fd53f85d6fe7', 'a0000000-0000-4000-a000-000000000004', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('03717ccc-6406-4748-9eea-ce5adc183087', 'a0000000-0000-4000-a000-000000000004', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('109680f0-8d69-456c-86b1-de009c1a9917', 'a0000000-0000-4000-a000-000000000004', 18, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a02ccac1-9e17-4825-a721-8cb61a9c69d0', 'a0000000-0000-4000-a000-000000000004', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c6d0e5b6-44a5-464b-815c-97e5510a05bf', 'a0000000-0000-4000-a000-000000000004', 15, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('634f45e2-a2fa-4f41-b15a-dcf2c67c1a6f', 'a0000000-0000-4000-a000-000000000004', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('cbf04e37-bd5b-47b0-a378-fd8093e06744', 'a0000000-0000-4000-a000-000000000004', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('63bad8b1-46dc-4dfe-85dd-0a2f6c1986b5', 'a0000000-0000-4000-a000-000000000004', 19, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('0b200152-a6bb-4677-b2a7-dc4f8d2a42a5', 'a0000000-0000-4000-a000-000000000004', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('02c69907-cf41-486b-9ce9-314abfe4a29c', 'a0000000-0000-4000-a000-000000000004', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('7cfb8b9d-a560-4f73-b6d7-afbc21519136', 'a0000000-0000-4000-a000-000000000004', 16, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('7988f5ba-ff8b-43a7-8afb-66ca00f8a46a', 'a0000000-0000-4000-a000-000000000004', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('1e9d9000-9b55-42a2-9018-c59a9c0a81e8', 'a0000000-0000-4000-a000-000000000004', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3c8b0bfe-6483-4eae-8e81-a9e1eadfa268', 'a0000000-0000-4000-a000-000000000004', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('b97a7f2c-ed1e-4270-a271-af066bf80cfe', 'a0000000-0000-4000-a000-000000000004', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('38751301-c225-44a1-a239-8253e8ea0897', 'a0000000-0000-4000-a000-000000000004', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ad4b65b6-7368-4c18-9477-c0f9e367e1e5', 'a0000000-0000-4000-a000-000000000005', 20, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9bb29778-bed4-493e-b0a8-17710f7c96be', 'a0000000-0000-4000-a000-000000000005', 25, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('eb59d23d-0e1c-4ce9-9ddb-a173fccb0145', 'a0000000-0000-4000-a000-000000000005', 26, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('164b1be8-f3c8-45d0-8e66-fe2e8207f932', 'a0000000-0000-4000-a000-000000000005', 27, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('465ab582-b048-4ff9-9c54-3a4f3f982bf9', 'a0000000-0000-4000-a000-000000000005', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('52c5869a-c5e7-46c7-9a29-2e8b55a59999', 'a0000000-0000-4000-a000-000000000005', 17, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('7159ec61-bac8-4e1d-891f-eb8cacbdcb95', 'a0000000-0000-4000-a000-000000000005', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('be777fc2-d846-44e8-ab62-230dd2f842a7', 'a0000000-0000-4000-a000-000000000005', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c1894bd9-34f6-4f91-8743-086a8c004a71', 'a0000000-0000-4000-a000-000000000005', 18, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('dc1e5b63-1707-4e71-99b1-72316a0d5169', 'a0000000-0000-4000-a000-000000000005', 15, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('005b57cc-ef2b-4b52-965d-61680e42342f', 'a0000000-0000-4000-a000-000000000005', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('12414c6d-d313-4270-a286-9d85305456df', 'a0000000-0000-4000-a000-000000000005', 21, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8077fd61-5d8e-4ab0-8e34-0bb59ed9148d', 'a0000000-0000-4000-a000-000000000005', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('625a78d9-885c-495d-82b6-5f2c0cccdf8a', 'a0000000-0000-4000-a000-000000000005', 19, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('228c60bc-17bc-4532-8c35-f3919afd40b5', 'a0000000-0000-4000-a000-000000000005', 24, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('166d9537-292d-4731-a9d7-eab896e54e52', 'a0000000-0000-4000-a000-000000000005', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('5a598fb7-3f5d-4e82-b583-99b288dd1a21', 'a0000000-0000-4000-a000-000000000005', 28, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f49593a4-79ea-4d39-8d7f-200f0215dd88', 'a0000000-0000-4000-a000-000000000005', 30, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('97913f8e-9999-436e-a0b8-a08db881ffa0', 'a0000000-0000-4000-a000-000000000005', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('b621ed1c-2ec1-4efb-ac49-d5b94d4c4502', 'a0000000-0000-4000-a000-000000000005', 29, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('4a48a11f-5fbc-413f-ae0b-e933aa0d73fd', 'a0000000-0000-4000-a000-000000000005', 16, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('436a5dd3-ea34-4a28-b6dd-d012211fe081', 'a0000000-0000-4000-a000-000000000005', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('456404ad-dbbc-4986-8054-23e0a82cdb5e', 'a0000000-0000-4000-a000-000000000005', 23, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('5e16fb1a-ab12-4ae7-a377-d74dedf52526', 'a0000000-0000-4000-a000-000000000005', 1, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('e05aa8f9-47cd-4161-94e6-6ca0f9346e20', 'a0000000-0000-4000-a000-000000000005', 22, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a2fe08a8-022e-4f9f-aa87-fe0347323414', 'a0000000-0000-4000-a000-000000000005', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3ed66946-bf16-4fcf-be0d-dd579b4b4f09', 'a0000000-0000-4000-a000-000000000005', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c12c10c1-a368-401e-849f-dfe83eb1efd3', 'a0000000-0000-4000-a000-000000000005', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('d337f00f-1992-43ab-ba39-06819b0484cd', 'a0000000-0000-4000-a000-000000000005', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a22eb20b-7b5d-4d13-940c-ac1fd0a46597', 'a0000000-0000-4000-a000-000000000006', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('5ec1e6c9-2a1e-484a-8a7c-ee413dfab975', 'a0000000-0000-4000-a000-000000000006', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c9790996-d965-4985-9d42-a0bbcad58342', 'a0000000-0000-4000-a000-000000000006', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3f7e55a0-ab25-4701-8a58-0db0359a4ccd', 'a0000000-0000-4000-a000-000000000006', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('e7f3ffc7-bd41-44b3-bc81-0c655596dc86', 'a0000000-0000-4000-a000-000000000006', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('706bef97-9dc2-44d0-a66d-fdd719c8a5aa', 'a0000000-0000-4000-a000-000000000006', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ecdea757-37c4-475f-922f-e46d3885292b', 'a0000000-0000-4000-a000-000000000006', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('72673503-d7ab-45ed-b3d9-7c7fee72eb8c', 'a0000000-0000-4000-a000-000000000006', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('16471b59-1c2e-46cf-a57e-03561ea788a8', 'a0000000-0000-4000-a000-000000000006', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('1f7ae74a-aa18-4c80-8d9b-91f1db49602c', 'a0000000-0000-4000-a000-000000000006', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f5c64bcc-5754-4582-8806-6f33c74d7279', 'a0000000-0000-4000-a000-000000000006', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8be37e0f-77f5-4b1d-9cb1-d5282c1e2434', 'a0000000-0000-4000-a000-000000000007', 20, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('363f4636-ab4d-42a9-921f-ab6e84f9a0bc', 'a0000000-0000-4000-a000-000000000007', 25, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('2fbf17ee-65aa-4043-98d6-8d50023cc03c', 'a0000000-0000-4000-a000-000000000007', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('1e867144-ef21-4a93-a3fa-cb773787c61c', 'a0000000-0000-4000-a000-000000000007', 17, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3eda4b3f-3664-4367-9eaf-7ff37af8ed0c', 'a0000000-0000-4000-a000-000000000007', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('777d9591-2ae2-497a-9310-e639817a4753', 'a0000000-0000-4000-a000-000000000007', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('bdf48f3b-3072-4348-9de2-2a2af422cd77', 'a0000000-0000-4000-a000-000000000003', 1, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('57979f9e-6e6f-45cd-a0f3-2d4e40925fb0', 'a0000000-0000-4000-a000-000000000007', 18, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('d33dcd4f-17d6-42b5-b3a9-b5c7abb385d1', 'a0000000-0000-4000-a000-000000000007', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a2250adc-23ee-4c11-b33c-e62ee65b3bc9', 'a0000000-0000-4000-a000-000000000007', 15, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('76079448-2f97-4319-b288-bda8933b7fa2', 'a0000000-0000-4000-a000-000000000007', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('12f88954-e9c0-4076-90fb-54d22571a98f', 'a0000000-0000-4000-a000-000000000007', 21, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c89b3fe7-d97b-45c4-9ca8-2a75b4c00061', 'a0000000-0000-4000-a000-000000000007', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f22a742d-d473-4324-919b-e8a0253d55c2', 'a0000000-0000-4000-a000-000000000007', 19, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('beadf2da-3618-43ac-8714-b1fde1137b54', 'a0000000-0000-4000-a000-000000000007', 24, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('79d2aa1f-507f-4961-a349-bbf933853569', 'a0000000-0000-4000-a000-000000000007', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('351224bb-e03c-4eb5-b4f8-242f83f4365d', 'a0000000-0000-4000-a000-000000000007', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('7dabf6c7-fc9f-46d7-8d88-4386e326edab', 'a0000000-0000-4000-a000-000000000007', 16, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('b60a16b1-1308-4997-9902-dc8afdcf6df0', 'a0000000-0000-4000-a000-000000000007', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9ba104b5-0311-4717-a3c3-b47d44e99671', 'a0000000-0000-4000-a000-000000000007', 23, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8f01fcc9-ee5d-44a8-9cb9-d2c2c9125189', 'a0000000-0000-4000-a000-000000000007', 1, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('b1870c16-5da6-4376-8b8e-1f5cdba77a7a', 'a0000000-0000-4000-a000-000000000007', 22, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('1c103757-ee4c-4a88-a9e1-443516db833a', 'a0000000-0000-4000-a000-000000000007', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('2c229e78-1ecb-495e-ba76-733ad00c943c', 'a0000000-0000-4000-a000-000000000007', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('736c8f5c-3dcd-46b8-b4f6-efde4dd23bd1', 'a0000000-0000-4000-a000-000000000007', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f477b7d7-e52f-4b50-9e9d-61df535a4b66', 'a0000000-0000-4000-a000-000000000008', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ee11c2ed-d779-4de8-a13e-980cbbcca6f7', 'a0000000-0000-4000-a000-000000000008', 17, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f387d04c-b32c-48b9-8672-d5103e8dca8d', 'a0000000-0000-4000-a000-000000000008', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('2eae0997-fa69-49cd-8021-c0ffd0b465f1', 'a0000000-0000-4000-a000-000000000008', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('22f87457-2a42-4b84-8ada-c7f999e7790d', 'a0000000-0000-4000-a000-000000000008', 18, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('2e9d8df8-fa1a-45a9-b40b-dc62a28be918', 'a0000000-0000-4000-a000-000000000008', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('83b14a5f-5c5b-498d-817d-1ecbb22cf35f', 'a0000000-0000-4000-a000-000000000008', 15, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('96c757ba-97ed-4885-acaf-13141ffa6592', 'a0000000-0000-4000-a000-000000000008', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('565b6e95-b16d-43d7-8853-063e0c8d917a', 'a0000000-0000-4000-a000-000000000008', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3ed29da3-7871-498e-8ca0-f7ef7a0c5de2', 'a0000000-0000-4000-a000-000000000008', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a8c55cd9-37be-4111-9fa5-f4abc1f81128', 'a0000000-0000-4000-a000-000000000008', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('335c37c6-2264-414e-8ca0-eaa1480863ee', 'a0000000-0000-4000-a000-000000000008', 16, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('0400dabf-6244-492c-be69-b4a24c46c3d6', 'a0000000-0000-4000-a000-000000000008', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('bf926a17-bc8e-4dc7-bde0-fde1d4f81588', 'a0000000-0000-4000-a000-000000000008', 1, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3e2d39ee-7c79-4366-930b-f55845aa5ceb', 'a0000000-0000-4000-a000-000000000008', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('e564a667-8919-41ea-ab29-5796ed55361a', 'a0000000-0000-4000-a000-000000000008', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('13cf4fa2-7a8b-4b27-901f-cdfca638b69b', 'a0000000-0000-4000-a000-000000000008', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a975ee2e-6c84-450c-b0e1-0701b1410b76', 'a0000000-0000-4000-a000-000000000008', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('cdbae047-4f21-4f93-80f8-6ec7ae38b636', 'a0000000-0000-4000-a000-000000000009', 20, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3332340a-a06c-4039-83a5-18994a49eec9', 'a0000000-0000-4000-a000-000000000009', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('244b49c9-1a92-43dc-883d-37a235325982', 'a0000000-0000-4000-a000-000000000009', 17, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('58928f59-136f-4880-8bf0-782896acd715', 'a0000000-0000-4000-a000-000000000009', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('6d015792-7186-4fc6-bd28-771a2eaea2be', 'a0000000-0000-4000-a000-000000000009', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('33166ef1-3369-407a-9772-6b31d68918a4', 'a0000000-0000-4000-a000-000000000009', 18, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3c484d8a-9f67-467c-b5fe-1f44348e7e44', 'a0000000-0000-4000-a000-000000000009', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a3eb26ba-504b-428a-8268-b1bb0f338363', 'a0000000-0000-4000-a000-000000000009', 15, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('858adeb2-d455-423b-bcb7-417bc1e67c25', 'a0000000-0000-4000-a000-000000000009', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ecc75f77-7d4a-4afc-9bd7-4ade9a481071', 'a0000000-0000-4000-a000-000000000009', 21, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('e57d6e71-ab1b-4b46-b2e0-c920796f32ee', 'a0000000-0000-4000-a000-000000000009', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a93edf27-23df-4e5c-9622-81f13838ca3e', 'a0000000-0000-4000-a000-000000000009', 19, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3b017946-b7b1-4681-8ff0-fca7e6d396f1', 'a0000000-0000-4000-a000-000000000009', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ede81e64-feea-48b6-b141-f2625d2736ad', 'a0000000-0000-4000-a000-000000000009', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('7c4b8bd3-e425-476d-9846-f1127958fb7d', 'a0000000-0000-4000-a000-000000000009', 16, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('52cacbd1-2656-4c9f-a126-8a3191273d0f', 'a0000000-0000-4000-a000-000000000009', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('473f56b3-0a73-4eec-be32-00b9232a6a01', 'a0000000-0000-4000-a000-000000000009', 22, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('562db462-0d7d-40f8-b815-af931a402650', 'a0000000-0000-4000-a000-000000000009', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('35f604fd-4158-4c24-b870-aded7f20ffa5', 'a0000000-0000-4000-a000-000000000009', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('43fd050d-1582-4af2-b886-95e5fd246a35', 'a0000000-0000-4000-a000-000000000009', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('3a2d1da6-437b-4467-b7d8-deef939f3283', 'a0000000-0000-4000-a000-000000000009', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('62a84f2a-3bb6-42a2-9576-c749dddc0e45', 'a0000000-0000-4000-a000-000000000010', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('11ab12c9-7471-4bb3-b34c-bacbabd0ebc4', 'a0000000-0000-4000-a000-000000000010', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('fe07d9bf-649f-4acd-9dcb-e33f90a58aff', 'a0000000-0000-4000-a000-000000000010', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('60ff43ec-82c6-44c7-a4aa-e8530f64e16c', 'a0000000-0000-4000-a000-000000000010', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('e4cd1a47-436b-4e20-b3b5-73124c09726c', 'a0000000-0000-4000-a000-000000000010', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9d7b91a3-f8b1-4a6d-b9d1-1d5da7096fde', 'a0000000-0000-4000-a000-000000000010', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('dac1074e-551b-484c-b4a7-010b2d422249', 'a0000000-0000-4000-a000-000000000010', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('63f6feeb-6aef-41a1-9491-bcf9774b00cf', 'a0000000-0000-4000-a000-000000000010', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c3040869-c405-441a-9346-7c8a4c8e54bf', 'a0000000-0000-4000-a000-000000000010', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('038720f1-7861-43ea-90b3-dc7b41bcc6b8', 'a0000000-0000-4000-a000-000000000010', 1, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9946fcc8-4d70-486a-bec8-c7d210126b98', 'a0000000-0000-4000-a000-000000000010', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('cc9ca546-b51a-4395-9784-61dc07a5286a', 'a0000000-0000-4000-a000-000000000010', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ca45662d-973b-45cc-8177-37ed8f16a543', 'a0000000-0000-4000-a000-000000000010', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('b4c6e7e8-e145-40dc-8329-b20c2e60785e', 'a0000000-0000-4000-a000-000000000010', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a5ad2139-25e3-41f3-bd2d-4d472566d96d', 'a0000000-0000-4000-a000-000000000011', 11, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('b81dd248-7914-4d35-a963-6e10f9d6c11c', 'a0000000-0000-4000-a000-000000000011', 12, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('0604a3fa-78bd-4ffa-8bbf-decd37a9e90d', 'a0000000-0000-4000-a000-000000000011', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('cfd77738-dde8-483d-8cb7-52039f36aa11', 'a0000000-0000-4000-a000-000000000011', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('c9ca5ea9-82c7-45f2-8c54-6109be3d0a8c', 'a0000000-0000-4000-a000-000000000011', 15, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f82c6adb-7017-489d-81c2-766ab087f0e9', 'a0000000-0000-4000-a000-000000000011', 13, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('04c5ef95-6997-47d9-94ec-f9c9362338d4', 'a0000000-0000-4000-a000-000000000011', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f8505b33-3a8b-4e81-b875-55db89fa4607', 'a0000000-0000-4000-a000-000000000011', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('a83f74fb-adf0-4ee2-990e-ce000c702957', 'a0000000-0000-4000-a000-000000000011', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('4a7544db-f349-4ffc-b695-9c5a34f23c35', 'a0000000-0000-4000-a000-000000000011', 16, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('70011c0c-0a7b-4230-86e9-c65bfe10a1e6', 'a0000000-0000-4000-a000-000000000011', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('05ced8dd-64c0-4dfd-83a7-885c0f36be9d', 'a0000000-0000-4000-a000-000000000011', 1, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('2289b70f-f20e-40a8-ba55-559b12803e2d', 'a0000000-0000-4000-a000-000000000011', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8171835a-6a08-421f-91f0-6de63fb48697', 'a0000000-0000-4000-a000-000000000011', 14, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('5098505f-d87c-4c4f-b0c6-2ab3438c4eb4', 'a0000000-0000-4000-a000-000000000011', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('26c991dc-ea95-456f-b5d2-4173b0d5d560', 'a0000000-0000-4000-a000-000000000011', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('92fe5b61-f9e8-400c-b6f6-dcfb38e84c54', 'a0000000-0000-4000-a000-000000000012', 10, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('d38c1890-415c-4a12-8991-a6d2f3174268', 'a0000000-0000-4000-a000-000000000012', 2, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('79656c40-e0e2-4001-9c54-e8c8dadc3aa9', 'a0000000-0000-4000-a000-000000000012', 5, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('aa632eea-4198-49aa-abd2-aaaec5a34feb', 'a0000000-0000-4000-a000-000000000012', 8, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ae8c320e-769a-44ee-83a9-2dece98627fe', 'a0000000-0000-4000-a000-000000000012', 6, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('f99f01b4-e757-4e1c-b026-9d5f6f9f0bbc', 'a0000000-0000-4000-a000-000000000012', 4, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8f560f33-0278-45d3-88ca-d2df6f1a8647', 'a0000000-0000-4000-a000-000000000012', 3, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('7b871357-da71-47aa-b3f2-23060277d220', 'a0000000-0000-4000-a000-000000000012', 9, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('10b5472e-7eb4-44b7-b08b-64700e86a16c', 'a0000000-0000-4000-a000-000000000012', 7, 'libre');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('81c8e32f-e36f-4666-8cac-350726275767', 'a0000000-0000-4000-a000-000000000001', 2, 'occupee');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('9b3f29b1-312f-4547-a17b-22a6342fe79b', 'a0000000-0000-4000-a000-000000000001', 1, 'occupee');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('ebf8b45e-7c62-4284-b556-960ef55eba6f', 'a0000000-0000-4000-a000-000000000002', 2, 'occupee');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('e792d437-9217-4d96-98f6-06fd5db68e19', 'a0000000-0000-4000-a000-000000000004', 1, 'occupee');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('eedaeef5-23c4-4bca-aa9b-c86406a1c4f4', 'a0000000-0000-4000-a000-000000000005', 2, 'occupee');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('29907adc-45bc-43e2-a1e7-5a8866546b71', 'a0000000-0000-4000-a000-000000000006', 1, 'occupee');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('e4b017a5-ba85-4ee3-9217-50955d6d64ad', 'a0000000-0000-4000-a000-000000000007', 3, 'occupee');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('95e88367-8e91-4a0c-8b41-c8dcbb6c6335', 'a0000000-0000-4000-a000-000000000009', 1, 'occupee');
-INSERT INTO public.slots (id, relay_point_id, numero, statut) VALUES ('8008453d-bd93-44ba-acdc-571f706b80c9', 'a0000000-0000-4000-a000-000000000012', 1, 'occupee');
-
-
-ALTER TABLE public.slots ENABLE TRIGGER USER;
-
---
--- Data for Name: keys; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.keys DISABLE TRIGGER USER;
-
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000005', '04:5A:2B:C1:D8:E3:05', 'KWIH4N7S', 'Chambre Faubourg', NULL, '20000000-0000-4000-a000-000000000002', 'a0000000-0000-4000-a000-000000000005', NULL, 'retiree', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000009', '04:5A:2B:C1:D8:E3:09', 'KWIR7S3T', 'Atelier Bastille', NULL, '20000000-0000-4000-a000-000000000003', 'a0000000-0000-4000-a000-000000000008', NULL, 'en_attente', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000011', '04:5A:2B:C1:D8:E3:11', 'KWIX6Y2Z', 'Studio Voltaire', NULL, '20000000-0000-4000-a000-000000000004', 'a0000000-0000-4000-a000-000000000010', NULL, 'retiree', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000012', '04:5A:2B:C1:D8:E3:12', 'KWIA9B5C', 'F2 Saint-Maur', NULL, '20000000-0000-4000-a000-000000000004', 'a0000000-0000-4000-a000-000000000011', NULL, 'perdue', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000014', '04:5A:2B:C1:D8:E3:14', 'KWIG8H4J', 'Appartement Turbigo', NULL, '20000000-0000-4000-a000-000000000005', 'a0000000-0000-4000-a000-000000000002', NULL, 'en_attente', 'en_attente', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000002', '04:5A:2B:C1:D8:E3:02', 'KWIM3X8P', 'Studio République', NULL, '20000000-0000-4000-a000-000000000001', 'a0000000-0000-4000-a000-000000000001', '81c8e32f-e36f-4666-8cac-350726275767', 'prete_retrait', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000001', '04:5A:2B:C1:D8:E3:01', 'KWI7A2B4', 'Loft Canal Saint-Martin', NULL, '20000000-0000-4000-a000-000000000001', 'a0000000-0000-4000-a000-000000000001', '9b3f29b1-312f-4547-a17b-22a6342fe79b', 'deposee', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000015', '04:5A:2B:C1:D8:E3:15', 'KWIK2M6N', 'Studio Arts-et-Métiers', NULL, '20000000-0000-4000-a000-000000000005', 'a0000000-0000-4000-a000-000000000002', 'ebf8b45e-7c62-4284-b556-960ef55eba6f', 'deposee', 'offert', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000004', '04:5A:2B:C1:D8:E3:04', 'KWIW6Y2U', 'T2 Parmentier', NULL, '20000000-0000-4000-a000-000000000002', 'a0000000-0000-4000-a000-000000000004', 'e792d437-9217-4d96-98f6-06fd5db68e19', 'deposee', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000006', '04:5A:2B:C1:D8:E3:06', 'KWIE8F3G', 'Duplex Lancry', NULL, '20000000-0000-4000-a000-000000000002', 'a0000000-0000-4000-a000-000000000005', 'eedaeef5-23c4-4bca-aa9b-c86406a1c4f4', 'retour', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000007', '04:5A:2B:C1:D8:E3:07', 'KWIJ5K9M', 'Maison Oberkampf', NULL, '20000000-0000-4000-a000-000000000003', 'a0000000-0000-4000-a000-000000000006', '29907adc-45bc-43e2-a1e7-5a8866546b71', 'prete_retrait', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000008', '04:5A:2B:C1:D8:E3:08', 'KWIN2P6Q', 'Studio Temple', NULL, '20000000-0000-4000-a000-000000000003', 'a0000000-0000-4000-a000-000000000007', 'e4b017a5-ba85-4ee3-9217-50955d6d64ad', 'deposee', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000010', '04:5A:2B:C1:D8:E3:10', 'KWIU4V8W', 'T3 Magenta', NULL, '20000000-0000-4000-a000-000000000004', 'a0000000-0000-4000-a000-000000000009', '95e88367-8e91-4a0c-8b41-c8dcbb6c6335', 'deposee', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000013', '04:5A:2B:C1:D8:E3:13', 'KWID3E7F', 'Loft Château d''Eau', NULL, '20000000-0000-4000-a000-000000000005', 'a0000000-0000-4000-a000-000000000012', '8008453d-bd93-44ba-acdc-571f706b80c9', 'prete_retrait', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-INSERT INTO public.keys (id, badge_uid, code_badge_imprime, logement, photo_url, hote_id, relay_point_id, slot_id, statut, paiement_statut, created_at, updated_at) VALUES ('b0000000-0000-4000-a000-000000000003', '04:5A:2B:C1:D8:E3:03', 'KWIQ9R4T', 'Appartement Bretagne', NULL, '20000000-0000-4000-a000-000000000001', 'a0000000-0000-4000-a000-000000000003', NULL, 'en_attente', 'paye', '2026-06-12 22:11:23.031547+00', '2026-06-25 05:57:12.899169+00');
-
-
-ALTER TABLE public.keys ENABLE TRIGGER USER;
-
---
--- Data for Name: access_codes; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.access_codes DISABLE TRIGGER USER;
-
-INSERT INTO public.access_codes (id, key_id, code_6, qr_payload, beneficiaire_email, beneficiaire_nom, expire_at, statut, created_at) VALUES ('c0000000-0000-4000-a000-000000000002', 'b0000000-0000-4000-a000-000000000007', 'XR4T9B', 'KEYWI:XR4T9B', 'invite1@exemple.fr', 'Tom Becker', '2026-06-15 22:11:23.031547+00', 'actif', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.access_codes (id, key_id, code_6, qr_payload, beneficiaire_email, beneficiaire_nom, expire_at, statut, created_at) VALUES ('c0000000-0000-4000-a000-000000000005', 'b0000000-0000-4000-a000-000000000011', 'WD9XE5', 'KEYWI:WD9XE5', 'invite2@exemple.fr', 'Anna Keller', NULL, 'utilise', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.access_codes (id, key_id, code_6, qr_payload, beneficiaire_email, beneficiaire_nom, expire_at, statut, created_at) VALUES ('c0000000-0000-4000-a000-000000000007', 'b0000000-0000-4000-a000-000000000001', 'JC5VK7', 'KEYWI:JC5VK7', 'invite3@exemple.fr', 'Paul Morel', NULL, 'revoque', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.access_codes (id, key_id, code_6, qr_payload, beneficiaire_email, beneficiaire_nom, expire_at, statut, created_at) VALUES ('c0000000-0000-4000-a000-000000000001', 'b0000000-0000-4000-a000-000000000002', 'H7KM2P', 'KEYWI:H7KM2P', 'voyageur@keywi.fr', 'Léa Martin', '2026-06-19 22:11:23.031547+00', 'actif', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.access_codes (id, key_id, code_6, qr_payload, beneficiaire_email, beneficiaire_nom, expire_at, statut, created_at) VALUES ('c0000000-0000-4000-a000-000000000003', 'b0000000-0000-4000-a000-000000000013', 'PM8WQ3', 'KEYWI:PM8WQ3', 'voyageur@keywi.fr', 'Léa Martin', NULL, 'actif', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.access_codes (id, key_id, code_6, qr_payload, beneficiaire_email, beneficiaire_nom, expire_at, statut, created_at) VALUES ('c0000000-0000-4000-a000-000000000004', 'b0000000-0000-4000-a000-000000000005', 'TY6ZN4', 'KEYWI:TY6ZN4', 'voyageur@keywi.fr', 'Léa Martin', NULL, 'utilise', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.access_codes (id, key_id, code_6, qr_payload, beneficiaire_email, beneficiaire_nom, expire_at, statut, created_at) VALUES ('c0000000-0000-4000-a000-000000000006', 'b0000000-0000-4000-a000-000000000006', 'FB3GH8', 'KEYWI:FB3GH8', 'voyageur@keywi.fr', 'Léa Martin', NULL, 'utilise', '2026-06-12 22:11:23.031547+00');
-
-
-ALTER TABLE public.access_codes ENABLE TRIGGER USER;
-
---
--- Data for Name: candidatures_commercants; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.candidatures_commercants DISABLE TRIGGER USER;
-
-
-
-ALTER TABLE public.candidatures_commercants ENABLE TRIGGER USER;
-
---
--- Data for Name: movements; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.movements DISABLE TRIGGER USER;
-
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('a5f4ea7c-19e3-4a65-87ba-be424f281d0d', 'b0000000-0000-4000-a000-000000000002', 'a0000000-0000-4000-a000-000000000001', '81c8e32f-e36f-4666-8cac-350726275767', 'depot', '10000000-0000-4000-a000-000000000001', '{"seed": true, "logement": "Studio République"}', '2026-06-08 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('f9eeffc1-955c-4134-8a81-90143d8899a2', 'b0000000-0000-4000-a000-000000000001', 'a0000000-0000-4000-a000-000000000001', '9b3f29b1-312f-4547-a17b-22a6342fe79b', 'depot', '10000000-0000-4000-a000-000000000001', '{"seed": true, "logement": "Loft Canal Saint-Martin"}', '2026-06-06 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('5ddbbfd4-e755-4e02-8791-0a7977bd9f45', 'b0000000-0000-4000-a000-000000000015', 'a0000000-0000-4000-a000-000000000002', 'ebf8b45e-7c62-4284-b556-960ef55eba6f', 'depot', '10000000-0000-4000-a000-000000000002', '{"seed": true, "logement": "Studio Arts-et-Métiers"}', '2026-06-04 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('047d7fc0-b33a-4a60-882d-8b1823149615', 'b0000000-0000-4000-a000-000000000004', 'a0000000-0000-4000-a000-000000000004', 'e792d437-9217-4d96-98f6-06fd5db68e19', 'depot', '10000000-0000-4000-a000-000000000004', '{"seed": true, "logement": "T2 Parmentier"}', '2026-06-09 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('e08fe7cc-5f5f-47c8-b328-ed5e2263ea53', 'b0000000-0000-4000-a000-000000000007', 'a0000000-0000-4000-a000-000000000006', '29907adc-45bc-43e2-a1e7-5a8866546b71', 'depot', '10000000-0000-4000-a000-000000000006', '{"seed": true, "logement": "Maison Oberkampf"}', '2026-06-10 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('6846e9e5-b6ae-4fc3-80df-2dd1d4b26ecd', 'b0000000-0000-4000-a000-000000000008', 'a0000000-0000-4000-a000-000000000007', 'e4b017a5-ba85-4ee3-9217-50955d6d64ad', 'depot', '10000000-0000-4000-a000-000000000007', '{"seed": true, "logement": "Studio Temple"}', '2026-06-07 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('ad09c6d3-c0d9-4467-80c2-8eb191dbde3e', 'b0000000-0000-4000-a000-000000000010', 'a0000000-0000-4000-a000-000000000009', '95e88367-8e91-4a0c-8b41-c8dcbb6c6335', 'depot', '10000000-0000-4000-a000-000000000009', '{"seed": true, "logement": "T3 Magenta"}', '2026-06-11 10:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('2054d36f-1c9e-4509-9685-06cf653e5831', 'b0000000-0000-4000-a000-000000000013', 'a0000000-0000-4000-a000-000000000012', '8008453d-bd93-44ba-acdc-571f706b80c9', 'depot', '10000000-0000-4000-a000-000000000012', '{"seed": true, "logement": "Loft Château d''Eau"}', '2026-06-11 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('9bb3e4fc-41d6-4d7a-9e79-d04a741a6442', 'b0000000-0000-4000-a000-000000000005', 'a0000000-0000-4000-a000-000000000005', NULL, 'depot', '10000000-0000-4000-a000-000000000005', '{"seed": true, "logement": "Chambre Faubourg"}', '2026-06-02 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('042dcc8a-bf3d-417e-8222-926976410912', 'b0000000-0000-4000-a000-000000000005', 'a0000000-0000-4000-a000-000000000005', NULL, 'retrait', '10000000-0000-4000-a000-000000000005', '{"seed": true, "logement": "Chambre Faubourg"}', '2026-06-05 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('17f5823e-7079-4bd7-9868-301b9cf92343', 'b0000000-0000-4000-a000-000000000006', 'a0000000-0000-4000-a000-000000000005', 'eedaeef5-23c4-4bca-aa9b-c86406a1c4f4', 'depot', '10000000-0000-4000-a000-000000000005', '{"seed": true, "logement": "Duplex Lancry"}', '2026-05-31 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('493c8f04-5edd-48bb-a6b0-ad9d15eed4a4', 'b0000000-0000-4000-a000-000000000006', 'a0000000-0000-4000-a000-000000000005', 'eedaeef5-23c4-4bca-aa9b-c86406a1c4f4', 'retrait', '10000000-0000-4000-a000-000000000005', '{"seed": true, "logement": "Duplex Lancry"}', '2026-06-03 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('46598517-f5bb-419f-b185-c9b2a5401861', 'b0000000-0000-4000-a000-000000000006', 'a0000000-0000-4000-a000-000000000005', 'eedaeef5-23c4-4bca-aa9b-c86406a1c4f4', 'retour', '10000000-0000-4000-a000-000000000005', '{"seed": true, "logement": "Duplex Lancry"}', '2026-06-10 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('96a2991d-c341-426d-beaf-3182dc58f529', 'b0000000-0000-4000-a000-000000000011', 'a0000000-0000-4000-a000-000000000010', NULL, 'depot', '10000000-0000-4000-a000-000000000010', '{"seed": true, "logement": "Studio Voltaire"}', '2026-05-28 22:11:23.031547+00');
-INSERT INTO public.movements (id, key_id, relay_point_id, slot_id, type, scanned_by, details, created_at) VALUES ('e0f7d3fb-1364-401f-b83b-2b3a731d02e3', 'b0000000-0000-4000-a000-000000000011', 'a0000000-0000-4000-a000-000000000010', NULL, 'retrait', '10000000-0000-4000-a000-000000000010', '{"seed": true, "logement": "Studio Voltaire"}', '2026-06-01 22:11:23.031547+00');
-
-
-ALTER TABLE public.movements ENABLE TRIGGER USER;
-
---
--- Data for Name: notifications; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.notifications DISABLE TRIGGER USER;
-
-INSERT INTO public.notifications (id, user_id, type, canal, payload, lu, created_at) VALUES ('162fd112-06b8-4a47-8cdd-27dc18dc5ef9', '20000000-0000-4000-a000-000000000001', 'depot_effectue', 'in_app', '{"commerce": "Café du Canal", "logement": "Loft Canal Saint-Martin", "case_numero": 1}', true, '2026-06-06 22:11:23.031547+00');
-INSERT INTO public.notifications (id, user_id, type, canal, payload, lu, created_at) VALUES ('88dab472-e003-4005-9676-d0cda92ae29f', '20000000-0000-4000-a000-000000000001', 'depot_effectue', 'in_app', '{"commerce": "Café du Canal", "logement": "Studio République", "case_numero": 2}', false, '2026-06-08 22:11:23.031547+00');
-INSERT INTO public.notifications (id, user_id, type, canal, payload, lu, created_at) VALUES ('230db3dc-b5b0-49c2-9997-36fafec2a3cb', '30000000-0000-4000-a000-000000000001', 'cles_disponibles', 'in_app', '{"code_6": "H7KM2P", "commerce": "Café du Canal", "logement": "Studio République"}', false, '2026-06-08 22:11:23.031547+00');
-INSERT INTO public.notifications (id, user_id, type, canal, payload, lu, created_at) VALUES ('64df7411-cd46-44cd-b92f-9a58317830c6', '20000000-0000-4000-a000-000000000002', 'retrait_effectue', 'in_app', '{"commerce": "Tabac Le Faubourg", "logement": "Chambre Faubourg", "beneficiaire": "Léa Martin"}', false, '2026-06-05 22:11:23.031547+00');
-
-
-ALTER TABLE public.notifications ENABLE TRIGGER USER;
-
---
--- Data for Name: paiements; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.paiements DISABLE TRIGGER USER;
-
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('ae04562f-3e9a-493d-ac21-f25cf678b844', '20000000-0000-4000-a000-000000000001', 'b0000000-0000-4000-a000-000000000003', 'cs_test_seed_KLVQ9R4T', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('9bd743fa-684b-4d1f-b373-9840c4c1a719', '20000000-0000-4000-a000-000000000002', 'b0000000-0000-4000-a000-000000000005', 'cs_test_seed_KLVH4N7S', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('bab0535b-7482-4b64-a66f-03761b70f9c5', '20000000-0000-4000-a000-000000000003', 'b0000000-0000-4000-a000-000000000009', 'cs_test_seed_KLVR7S3T', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('72459814-2eb8-48a4-9c82-ee42088e83f7', '20000000-0000-4000-a000-000000000004', 'b0000000-0000-4000-a000-000000000011', 'cs_test_seed_KLVX6Y2Z', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('d47444c7-205e-40ce-93f5-92a561ebeab1', '20000000-0000-4000-a000-000000000004', 'b0000000-0000-4000-a000-000000000012', 'cs_test_seed_KLVA9B5C', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('99569c37-ca1b-4405-8a6d-672504cee257', '20000000-0000-4000-a000-000000000001', 'b0000000-0000-4000-a000-000000000002', 'cs_test_seed_KLVM3X8P', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('c8d4a412-0a61-4e81-a1c2-122598378d0d', '20000000-0000-4000-a000-000000000001', 'b0000000-0000-4000-a000-000000000001', 'cs_test_seed_KLV7A2B4', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('0f6c0547-cde1-49ad-a9de-750be58698e2', '20000000-0000-4000-a000-000000000002', 'b0000000-0000-4000-a000-000000000004', 'cs_test_seed_KLVW6Y2U', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('e3f2d82a-5c68-4ab2-9803-6ca3864a8f06', '20000000-0000-4000-a000-000000000002', 'b0000000-0000-4000-a000-000000000006', 'cs_test_seed_KLVE8F3G', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('abe9ea74-f5cf-4279-b0f4-113c4bd5e2ac', '20000000-0000-4000-a000-000000000003', 'b0000000-0000-4000-a000-000000000007', 'cs_test_seed_KLVJ5K9M', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('105d4d2e-a294-440d-9aa1-65684caf315e', '20000000-0000-4000-a000-000000000003', 'b0000000-0000-4000-a000-000000000008', 'cs_test_seed_KLVN2P6Q', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('5e7b3446-518f-4bc8-9905-18f69ab7f27a', '20000000-0000-4000-a000-000000000004', 'b0000000-0000-4000-a000-000000000010', 'cs_test_seed_KLVU4V8W', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-INSERT INTO public.paiements (id, hote_id, key_id, stripe_session_id, type, montant_centimes, statut, created_at) VALUES ('80c7b9e4-3076-47d0-8755-5422860a3fef', '20000000-0000-4000-a000-000000000005', 'b0000000-0000-4000-a000-000000000013', 'cs_test_seed_KLVD3E7F', 'depot_unitaire', 895, 'paye', '2026-06-12 22:11:23.031547+00');
-
-
-ALTER TABLE public.paiements ENABLE TRIGGER USER;
-
---
--- Data for Name: remuneration_paliers; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-ALTER TABLE public.remuneration_paliers DISABLE TRIGGER USER;
-
-INSERT INTO public.remuneration_paliers (id, seuil_min, seuil_max, montant_centimes) VALUES (1, 1, 50, 80);
-INSERT INTO public.remuneration_paliers (id, seuil_min, seuil_max, montant_centimes) VALUES (2, 51, 150, 100);
-INSERT INTO public.remuneration_paliers (id, seuil_min, seuil_max, montant_centimes) VALUES (3, 151, NULL, 120);
-
-
-ALTER TABLE public.remuneration_paliers ENABLE TRIGGER USER;
-
---
--- Name: remuneration_paliers_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('public.remuneration_paliers_id_seq', 3, true);
-
-
---
--- PostgreSQL database dump complete
---
-
-
+-- ============================================================
+-- KUBE — Données de démarrage (seed)
+-- ============================================================
+
+-- Utilisateur admin (mot de passe : Admin1234!)
+insert into auth.users (
+  instance_id, id, aud, role, email, encrypted_password,
+  email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+  created_at, updated_at, is_anonymous
+) values (
+  '00000000-0000-0000-0000-000000000000',
+  '00000000-0000-4000-a000-000000000001',
+  'authenticated', 'authenticated',
+  'admin@kube.fr',
+  '$2a$06$ALKM9URNpL4OaZA9ekiLfeWO6330wnkSfBYxSb1hdfzAEF1UH6PlS',
+  now(),
+  '{"provider":"email","providers":["email"]}',
+  '{"nom":"Admin KUBE","role":"admin"}',
+  now(), now(), false
+) on conflict (id) do nothing;
+
+insert into public.profiles (id, email, nom, role) values (
+  '00000000-0000-4000-a000-000000000001',
+  'admin@kube.fr', 'Admin KUBE', 'admin'
+) on conflict (id) do nothing;
+
+-- Paramètres globaux
+insert into public.settings (
+  id, hauteur_fixe_cm, cout_fixe, forfait_livraison,
+  seuil_livraison_gratuite, dessous_carrelee, texte_accueil
+) values (
+  1, 45, 50, 80, 500, false,
+  'Le mobilier mosaïque sur-mesure.'
+) on conflict (id) do nothing;
+
+-- Paliers de prix par m²
+insert into public.pricing_tiers (taille_min_cm, taille_max_cm, prix_par_m2, label) values
+  (1,  2,  850, '1–2 cm (micro-mosaïque)'),
+  (3,  5,  480, '3–5 cm (classique)'),
+  (6, 10,  320, '6–10 cm (grand format)')
+on conflict do nothing;
+
+-- Surcharges couleurs
+insert into public.color_surcharges (nb_couleurs, surcharge_pct) values
+  (1, 0),
+  (2, 5),
+  (3, 10),
+  (4, 15)
+on conflict (nb_couleurs) do nothing;
+
+-- Palette carreaux (6 couleurs)
+insert into public.colors (nom, hex, type, ordre, actif) values
+  ('Blanc Carrare',   '#F5F0E8', 'tile', 1, true),
+  ('Noir Marquina',   '#1A1A1A', 'tile', 2, true),
+  ('Terracotta',      '#C4714A', 'tile', 3, true),
+  ('Vert Sauge',      '#8AAF8A', 'tile', 4, true),
+  ('Bleu Nuit',       '#2A3F5F', 'tile', 5, true),
+  ('Sable Doré',      '#D4A85A', 'tile', 6, true);
+
+-- Palette joints (6 couleurs)
+insert into public.colors (nom, hex, type, ordre, actif) values
+  ('Joint Blanc',     '#FFFFFF', 'grout', 1, true),
+  ('Joint Gris Clair','#CCCCCC', 'grout', 2, true),
+  ('Joint Gris',      '#888888', 'grout', 3, true),
+  ('Joint Anthracite','#333333', 'grout', 4, true),
+  ('Joint Noir',      '#111111', 'grout', 5, true),
+  ('Joint Sable',     '#C8B89A', 'grout', 6, true);
+
+-- Promotions de démonstration
+insert into public.promotions (
+  code, type, valeur, seuil_montant, actif, usage_unique, description
+) values
+  ('PREMIERE', 'pourcentage',     10,   null, true, false, '−10 % sur votre première commande'),
+  ('KUBE500',  'livraison_gratuite', 0, 500,  true, false, 'Livraison offerte dès 500 €'),
+  ('PACK2',    'pourcentage',      8,   null, true, false, '−8 % à partir de 2 articles dans le panier')
+on conflict (code) do nothing;
