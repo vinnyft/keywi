@@ -112,20 +112,9 @@ export function PanneauControles() {
     couleurs, toggleCouleur,
     couleurJoint, setCouleurJoint,
     motif, setMotif,
-    groutColors,
     regenererSeed,
   } = useConfigurateurStore();
 
-  const FALLBACK_GROUT_COLORS = [
-    { id: "g1", hex: "#F3EFE7", nom: "Joint Ivoire" },
-    { id: "g2", hex: "#FFFFFF", nom: "Joint Blanc" },
-    { id: "g3", hex: "#C8B89A", nom: "Joint Sable" },
-    { id: "g4", hex: "#808080", nom: "Joint Gris" },
-    { id: "g5", hex: "#333333", nom: "Joint Anthracite" },
-    { id: "g6", hex: "#111111", nom: "Joint Noir" },
-  ];
-
-  const grouts = groutColors.length ? groutColors : FALLBACK_GROUT_COLORS;
   const paletteGrouped = getPaletteByFamily();
 
   // Bornes : chaque dimension (nb carreaux × taille) reste ≤ 150 cm.
@@ -272,28 +261,46 @@ export function PanneauControles() {
         )}
       </div>
 
-      {/* Couleur joint */}
+      {/* Couleur joint — même palette que les carreaux (sélection unique) */}
       <div>
         <SectionLabel>Couleur du joint</SectionLabel>
-        <div className="flex flex-wrap gap-2">
-          {grouts.map((color) => {
-            const selected = couleurJoint === color.hex;
-            return (
-              <button
-                key={color.id}
-                onClick={() => setCouleurJoint(color.hex)}
-                title={color.nom}
-                className={`w-10 h-10 rounded-sm border-2 transition-all ${
-                  selected
-                    ? "border-[#1a56db] scale-110 shadow-md"
-                    : "border-transparent hover:border-[#6b6b6b]"
-                }`}
-                style={{ backgroundColor: color.hex }}
-                aria-pressed={selected}
-                aria-label={color.nom}
-              />
-            );
-          })}
+        <div className="flex items-center gap-2 mb-3">
+          <span
+            className="w-8 h-8 rounded-sm border-2 border-[#1a56db] shadow-sm flex-shrink-0"
+            style={{ backgroundColor: couleurJoint }}
+          />
+          <span className="text-xs text-[#4b4b4b]">
+            {paletteGrouped.flatMap((g) => g.couleurs).find((c) => c.hex === couleurJoint)?.name ?? "Personnalisé"}
+          </span>
+        </div>
+        <div className="space-y-3">
+          {paletteGrouped.map(({ family, label, couleurs: familyCouleurs }) => (
+            <div key={family}>
+              <p className="text-[10px] text-[#9b9b9b] uppercase tracking-wider mb-1.5">
+                {label}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {familyCouleurs.map((color) => {
+                  const selected = couleurJoint === color.hex;
+                  return (
+                    <button
+                      key={color.hex}
+                      onClick={() => setCouleurJoint(color.hex)}
+                      title={color.name}
+                      className={`w-7 h-7 rounded-sm border-2 transition-all ${
+                        selected
+                          ? "border-[#1a56db] scale-110 shadow-md"
+                          : "border-transparent hover:border-[#6b6b6b]"
+                      }`}
+                      style={{ backgroundColor: color.hex }}
+                      aria-pressed={selected}
+                      aria-label={color.name}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>

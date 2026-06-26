@@ -162,6 +162,25 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
   const col = new THREE.Color();
   const hsl = { h: 0, s: 0, l: 0 };
 
+  // ─── Arêtes et coins : fillets de ciment couvrant les jonctions entre faces ───
+  // edgeOut = saillie du ciment sur la surface du cube (= épaisseur − retrait)
+  const edgeOut = thickness - jointRecess;
+  const eHX = Lx / 2, eHY = Hy / 2, eHZ = Wz / 2;
+  const mX = eHX + edgeOut / 2, mY = eHY + edgeOut / 2, mZ = eHZ + edgeOut / 2;
+
+  // 4 arêtes verticales (± X, ± Z), longueur = Hy
+  for (const sx of [-1, 1] as const) for (const sz of [-1, 1] as const)
+    groutSlabs.push({ center: [sx * mX, 0, sz * mZ], size: [edgeOut, Hy, edgeOut] });
+  // 4 arêtes profondes (± X, ± Y), longueur = Wz
+  for (const sx of [-1, 1] as const) for (const sy of [-1, 1] as const)
+    groutSlabs.push({ center: [sx * mX, sy * mY, 0], size: [edgeOut, edgeOut, Wz] });
+  // 4 arêtes larges (± Y, ± Z), longueur = Lx
+  for (const sy of [-1, 1] as const) for (const sz of [-1, 1] as const)
+    groutSlabs.push({ center: [0, sy * mY, sz * mZ], size: [Lx, edgeOut, edgeOut] });
+  // 8 coins
+  for (const sx of [-1, 1] as const) for (const sy of [-1, 1] as const) for (const sz of [-1, 1] as const)
+    groutSlabs.push({ center: [sx * mX, sy * mY, sz * mZ], size: [edgeOut, edgeOut, edgeOut] });
+
   let idx = 0;
   for (const f of faces) {
     // base orthonormée (u, v, n) directe → quaternion d'orientation de la face
