@@ -35,7 +35,7 @@ export function ConfigurateurScene({ enableZoom = true, ...props }: SceneContent
       <Canvas
         shadows
         camera={{ position: [3.5, 2.5, 4], fov: 35 }}
-        gl={{ antialias: true, alpha: true }}
+        gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
         style={{ background: "transparent" }}
       >
         <ambientLight intensity={1.2} />
