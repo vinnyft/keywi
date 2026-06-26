@@ -65,12 +65,12 @@ export function PanneauControles() {
   } = useConfigurateurStore();
 
   const FALLBACK_TILE_COLORS = [
-    { id: "t1", hex: "#F5F0E8", nom: "Blanc Carrare" },
-    { id: "t2", hex: "#1A1A1A", nom: "Noir Marquina" },
-    { id: "t3", hex: "#C4714A", nom: "Terracotta" },
-    { id: "t4", hex: "#8AAF8A", nom: "Vert Sauge" },
-    { id: "t5", hex: "#2A3F5F", nom: "Bleu Nuit" },
-    { id: "t6", hex: "#D4A85A", nom: "Sable Doré" },
+    { id: "t1", hex: "#002FA7", nom: "Bleu Klein" },
+    { id: "t2", hex: "#D9A411", nom: "Jaune Moutarde" },
+    { id: "t3", hex: "#0A6B4F", nom: "Vert Émeraude" },
+    { id: "t4", hex: "#C8102E", nom: "Rouge Écarlate" },
+    { id: "t5", hex: "#F2EBDD", nom: "Blanc Crème" },
+    { id: "t6", hex: "#15110D", nom: "Noir" },
   ];
   const FALLBACK_GROUT_COLORS = [
     { id: "g1", hex: "#FFFFFF", nom: "Joint Blanc" },
@@ -83,6 +83,9 @@ export function PanneauControles() {
 
   const tiles = tileColors.length ? tileColors : FALLBACK_TILE_COLORS;
   const grouts = groutColors.length ? groutColors : FALLBACK_GROUT_COLORS;
+
+  // Bornes : chaque dimension (nb carreaux × taille) reste ≤ 150 cm.
+  const maxNb = Math.max(1, Math.floor(150 / tailleCm));
 
   return (
     <div className="space-y-8">
@@ -112,14 +115,14 @@ export function PanneauControles() {
       {/* Nombre de carreaux longueur */}
       <div>
         <SectionLabel>Carreaux en longueur</SectionLabel>
-        <BoutonQte value={nbLongueur} onChange={setNbLongueur} min={2} max={60} />
+        <BoutonQte value={nbLongueur} onChange={setNbLongueur} min={1} max={maxNb} />
         <p className="text-xs text-[#6b6b6b] mt-1">→ {(nbLongueur * tailleCm)} cm</p>
       </div>
 
       {/* Nombre de carreaux largeur */}
       <div>
         <SectionLabel>Carreaux en largeur</SectionLabel>
-        <BoutonQte value={nbLargeur} onChange={setNbLargeur} min={2} max={60} />
+        <BoutonQte value={nbLargeur} onChange={setNbLargeur} min={1} max={maxNb} />
         <p className="text-xs text-[#6b6b6b] mt-1">→ {(nbLargeur * tailleCm)} cm</p>
       </div>
 
@@ -129,8 +132,8 @@ export function PanneauControles() {
         <div className="flex items-center gap-4">
           <input
             type="range"
-            min={10}
-            max={120}
+            min={1}
+            max={150}
             step={1}
             value={hauteurCm}
             onChange={(e) => setHauteurCm(Number(e.target.value))}
@@ -141,8 +144,8 @@ export function PanneauControles() {
           </span>
         </div>
         <div className="flex justify-between text-[10px] text-[#6b6b6b] mt-1">
-          <span>10 cm</span>
-          <span>120 cm</span>
+          <span>1 cm</span>
+          <span>150 cm</span>
         </div>
       </div>
 

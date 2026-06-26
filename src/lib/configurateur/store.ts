@@ -74,7 +74,7 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
     nbLongueur: 10,
     nbLargeur: 8,
     hauteurCm: 45,
-    couleurs: ["#F5F0E8"],
+    couleurs: ["#F2EBDD"],
     couleurJoint: "#888888",
     seed: nouvelSeed(),
 
@@ -86,8 +86,14 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
     resultat: null,
 
     setTaille: (v) => {
-      const next = { ...get(), tailleCm: v };
-      set({ tailleCm: v, resultat: recomputer(next) });
+      // Chaque dimension (nb carreaux × taille) reste bornée à 150 cm.
+      const maxNb = Math.max(1, Math.floor(150 / v));
+      const s = get();
+      const nbLongueur = Math.min(s.nbLongueur, maxNb);
+      const nbLargeur = Math.min(s.nbLargeur, maxNb);
+      const hauteurCm = Math.min(s.hauteurCm, 150);
+      const next = { ...s, tailleCm: v, nbLongueur, nbLargeur, hauteurCm };
+      set({ tailleCm: v, nbLongueur, nbLargeur, hauteurCm, resultat: recomputer(next) });
     },
     setNbLongueur: (v) => {
       const next = { ...get(), nbLongueur: v };
@@ -116,7 +122,7 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
     regenererSeed: () => set({ seed: nouvelSeed() }),
 
     chargerConfig: ({ settings, tileColors, groutColors, pricingTiers, colorSurcharges }) => {
-      const defaultTile = tileColors[0]?.hex ?? "#F5F0E8";
+      const defaultTile = tileColors[0]?.hex ?? "#F2EBDD";
       const defaultGrout = groutColors.find((c) => c.nom.includes("Gris"))?.hex ?? "#888888";
       const current = get();
       const nextState = {

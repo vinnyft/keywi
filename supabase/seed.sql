@@ -48,14 +48,14 @@ insert into public.color_surcharges (nb_couleurs, surcharge_pct) values
   (4, 15)
 on conflict (nb_couleurs) do nothing;
 
--- Palette carreaux (6 couleurs)
+-- Palette carreaux (6 couleurs — glaçure zellige)
 insert into public.colors (nom, hex, type, ordre, actif) values
-  ('Blanc Carrare',   '#F5F0E8', 'tile', 1, true),
-  ('Noir Marquina',   '#1A1A1A', 'tile', 2, true),
-  ('Terracotta',      '#C4714A', 'tile', 3, true),
-  ('Vert Sauge',      '#8AAF8A', 'tile', 4, true),
-  ('Bleu Nuit',       '#2A3F5F', 'tile', 5, true),
-  ('Sable Doré',      '#D4A85A', 'tile', 6, true);
+  ('Bleu Klein',      '#002FA7', 'tile', 1, true),
+  ('Jaune Moutarde',  '#D9A411', 'tile', 2, true),
+  ('Vert Émeraude',   '#0A6B4F', 'tile', 3, true),
+  ('Rouge Écarlate',  '#C8102E', 'tile', 4, true),
+  ('Blanc Crème',     '#F2EBDD', 'tile', 5, true),
+  ('Noir',            '#15110D', 'tile', 6, true);
 
 -- Palette joints (6 couleurs)
 insert into public.colors (nom, hex, type, ordre, actif) values

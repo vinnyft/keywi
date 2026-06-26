@@ -1,10 +1,11 @@
 "use client";
 
-import { Suspense, useRef } from "react";
+import { Suspense, useRef, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Environment, ContactShadows, OrbitControls } from "@react-three/drei";
+import { Environment, Lightformer, ContactShadows, OrbitControls, Bounds, useBounds } from "@react-three/drei";
 import * as THREE from "three";
 import { CubeKube } from "./CubeKube";
+import { CM_TO_UNIT } from "@/lib/configurateur/tiles";
 
 interface SceneContentProps {
   tailleCm: number;
@@ -19,61 +20,88 @@ interface SceneContentProps {
   enableZoom?: boolean;
 }
 
-// Respiration verticale douce du cube flottant
+// Respiration verticale douce du pavé flottant.
 function FloatingGroup({ children }: { children: React.ReactNode }) {
   const groupRef = useRef<THREE.Group>(null);
   useFrame((state) => {
     if (!groupRef.current) return;
-    groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.06;
+    groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.8) * 0.04;
   });
   return <group ref={groupRef}>{children}</group>;
 }
 
+// Recadre la caméra quand les dimensions changent (un 5 cm comme un 150 cm).
+function RefitOnChange({ deps }: { deps: unknown[] }) {
+  const bounds = useBounds();
+  useEffect(() => {
+    bounds.refresh().clip().fit();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
+  return null;
+}
+
 export function ConfigurateurScene({ enableZoom = true, ...props }: SceneContentProps) {
+  // Bas du pavé → placement de l'ombre de contact (le cube est centré à l'origine).
+  const contactY = -(props.nbHauteur * props.tailleCm * CM_TO_UNIT) / 2;
+  const fitDeps = [props.tailleCm, props.nbLongueur, props.nbLargeur, props.nbHauteur, props.dessousCarrelee];
+
   return (
     <div className="w-full h-full" style={{ touchAction: "none" }}>
       <Canvas
         shadows
-        camera={{ position: [3.5, 2.5, 4], fov: 35 }}
+        dpr={[1, 2]}
+        camera={{ position: [3.2, 2.4, 4.2], fov: 35 }}
         gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
         style={{ background: "transparent" }}
       >
-        <ambientLight intensity={1.2} />
+        <ambientLight intensity={0.55} />
         <directionalLight
-          position={[4, 8, 4]}
-          intensity={1.8}
+          position={[5, 9, 5]}
+          intensity={2.6}
           castShadow
-          shadow-mapSize={[1024, 1024]}
+          shadow-mapSize={[2048, 2048]}
+          shadow-bias={-0.0002}
         />
-        <directionalLight position={[-3, 2, -2]} intensity={0.4} />
+        <directionalLight position={[-4, 3, -3]} intensity={0.5} />
 
         <Suspense fallback={null}>
-          <FloatingGroup>
-            <CubeKube {...props} />
-          </FloatingGroup>
+          <Bounds fit clip margin={1.25}>
+            <RefitOnChange deps={fitDeps} />
+            <FloatingGroup>
+              <CubeKube {...props} />
+            </FloatingGroup>
+          </Bounds>
 
           <ContactShadows
-            position={[0, -1.8, 0]}
-            opacity={0.15}
-            scale={6}
-            blur={2.5}
-            far={3}
+            position={[0, contactY - 0.05, 0]}
+            opacity={0.28}
+            scale={9}
+            blur={2.6}
+            far={5}
+            resolution={1024}
           />
 
-          <Environment preset="city" />
+          {/* Environnement procédural (aucun téléchargement) : reflets de glaçure
+              doux qui glissent sur les carreaux à la rotation. */}
+          <Environment resolution={256} environmentIntensity={0.6}>
+            <Lightformer intensity={2} position={[0, 4, 2]} scale={[8, 4, 1]} color="#ffffff" />
+            <Lightformer intensity={1.2} position={[-4, 1, 3]} scale={[3, 6, 1]} color="#fff6e8" />
+            <Lightformer intensity={1.2} position={[4, 2, -3]} scale={[3, 6, 1]} color="#eef3ff" />
+            <Lightformer intensity={0.8} position={[0, -3, 0]} scale={[8, 4, 1]} color="#ffffff" />
+          </Environment>
         </Suspense>
 
-        {/* Rotation libre souris/doigt + rotation auto lente au repos */}
+        {/* Rotation libre souris/doigt + rotation auto lente au repos. */}
         <OrbitControls
+          makeDefault
           enablePan={false}
           enableZoom={enableZoom}
-          minDistance={3}
-          maxDistance={9}
+          minPolarAngle={0.15}
+          maxPolarAngle={Math.PI - 0.15}
           autoRotate
-          autoRotateSpeed={0.6}
+          autoRotateSpeed={0.55}
           enableDamping
           dampingFactor={0.12}
-          target={[0, 0, 0]}
         />
       </Canvas>
     </div>
