@@ -75,6 +75,10 @@ export function ConfigurateurClient({ settings, tileColors, groutColors, pricing
           <div>
             <h1 className="text-2xl font-black tracking-[-0.03em] text-[#0a0a0a]">Configurer</h1>
             <p className="text-sm text-[#6b6b6b] mt-1">Composez votre meuble mosaïque sur-mesure.</p>
+            <p className="text-[11px] text-[#9b9b9b] mt-2 tracking-wide">
+              18&thinsp;000&thinsp;000 milliards de combinaisons —{" "}
+              <span className="text-[#0a0a0a] font-medium">la vôtre est unique.</span>
+            </p>
           </div>
 
           <PanneauControles />
