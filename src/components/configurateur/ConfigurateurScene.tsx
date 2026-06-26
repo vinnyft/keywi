@@ -1,8 +1,8 @@
 "use client";
 
 import { Suspense, useRef } from "react";
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { Environment, ContactShadows } from "@react-three/drei";
+import { Canvas, useFrame } from "@react-three/fiber";
+import { Environment, ContactShadows, OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 import { CubeKube } from "./CubeKube";
 
@@ -15,8 +15,11 @@ interface SceneContentProps {
   couleurJoint: string;
   seed: number;
   dessousCarrelee: boolean;
+  /** Autoriser le zoom molette/pincement (désactivé pour le cube décoratif d'accueil) */
+  enableZoom?: boolean;
 }
 
+// Respiration verticale douce du cube flottant
 function FloatingGroup({ children }: { children: React.ReactNode }) {
   const groupRef = useRef<THREE.Group>(null);
   useFrame((state) => {
@@ -26,33 +29,12 @@ function FloatingGroup({ children }: { children: React.ReactNode }) {
   return <group ref={groupRef}>{children}</group>;
 }
 
-function MouseParallax({ children }: { children: React.ReactNode }) {
-  const groupRef = useRef<THREE.Group>(null);
-  const mouse = useRef({ x: 0, y: 0 });
-  const { size } = useThree();
-
-  return (
-    <group
-      ref={groupRef}
-      onPointerMove={(e) => {
-        if (!groupRef.current) return;
-        const x = (e.clientX / size.width - 0.5) * 0.3;
-        const y = -(e.clientY / size.height - 0.5) * 0.15;
-        mouse.current = { x, y };
-        groupRef.current.rotation.y += (x - groupRef.current.rotation.y) * 0.05;
-      }}
-    >
-      {children}
-    </group>
-  );
-}
-
-export function ConfigurateurScene(props: SceneContentProps) {
+export function ConfigurateurScene({ enableZoom = true, ...props }: SceneContentProps) {
   return (
     <div className="w-full h-full" style={{ touchAction: "none" }}>
       <Canvas
         shadows
-        camera={{ position: [0, 1.2, 5], fov: 35 }}
+        camera={{ position: [3.5, 2.5, 4], fov: 35 }}
         gl={{ antialias: true, alpha: true }}
         style={{ background: "transparent" }}
       >
@@ -67,10 +49,7 @@ export function ConfigurateurScene(props: SceneContentProps) {
 
         <Suspense fallback={null}>
           <FloatingGroup>
-            <CubeKube
-              {...props}
-              autoRotate
-            />
+            <CubeKube {...props} />
           </FloatingGroup>
 
           <ContactShadows
@@ -83,6 +62,19 @@ export function ConfigurateurScene(props: SceneContentProps) {
 
           <Environment preset="city" />
         </Suspense>
+
+        {/* Rotation libre souris/doigt + rotation auto lente au repos */}
+        <OrbitControls
+          enablePan={false}
+          enableZoom={enableZoom}
+          minDistance={3}
+          maxDistance={9}
+          autoRotate
+          autoRotateSpeed={0.6}
+          enableDamping
+          dampingFactor={0.12}
+          target={[0, 0, 0]}
+        />
       </Canvas>
     </div>
   );

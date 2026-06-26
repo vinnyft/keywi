@@ -46,8 +46,14 @@ export default function CheckoutPage() {
     }
   }
 
+  // Drapeau de montage : le panier est persisté côté client (localStorage),
+  // on attend l'hydratation avant de décider d'une éventuelle redirection
+  // pour éviter tout décalage SSR/client.
   const [hydrated, setHydrated] = useState(false);
-  useEffect(() => { setHydrated(true); }, []);
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setHydrated(true);
+  }, []);
   useEffect(() => {
     if (hydrated && items.length === 0) router.replace("/panier");
   }, [hydrated, items.length, router]);

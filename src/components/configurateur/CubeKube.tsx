@@ -1,9 +1,8 @@
 "use client";
 
-import { useRef, useMemo, useEffect } from "react";
-import { useFrame } from "@react-three/fiber";
+import { useMemo, useEffect } from "react";
 import * as THREE from "three";
-import { genererTexturesFaces, distributeCouleurs, drawFaceTexture } from "@/lib/configurateur/texture";
+import { distributeCouleurs, drawFaceTexture } from "@/lib/configurateur/texture";
 
 interface CubeKubeProps {
   tailleCm: number;
@@ -14,7 +13,6 @@ interface CubeKubeProps {
   couleurJoint: string;
   seed: number;
   dessousCarrelee: boolean;
-  autoRotate: boolean;
 }
 
 export function CubeKube({
@@ -26,13 +24,10 @@ export function CubeKube({
   couleurJoint,
   seed,
   dessousCarrelee,
-  autoRotate,
 }: CubeKubeProps) {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const rotY = useRef(Math.PI / 4);
-  const rotX = useRef(-0.15);
-  const isUserInteracting = useRef(false);
-  const lastInteraction = useRef(0);
+  // Clé stable pour la liste des couleurs (les expressions composées ne
+  // sont pas autorisées dans un tableau de dépendances).
+  const couleursKey = couleurs.join(",");
 
   // Build materials from canvas textures
   const materials = useMemo(() => {
@@ -72,7 +67,7 @@ export function CubeKube({
       makeMat(nbLongueur, nbHauteur, 500),  // back (-z)
     ];
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tailleCm, nbLongueur, nbLargeur, nbHauteur, couleurs.join(","), couleurJoint, seed, dessousCarrelee]);
+  }, [tailleCm, nbLongueur, nbLargeur, nbHauteur, couleursKey, couleurJoint, seed, dessousCarrelee]);
 
   // Cleanup textures on remount
   useEffect(() => {
@@ -94,18 +89,10 @@ export function CubeKube({
   const H = hauteurCm * scale;  // Y
   const D = largeurCm * scale;  // Z
 
-  useFrame((_, delta) => {
-    if (!meshRef.current) return;
-    const now = Date.now();
-    if (autoRotate && !isUserInteracting.current && now - lastInteraction.current > 1500) {
-      rotY.current += delta * 0.35;
-    }
-    meshRef.current.rotation.y = rotY.current;
-    meshRef.current.rotation.x = rotX.current;
-  });
-
+  // Rotation (souris/doigt + auto au repos) est portée par OrbitControls
+  // dans ConfigurateurScene : le maillage lui-même reste statique.
   return (
-    <mesh ref={meshRef} material={materials} castShadow receiveShadow>
+    <mesh material={materials} castShadow receiveShadow>
       <boxGeometry args={[W, H, D]} />
     </mesh>
   );

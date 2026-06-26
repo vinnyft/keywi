@@ -9,7 +9,7 @@ const ConfigurateurScene = dynamic(
 
 export function AccueilCube() {
   return (
-    <div className="w-full h-full animate-float" style={{ minHeight: 320 }}>
+    <div className="w-full h-full" style={{ minHeight: 320 }}>
       <ConfigurateurScene
         tailleCm={5}
         nbLongueur={8}
@@ -19,6 +19,7 @@ export function AccueilCube() {
         couleurJoint="#888888"
         seed={42}
         dessousCarrelee={false}
+        enableZoom={false}
       />
     </div>
   );

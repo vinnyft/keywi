@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
 
@@ -12,7 +11,6 @@ export default function InscriptionPage() {
   const [loading, setLoading] = useState(false);
   const [erreur, setErreur] = useState("");
   const [succes, setSucces] = useState(false);
-  const router = useRouter();
 
   async function inscription(e: React.FormEvent) {
     e.preventDefault();
