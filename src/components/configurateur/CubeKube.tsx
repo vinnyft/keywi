@@ -3,7 +3,7 @@
 import { useMemo, useRef, useEffect, useLayoutEffect } from "react";
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three-stdlib";
-import { buildTileInstances, CM_TO_UNIT } from "@/lib/configurateur/tiles";
+import { buildTileInstances, CM_TO_UNIT, type MotifMosaique } from "@/lib/configurateur/tiles";
 import { genererTexturesFaces } from "@/lib/configurateur/texture";
 
 export interface CubeKubeProps {
@@ -15,6 +15,7 @@ export interface CubeKubeProps {
   couleurJoint: string;
   seed: number;
   dessousCarrelee: boolean;
+  motif?: MotifMosaique;
 }
 
 // Au-delà de ce nombre de carreaux le rendu en relief devient trop lourd → fallback texture.
@@ -158,6 +159,7 @@ function CubeRelief(props: CubeKubeProps) {
       props.couleurJoint,
       props.seed,
       props.dessousCarrelee,
+      props.motif,
     ]
   );
 
@@ -260,7 +262,7 @@ function CubeRelief(props: CubeKubeProps) {
 // ─────────────────────────── Fallback texture (très grand nombre de carreaux) ───────────────────────────
 
 function CubeTexture(props: CubeKubeProps) {
-  const { tailleCm, nbLongueur, nbLargeur, nbHauteur, couleurs, couleurJoint, seed, dessousCarrelee } = props;
+  const { tailleCm, nbLongueur, nbLargeur, nbHauteur, couleurs, couleurJoint, seed, dessousCarrelee, motif } = props;
   const couleursKey = couleurs.join(",");
 
   const materials = useMemo(() => {
@@ -273,6 +275,7 @@ function CubeTexture(props: CubeKubeProps) {
       nbHauteur,
       seed,
       dessousCarrelee,
+      motif,
     });
     return canvases.map((canvas) => {
       const tex = new THREE.CanvasTexture(canvas);
@@ -288,7 +291,7 @@ function CubeTexture(props: CubeKubeProps) {
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tailleCm, nbLongueur, nbLargeur, nbHauteur, couleursKey, couleurJoint, seed, dessousCarrelee]);
+  }, [tailleCm, nbLongueur, nbLargeur, nbHauteur, couleursKey, couleurJoint, seed, dessousCarrelee, motif]);
 
   useEffect(() => {
     return () => {

@@ -5,7 +5,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Lightformer, ContactShadows, OrbitControls, Bounds, useBounds } from "@react-three/drei";
 import * as THREE from "three";
 import { CubeKube } from "./CubeKube";
-import { CM_TO_UNIT } from "@/lib/configurateur/tiles";
+import { CM_TO_UNIT, type MotifMosaique } from "@/lib/configurateur/tiles";
 
 interface SceneContentProps {
   tailleCm: number;
@@ -16,6 +16,7 @@ interface SceneContentProps {
   couleurJoint: string;
   seed: number;
   dessousCarrelee: boolean;
+  motif?: MotifMosaique;
   /** Autoriser le zoom molette/pincement (désactivé pour le cube décoratif d'accueil) */
   enableZoom?: boolean;
 }

@@ -17,6 +17,7 @@ export function AccueilCube() {
         nbHauteur={9}
         couleurs={["#232C66", "#5E7A3C", "#C99A3A", "#B23A2E"]}
         couleurJoint="#F3EFE7"
+        motif="aleatoire"
         seed={42}
         dessousCarrelee={false}
         enableZoom={false}

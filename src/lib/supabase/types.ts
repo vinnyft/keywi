@@ -90,4 +90,5 @@ export interface ConfigMeuble {
   couleurJoint: string;
   seed: number;
   hauteurCm: number;
+  motif?: "aleatoire" | "lignes" | "croise" | "uni" | "accent";
 }

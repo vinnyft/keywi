@@ -28,6 +28,42 @@ function mulberry32(seed: number) {
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
+// Motif de répartition des couleurs sur les carreaux.
+export type MotifMosaique = "aleatoire" | "lignes" | "croise" | "uni" | "accent";
+
+// Couleur de base d'un carreau selon le motif et sa position (i, j) dans la grille.
+// Le jitter HSL « fait main » est appliqué ensuite, par-dessus, dans tous les cas.
+function couleurMotif(
+  motif: MotifMosaique,
+  i: number,
+  j: number,
+  couleurs: string[],
+  accentR: number,
+): string {
+  const nb = couleurs.length;
+  if (nb === 1) return couleurs[0];
+  switch (motif) {
+    case "uni":
+      return couleurs[0];
+    case "lignes":
+      // Bandes : la couleur dépend de la rangée verticale (j).
+      return couleurs[j % nb];
+    case "croise":
+      // Diagonales : effet chevron / tartan.
+      return couleurs[(i + j) % nb];
+    case "accent": {
+      // Fond uni (couleur 0) + ~16 % de carreaux d'accent (couleurs 1…n).
+      if (accentR < 0.16) {
+        const k = 1 + Math.floor((accentR / 0.16) * (nb - 1));
+        return couleurs[Math.min(k, nb - 1)];
+      }
+      return couleurs[0];
+    }
+    default:
+      return couleurs[0];
+  }
+}
+
 export interface TileBuildParams {
   nbLongueur: number;
   nbLargeur: number;
@@ -37,6 +73,7 @@ export interface TileBuildParams {
   couleurJoint: string;
   seed: number;
   dessousCarrelee: boolean;
+  motif?: MotifMosaique;
 }
 
 export interface TileBuildResult {
@@ -60,6 +97,7 @@ interface Face {
 
 export function buildTileInstances(p: TileBuildParams): TileBuildResult {
   const { nbLongueur, nbLargeur, nbHauteur, tailleCm, couleurs, seed, dessousCarrelee } = p;
+  const motif: MotifMosaique = p.motif ?? "aleatoire";
 
   const pitch = tailleCm * CM_TO_UNIT; // pas (centre à centre)
   const gap = pitch * 0.1; // joint ≈ 10 %
@@ -90,8 +128,9 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
 
   const total = faces.reduce((s, f) => s + f.countU * f.countV, 0);
 
-  // Répartition équilibrée des couleurs sur l'ensemble des carreaux.
-  const palette = distributeCouleurs(total, couleurs, seed);
+  // Mode aléatoire : répartition équilibrée puis mélangée (un seul flux global).
+  // Les autres motifs sont calculés par position (i, j) dans la boucle.
+  const palette = motif === "aleatoire" ? distributeCouleurs(total, couleurs, seed) : null;
 
   const matrices = new Float32Array(total * 16);
   const colors = new Float32Array(total * 3);
@@ -138,8 +177,11 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
         m.compose(pos, q, scl);
         m.toArray(matrices, idx * 16);
 
-        // Couleur + légère irrégularité de glaçure (HSL).
-        col.set(palette[idx]);
+        // Couleur de base selon le motif, puis irrégularité de glaçure (HSL).
+        // accentR : valeur déterministe indépendante du flux de jitter.
+        const accentR = mulberry32((seed ^ (idx * 0x85ebca6b)) >>> 0)();
+        const baseHex = palette ? palette[idx] : couleurMotif(motif, i, j, couleurs, accentR);
+        col.set(baseHex);
         col.getHSL(hsl);
         col.setHSL(
           (hsl.h + (rng() - 0.5) * 0.0167 + 1) % 1, // H ±3°

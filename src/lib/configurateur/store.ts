@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { Color, Settings, PricingTier, ColorSurcharge, ConfigMeuble } from "@/lib/supabase/types";
 import { calculerPrix, type ResultatPrix } from "./pricing";
+import type { MotifMosaique } from "./tiles";
 
 // ────────── Configurateur state ──────────
 
@@ -15,6 +16,7 @@ export interface ConfigurateurState {
   hauteurCm: number;
   couleurs: string[];       // 1–4 hex
   couleurJoint: string;     // 1 hex
+  motif: MotifMosaique;     // répartition des couleurs
   seed: number;
 
   // Loaded from DB
@@ -34,6 +36,7 @@ export interface ConfigurateurState {
   setHauteurCm: (v: number) => void;
   toggleCouleur: (hex: string) => void;
   setCouleurJoint: (hex: string) => void;
+  setMotif: (motif: MotifMosaique) => void;
   regenererSeed: () => void;
   chargerConfig: (params: {
     settings: Settings;
@@ -76,6 +79,7 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
     hauteurCm: 45,
     couleurs: ["#ECE5D8"],
     couleurJoint: "#F3EFE7",
+    motif: "aleatoire",
     seed: nouvelSeed(),
 
     settings: null,
@@ -119,6 +123,7 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
       set({ couleurs: next, resultat: recomputer(nextState) });
     },
     setCouleurJoint: (hex) => set({ couleurJoint: hex }),
+    setMotif: (motif) => set({ motif }),
     regenererSeed: () => set({ seed: nouvelSeed() }),
 
     chargerConfig: ({ settings, tileColors, groutColors, pricingTiers, colorSurcharges }) => {
@@ -148,6 +153,7 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
         nbLargeur: config.nbLargeur,
         couleurs: config.couleurs,
         couleurJoint: config.couleurJoint,
+        motif: config.motif ?? "aleatoire",
         seed: config.seed,
       };
       set({ ...nextState, resultat: recomputer(nextState) });

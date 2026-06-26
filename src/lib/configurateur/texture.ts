@@ -12,6 +12,44 @@ function mulberry32(seed: number) {
   };
 }
 
+export type MotifMosaique = "aleatoire" | "lignes" | "croise" | "uni" | "accent";
+
+// Couleurs d'une face (grille tilesX × tilesY) selon le motif.
+// Renvoie un tableau plat indexé par (ty * tilesX + tx).
+export function couleursPourFace(
+  motif: MotifMosaique,
+  tilesX: number,
+  tilesY: number,
+  couleurs: string[],
+  seed: number
+): string[] {
+  const total = tilesX * tilesY;
+  const nb = couleurs.length;
+  if (nb <= 1 || motif === "aleatoire") {
+    return distributeCouleurs(total, couleurs, seed);
+  }
+  const out: string[] = new Array(total);
+  for (let ty = 0; ty < tilesY; ty++) {
+    for (let tx = 0; tx < tilesX; tx++) {
+      const idx = ty * tilesX + tx;
+      let hex: string;
+      if (motif === "uni") {
+        hex = couleurs[0];
+      } else if (motif === "lignes") {
+        hex = couleurs[ty % nb];
+      } else if (motif === "croise") {
+        hex = couleurs[(tx + ty) % nb];
+      } else {
+        // accent : fond uni + ~16 % d'accents déterministes
+        const r = mulberry32((seed ^ (idx * 0x85ebca6b)) >>> 0)();
+        hex = r < 0.16 ? couleurs[Math.min(1 + Math.floor((r / 0.16) * (nb - 1)), nb - 1)] : couleurs[0];
+      }
+      out[idx] = hex;
+    }
+  }
+  return out;
+}
+
 // Distribute colors evenly then shuffle with seeded random
 export function distributeCouleurs(
   total: number,
@@ -97,12 +135,14 @@ export interface KubeFaceConfig {
   nbHauteur: number; // derived: round(hauteurCm / tailleCm)
   seed: number;
   dessousCarrelee: boolean;
+  motif?: MotifMosaique;
 }
 
 export function genererTexturesFaces(config: KubeFaceConfig): {
   canvases: HTMLCanvasElement[]; // [+x, -x, +y, -y, +z, -z]
 } {
   const { couleurs, couleurJoint, nbLongueur, nbLargeur, nbHauteur, seed, dessousCarrelee } = config;
+  const motif: MotifMosaique = config.motif ?? "aleatoire";
 
   // Resolution capped for performance
   const totalTiles = (nbLongueur * nbLargeur) * 2 + (nbLongueur + nbLargeur) * 2 * nbHauteur;
@@ -110,8 +150,7 @@ export function genererTexturesFaces(config: KubeFaceConfig): {
 
   function makeFace(tilesX: number, tilesY: number, faceSeedOffset: number): HTMLCanvasElement {
     const canvas = document.createElement("canvas");
-    const total = tilesX * tilesY;
-    const colors = distributeCouleurs(total, couleurs, seed + faceSeedOffset);
+    const colors = couleursPourFace(motif, tilesX, tilesY, couleurs, seed + faceSeedOffset);
     drawFaceTexture(canvas, { tilesX, tilesY, tileColors: colors, groutColor: couleurJoint, resolution: res });
     return canvas;
   }

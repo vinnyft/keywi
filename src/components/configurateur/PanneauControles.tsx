@@ -2,6 +2,56 @@
 
 import { useConfigurateurStore } from "@/lib/configurateur/store";
 import { getPaletteByFamily } from "@/lib/configurateur/palette";
+import type { MotifMosaique } from "@/lib/configurateur/tiles";
+
+const MOTIFS: { id: MotifMosaique; label: string }[] = [
+  { id: "aleatoire", label: "Aléatoire" },
+  { id: "lignes", label: "Lignes" },
+  { id: "croise", label: "Croisé" },
+  { id: "uni", label: "Uni" },
+  { id: "accent", label: "Accent" },
+];
+
+// Mini aperçu 4×4 du motif avec les couleurs choisies (2 couleurs de
+// démonstration si moins de 2 sélectionnées).
+function MotifPreview({ motif, couleurs }: { motif: MotifMosaique; couleurs: string[] }) {
+  const palette = couleurs.length >= 2 ? couleurs : ["#cfcabd", "#7d8a99"];
+  const nb = palette.length;
+  const N = 4;
+  const cells: string[] = [];
+  for (let y = 0; y < N; y++) {
+    for (let x = 0; x < N; x++) {
+      let c: string;
+      switch (motif) {
+        case "uni":
+          c = palette[0];
+          break;
+        case "lignes":
+          c = palette[y % nb];
+          break;
+        case "croise":
+          c = palette[(x + y) % nb];
+          break;
+        case "accent":
+          c = (x === 1 && y === 2) || (x === 3 && y === 0) ? palette[1] : palette[0];
+          break;
+        default: // aléatoire — motif fixe pour l'aperçu
+          c = palette[(x * 2 + y * 3 + (x ^ y)) % nb];
+      }
+      cells.push(c);
+    }
+  }
+  return (
+    <div
+      className="grid gap-px rounded-sm overflow-hidden"
+      style={{ gridTemplateColumns: `repeat(${N}, 1fr)`, width: 32, height: 32, background: "#e8e4da" }}
+    >
+      {cells.map((c, i) => (
+        <span key={i} style={{ background: c }} />
+      ))}
+    </div>
+  );
+}
 
 function BoutonQte({
   value,
@@ -61,7 +111,8 @@ export function PanneauControles() {
     hauteurCm, setHauteurCm,
     couleurs, toggleCouleur,
     couleurJoint, setCouleurJoint,
-    tileColors, groutColors,
+    motif, setMotif,
+    groutColors,
     regenererSeed,
   } = useConfigurateurStore();
 
@@ -178,13 +229,46 @@ export function PanneauControles() {
             </div>
           ))}
         </div>
-        {couleurs.length > 1 && (
+        {motif === "aleatoire" && couleurs.length > 1 && (
           <button
             onClick={regenererSeed}
             className="mt-3 text-xs text-[#6b6b6b] underline hover:text-[#0a0a0a] transition-colors"
           >
             Mélanger différemment
           </button>
+        )}
+      </div>
+
+      {/* Motif de répartition */}
+      <div>
+        <SectionLabel>Disposition des couleurs</SectionLabel>
+        <div className="grid grid-cols-5 gap-2">
+          {MOTIFS.map((m) => {
+            const selected = motif === m.id;
+            return (
+              <button
+                key={m.id}
+                onClick={() => setMotif(m.id)}
+                title={m.label}
+                aria-pressed={selected}
+                className={`flex flex-col items-center gap-1.5 p-2 rounded-md border-2 transition-all ${
+                  selected
+                    ? "border-[#1a56db] bg-[#f0f5ff]"
+                    : "border-[#e5e5e5] hover:border-[#9b9b9b]"
+                }`}
+              >
+                <MotifPreview motif={m.id} couleurs={couleurs} />
+                <span className="text-[9px] leading-tight text-center text-[#4b4b4b]">
+                  {m.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        {couleurs.length < 2 && (
+          <p className="text-[11px] text-[#9b9b9b] mt-2">
+            Choisissez au moins 2 couleurs pour voir les dispositions.
+          </p>
         )}
       </div>
 

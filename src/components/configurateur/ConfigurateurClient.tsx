@@ -22,7 +22,7 @@ interface Props {
 
 export function ConfigurateurClient({ settings, tileColors, groutColors, pricingTiers, colorSurcharges }: Props) {
   const {
-    tailleCm, nbLongueur, nbLargeur, hauteurCm, couleurs, couleurJoint, seed, resultat,
+    tailleCm, nbLongueur, nbLargeur, hauteurCm, couleurs, couleurJoint, motif, seed, resultat,
     chargerConfig,
   } = useConfigurateurStore();
   const ajouterItem = usePanierStore((s) => s.ajouterItem);
@@ -38,7 +38,7 @@ export function ConfigurateurClient({ settings, tileColors, groutColors, pricing
     ajouterItem(
       {
         tailleCm, nbLongueur, nbLargeur, couleurs, couleurJoint, seed,
-        hauteurCm,
+        hauteurCm, motif,
       },
       resultat
     );
@@ -58,6 +58,7 @@ export function ConfigurateurClient({ settings, tileColors, groutColors, pricing
             nbHauteur={nbHauteur}
             couleurs={couleurs}
             couleurJoint={couleurJoint}
+            motif={motif}
             seed={seed}
             dessousCarrelee={settings.dessous_carrelee}
           />
