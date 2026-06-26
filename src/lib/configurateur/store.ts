@@ -12,6 +12,7 @@ export interface ConfigurateurState {
   tailleCm: number;
   nbLongueur: number;
   nbLargeur: number;
+  hauteurCm: number;
   couleurs: string[];       // 1–4 hex
   couleurJoint: string;     // 1 hex
   seed: number;
@@ -30,6 +31,7 @@ export interface ConfigurateurState {
   setTaille: (v: number) => void;
   setNbLongueur: (v: number) => void;
   setNbLargeur: (v: number) => void;
+  setHauteurCm: (v: number) => void;
   toggleCouleur: (hex: string) => void;
   setCouleurJoint: (hex: string) => void;
   regenererSeed: () => void;
@@ -57,7 +59,7 @@ function recomputer(state: ConfigurateurState): ResultatPrix | null {
       nbLongueur: state.nbLongueur,
       nbLargeur: state.nbLargeur,
       nbCouleurs: state.couleurs.length,
-      hauteurCm: state.settings.hauteur_fixe_cm,
+      hauteurCm: state.hauteurCm,
       dessousCarrelee: state.settings.dessous_carrelee,
     },
     state.pricingTiers,
@@ -71,6 +73,7 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
     tailleCm: 5,
     nbLongueur: 10,
     nbLargeur: 8,
+    hauteurCm: 45,
     couleurs: ["#F5F0E8"],
     couleurJoint: "#888888",
     seed: nouvelSeed(),
@@ -93,6 +96,10 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
     setNbLargeur: (v) => {
       const next = { ...get(), nbLargeur: v };
       set({ nbLargeur: v, resultat: recomputer(next) });
+    },
+    setHauteurCm: (v) => {
+      const next = { ...get(), hauteurCm: v };
+      set({ hauteurCm: v, resultat: recomputer(next) });
     },
     toggleCouleur: (hex) => {
       const current = get().couleurs;
@@ -119,6 +126,7 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
         groutColors,
         pricingTiers,
         colorSurcharges,
+        hauteurCm: current.hauteurCm !== 45 ? current.hauteurCm : settings.hauteur_fixe_cm,
         couleurs: current.couleurs.length ? current.couleurs : [defaultTile],
         couleurJoint: current.couleurJoint !== "#888888" ? current.couleurJoint : defaultGrout,
       };

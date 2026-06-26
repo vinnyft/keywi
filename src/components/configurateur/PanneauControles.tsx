@@ -1,7 +1,6 @@
 "use client";
 
 import { useConfigurateurStore } from "@/lib/configurateur/store";
-import type { Color } from "@/lib/supabase/types";
 
 function BoutonQte({
   value,
@@ -58,14 +57,32 @@ export function PanneauControles() {
     tailleCm, setTaille,
     nbLongueur, setNbLongueur,
     nbLargeur, setNbLargeur,
+    hauteurCm, setHauteurCm,
     couleurs, toggleCouleur,
     couleurJoint, setCouleurJoint,
     tileColors, groutColors,
-    settings,
     regenererSeed,
   } = useConfigurateurStore();
 
-  const hauteurCm = settings?.hauteur_fixe_cm ?? 45;
+  const FALLBACK_TILE_COLORS = [
+    { id: "t1", hex: "#F5F0E8", nom: "Blanc Carrare" },
+    { id: "t2", hex: "#1A1A1A", nom: "Noir Marquina" },
+    { id: "t3", hex: "#C4714A", nom: "Terracotta" },
+    { id: "t4", hex: "#8AAF8A", nom: "Vert Sauge" },
+    { id: "t5", hex: "#2A3F5F", nom: "Bleu Nuit" },
+    { id: "t6", hex: "#D4A85A", nom: "Sable Doré" },
+  ];
+  const FALLBACK_GROUT_COLORS = [
+    { id: "g1", hex: "#FFFFFF", nom: "Joint Blanc" },
+    { id: "g2", hex: "#CCCCCC", nom: "Joint Gris Clair" },
+    { id: "g3", hex: "#888888", nom: "Joint Gris" },
+    { id: "g4", hex: "#333333", nom: "Joint Anthracite" },
+    { id: "g5", hex: "#111111", nom: "Joint Noir" },
+    { id: "g6", hex: "#C8B89A", nom: "Joint Sable" },
+  ];
+
+  const tiles = tileColors.length ? tileColors : FALLBACK_TILE_COLORS;
+  const grouts = groutColors.length ? groutColors : FALLBACK_GROUT_COLORS;
 
   return (
     <div className="space-y-8">
@@ -106,18 +123,34 @@ export function PanneauControles() {
         <p className="text-xs text-[#6b6b6b] mt-1">→ {(nbLargeur * tailleCm)} cm</p>
       </div>
 
-      {/* Hauteur fixe */}
+      {/* Hauteur */}
       <div>
         <SectionLabel>Hauteur</SectionLabel>
-        <p className="text-sm font-semibold text-[#0a0a0a]">{hauteurCm} cm</p>
-        <p className="text-xs text-[#6b6b6b]">Définie par KUBE</p>
+        <div className="flex items-center gap-4">
+          <input
+            type="range"
+            min={10}
+            max={120}
+            step={1}
+            value={hauteurCm}
+            onChange={(e) => setHauteurCm(Number(e.target.value))}
+            className="flex-1 accent-[#0a0a0a]"
+          />
+          <span className="w-16 text-right text-sm font-semibold text-[#0a0a0a]">
+            {hauteurCm} cm
+          </span>
+        </div>
+        <div className="flex justify-between text-[10px] text-[#6b6b6b] mt-1">
+          <span>10 cm</span>
+          <span>120 cm</span>
+        </div>
       </div>
 
       {/* Couleurs carreaux */}
       <div>
         <SectionLabel>Couleur(s) des carreaux (1 à 4)</SectionLabel>
         <div className="flex flex-wrap gap-2">
-          {tileColors.map((color: Color) => {
+          {tiles.map((color) => {
             const selected = couleurs.includes(color.hex);
             return (
               <button
@@ -150,7 +183,7 @@ export function PanneauControles() {
       <div>
         <SectionLabel>Couleur du joint</SectionLabel>
         <div className="flex flex-wrap gap-2">
-          {groutColors.map((color: Color) => {
+          {grouts.map((color) => {
             const selected = couleurJoint === color.hex;
             return (
               <button

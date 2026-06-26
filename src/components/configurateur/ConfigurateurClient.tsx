@@ -22,7 +22,7 @@ interface Props {
 
 export function ConfigurateurClient({ settings, tileColors, groutColors, pricingTiers, colorSurcharges }: Props) {
   const {
-    tailleCm, nbLongueur, nbLargeur, couleurs, couleurJoint, seed, resultat,
+    tailleCm, nbLongueur, nbLargeur, hauteurCm, couleurs, couleurJoint, seed, resultat,
     chargerConfig,
   } = useConfigurateurStore();
   const ajouterItem = usePanierStore((s) => s.ajouterItem);
@@ -31,14 +31,14 @@ export function ConfigurateurClient({ settings, tileColors, groutColors, pricing
     chargerConfig({ settings, tileColors, groutColors, pricingTiers, colorSurcharges });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const nbHauteur = Math.round(settings.hauteur_fixe_cm / tailleCm);
+  const nbHauteur = Math.max(1, Math.round(hauteurCm / tailleCm));
 
   function ajouterAuPanier() {
     if (!resultat) return;
     ajouterItem(
       {
         tailleCm, nbLongueur, nbLargeur, couleurs, couleurJoint, seed,
-        hauteurCm: settings.hauteur_fixe_cm,
+        hauteurCm,
       },
       resultat
     );
