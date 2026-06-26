@@ -1,6 +1,7 @@
 "use client";
 
 import { useConfigurateurStore } from "@/lib/configurateur/store";
+import { getPaletteByFamily } from "@/lib/configurateur/palette";
 
 function BoutonQte({
   value,
@@ -64,25 +65,17 @@ export function PanneauControles() {
     regenererSeed,
   } = useConfigurateurStore();
 
-  const FALLBACK_TILE_COLORS = [
-    { id: "t1", hex: "#002FA7", nom: "Bleu Klein" },
-    { id: "t2", hex: "#D9A411", nom: "Jaune Moutarde" },
-    { id: "t3", hex: "#0A6B4F", nom: "Vert Émeraude" },
-    { id: "t4", hex: "#C8102E", nom: "Rouge Écarlate" },
-    { id: "t5", hex: "#F2EBDD", nom: "Blanc Crème" },
-    { id: "t6", hex: "#15110D", nom: "Noir" },
-  ];
   const FALLBACK_GROUT_COLORS = [
-    { id: "g1", hex: "#FFFFFF", nom: "Joint Blanc" },
-    { id: "g2", hex: "#CCCCCC", nom: "Joint Gris Clair" },
-    { id: "g3", hex: "#888888", nom: "Joint Gris" },
-    { id: "g4", hex: "#333333", nom: "Joint Anthracite" },
-    { id: "g5", hex: "#111111", nom: "Joint Noir" },
-    { id: "g6", hex: "#C8B89A", nom: "Joint Sable" },
+    { id: "g1", hex: "#F3EFE7", nom: "Joint Ivoire" },
+    { id: "g2", hex: "#FFFFFF", nom: "Joint Blanc" },
+    { id: "g3", hex: "#C8B89A", nom: "Joint Sable" },
+    { id: "g4", hex: "#808080", nom: "Joint Gris" },
+    { id: "g5", hex: "#333333", nom: "Joint Anthracite" },
+    { id: "g6", hex: "#111111", nom: "Joint Noir" },
   ];
 
-  const tiles = tileColors.length ? tileColors : FALLBACK_TILE_COLORS;
   const grouts = groutColors.length ? groutColors : FALLBACK_GROUT_COLORS;
+  const paletteGrouped = getPaletteByFamily();
 
   // Bornes : chaque dimension (nb carreaux × taille) reste ≤ 150 cm.
   const maxNb = Math.max(1, Math.floor(150 / tailleCm));
@@ -149,33 +142,46 @@ export function PanneauControles() {
         </div>
       </div>
 
-      {/* Couleurs carreaux */}
+      {/* Couleurs carreaux — palette complète groupée par famille */}
       <div>
         <SectionLabel>Couleur(s) des carreaux (1 à 4)</SectionLabel>
-        <div className="flex flex-wrap gap-2">
-          {tiles.map((color) => {
-            const selected = couleurs.includes(color.hex);
-            return (
-              <button
-                key={color.id}
-                onClick={() => toggleCouleur(color.hex)}
-                title={color.nom}
-                className={`w-10 h-10 rounded-sm border-2 transition-all ${
-                  selected
-                    ? "border-[#1a56db] scale-110 shadow-md"
-                    : "border-transparent hover:border-[#6b6b6b]"
-                }`}
-                style={{ backgroundColor: color.hex }}
-                aria-pressed={selected}
-                aria-label={color.nom}
-              />
-            );
-          })}
+        <div className="space-y-3">
+          {paletteGrouped.map(({ family, label, couleurs: familyCouleurs }) => (
+            <div key={family}>
+              <p className="text-[10px] text-[#9b9b9b] uppercase tracking-wider mb-1.5">
+                {label}
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {familyCouleurs.map((color) => {
+                  const selected = couleurs.includes(color.hex);
+                  return (
+                    <div key={color.hex} className="relative">
+                      <button
+                        onClick={() => toggleCouleur(color.hex)}
+                        title={color.name}
+                        className={`w-8 h-8 rounded-sm border-2 transition-all ${
+                          selected
+                            ? "border-[#1a56db] scale-110 shadow-md"
+                            : "border-transparent hover:border-[#6b6b6b]"
+                        }`}
+                        style={{ backgroundColor: color.hex }}
+                        aria-pressed={selected}
+                        aria-label={color.name}
+                      />
+                      {color.isNew && (
+                        <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-[#1a56db]" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
         {couleurs.length > 1 && (
           <button
             onClick={regenererSeed}
-            className="mt-2 text-xs text-[#6b6b6b] underline hover:text-[#0a0a0a] transition-colors"
+            className="mt-3 text-xs text-[#6b6b6b] underline hover:text-[#0a0a0a] transition-colors"
           >
             Mélanger différemment
           </button>

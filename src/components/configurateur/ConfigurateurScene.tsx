@@ -51,18 +51,25 @@ export function ConfigurateurScene({ enableZoom = true, ...props }: SceneContent
         shadows
         dpr={[1, 2]}
         camera={{ position: [3.2, 2.4, 4.2], fov: 35 }}
-        gl={{ antialias: true, alpha: true, preserveDrawingBuffer: true }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          preserveDrawingBuffer: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.15,
+        }}
         style={{ background: "transparent" }}
       >
-        <ambientLight intensity={0.55} />
+        <ambientLight intensity={0.45} />
+        {/* Lumière principale rasante : angle bas pour révéler le relief des carreaux. */}
         <directionalLight
-          position={[5, 9, 5]}
-          intensity={2.6}
+          position={[4, 2.8, 5]}
+          intensity={2.4}
           castShadow
           shadow-mapSize={[2048, 2048]}
           shadow-bias={-0.0002}
         />
-        <directionalLight position={[-4, 3, -3]} intensity={0.5} />
+        <directionalLight position={[-3, 2, -2]} intensity={0.55} />
 
         <Suspense fallback={null}>
           <Bounds fit clip margin={1.25}>
@@ -81,13 +88,15 @@ export function ConfigurateurScene({ enableZoom = true, ...props }: SceneContent
             resolution={1024}
           />
 
-          {/* Environnement procédural (aucun téléchargement) : reflets de glaçure
-              doux qui glissent sur les carreaux à la rotation. */}
-          <Environment resolution={256} environmentIntensity={0.6}>
-            <Lightformer intensity={2} position={[0, 4, 2]} scale={[8, 4, 1]} color="#ffffff" />
-            <Lightformer intensity={1.2} position={[-4, 1, 3]} scale={[3, 6, 1]} color="#fff6e8" />
-            <Lightformer intensity={1.2} position={[4, 2, -3]} scale={[3, 6, 1]} color="#eef3ff" />
-            <Lightformer intensity={0.8} position={[0, -3, 0]} scale={[8, 4, 1]} color="#ffffff" />
+          {/* Environnement procédural : reflets de glaçure qui glissent sur les
+              carreaux à la rotation. 4 formeurs + un rimlight rasant pour faire
+              briller les arêtes biseautées et révéler la texture de surface. */}
+          <Environment resolution={256} environmentIntensity={0.78}>
+            <Lightformer intensity={2.6} position={[0, 4, 2]} scale={[8, 4, 1]} color="#ffffff" />
+            <Lightformer intensity={1.4} position={[-4, 1, 3]} scale={[3, 6, 1]} color="#fff6e8" />
+            <Lightformer intensity={1.4} position={[4, 2, -3]} scale={[3, 6, 1]} color="#eef3ff" />
+            <Lightformer intensity={0.9} position={[0, -3, 0]} scale={[8, 4, 1]} color="#ffffff" />
+            <Lightformer intensity={1.8} position={[3, 0, 5]} scale={[2, 8, 1]} color="#ffffff" />
           </Environment>
         </Suspense>
 

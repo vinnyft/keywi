@@ -74,8 +74,8 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
     nbLongueur: 10,
     nbLargeur: 8,
     hauteurCm: 45,
-    couleurs: ["#F2EBDD"],
-    couleurJoint: "#888888",
+    couleurs: ["#ECE5D8"],
+    couleurJoint: "#F3EFE7",
     seed: nouvelSeed(),
 
     settings: null,
@@ -122,8 +122,8 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
     regenererSeed: () => set({ seed: nouvelSeed() }),
 
     chargerConfig: ({ settings, tileColors, groutColors, pricingTiers, colorSurcharges }) => {
-      const defaultTile = tileColors[0]?.hex ?? "#F2EBDD";
-      const defaultGrout = groutColors.find((c) => c.nom.includes("Gris"))?.hex ?? "#888888";
+      const defaultTile = tileColors[0]?.hex ?? "#ECE5D8";
+      const defaultGrout = groutColors[0]?.hex ?? "#F3EFE7";
       const current = get();
       const nextState = {
         ...current,
@@ -134,7 +134,7 @@ export const useConfigurateurStore = create<ConfigurateurState>()(
         colorSurcharges,
         hauteurCm: current.hauteurCm !== 45 ? current.hauteurCm : settings.hauteur_fixe_cm,
         couleurs: current.couleurs.length ? current.couleurs : [defaultTile],
-        couleurJoint: current.couleurJoint !== "#888888" ? current.couleurJoint : defaultGrout,
+        couleurJoint: current.couleurJoint === "#888888" ? defaultGrout : current.couleurJoint,
       };
       set({ ...nextState, resultat: recomputer(nextState) });
     },

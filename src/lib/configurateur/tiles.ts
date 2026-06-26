@@ -123,14 +123,16 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
 
         const uPos = (i + 0.5) * pitch - halfU;
         const vPos = (j + 0.5) * pitch - halfV;
-        const tilt = (rng() - 0.5) * 2 * 0.035; // ±2°
-        const nPos = f.coreHalf + thickness / 2 + (rng() - 0.5) * 2 * 0.03 * pitch;
-        const sc = 1 + (rng() - 0.5) * 2 * 0.04;
+        const tilt = (rng() - 0.5) * 0.0524;   // ±1.5°
+        const uJit = (rng() - 0.5) * 0.0016;   // ±0.4 mm
+        const vJit = (rng() - 0.5) * 0.0016;   // ±0.4 mm
+        const nPos = f.coreHalf + thickness / 2 + (rng() - 0.5) * 0.0012; // ±0.3 mm
+        const sc = 1 + (rng() - 0.5) * 0.04;   // ±2 %
 
         qJit.setFromAxisAngle(f.normal, tilt);
         q.copy(qJit).multiply(qBase);
 
-        pos.copy(f.u).multiplyScalar(uPos).addScaledVector(v, vPos).addScaledVector(f.normal, nPos);
+        pos.copy(f.u).multiplyScalar(uPos + uJit).addScaledVector(v, vPos + vJit).addScaledVector(f.normal, nPos);
         scl.set(sc, sc, 1);
 
         m.compose(pos, q, scl);
@@ -139,7 +141,11 @@ export function buildTileInstances(p: TileBuildParams): TileBuildResult {
         // Couleur + légère irrégularité de glaçure (HSL).
         col.set(palette[idx]);
         col.getHSL(hsl);
-        col.setHSL(hsl.h, clamp01(hsl.s + (rng() - 0.5) * 0.05), clamp01(hsl.l + (rng() - 0.5) * 0.06));
+        col.setHSL(
+          (hsl.h + (rng() - 0.5) * 0.0167 + 1) % 1, // H ±3°
+          clamp01(hsl.s + (rng() - 0.5) * 0.12),      // S ±6 %
+          clamp01(hsl.l + (rng() - 0.5) * 0.20),      // L ±10 %
+        );
         colors[idx * 3] = col.r;
         colors[idx * 3 + 1] = col.g;
         colors[idx * 3 + 2] = col.b;

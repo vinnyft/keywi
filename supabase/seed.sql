@@ -48,23 +48,78 @@ insert into public.color_surcharges (nb_couleurs, surcharge_pct) values
   (4, 15)
 on conflict (nb_couleurs) do nothing;
 
--- Palette carreaux (6 couleurs — glaçure zellige)
+-- Palette carreaux zellige (52 couleurs, 9 familles)
 insert into public.colors (nom, hex, type, ordre, actif) values
-  ('Bleu Klein',      '#002FA7', 'tile', 1, true),
-  ('Jaune Moutarde',  '#D9A411', 'tile', 2, true),
-  ('Vert Émeraude',   '#0A6B4F', 'tile', 3, true),
-  ('Rouge Écarlate',  '#C8102E', 'tile', 4, true),
-  ('Blanc Crème',     '#F2EBDD', 'tile', 5, true),
-  ('Noir',            '#15110D', 'tile', 6, true);
+  -- Neutres & crèmes
+  ('Blanc craie',       '#F2EFE9', 'tile',  1, true),
+  ('Crème',             '#ECE5D8', 'tile',  2, true),
+  ('Blanc cassé froid', '#E8EAE6', 'tile',  3, true),
+  ('Gris perle',        '#D7D9D6', 'tile',  4, true),
+  ('Gris clair',        '#C4C7C5', 'tile',  5, true),
+  ('Lin',               '#E2DAC9', 'tile',  6, true),
+  -- Verts
+  ('Vert amande',       '#C7D8B5', 'tile',  7, true),
+  ('Vert pâle',         '#B9CBA0', 'tile',  8, true),
+  ('Vert pomme',        '#8FB45E', 'tile',  9, true),
+  ('Vert vif',          '#7FA84A', 'tile', 10, true),
+  ('Sauge',             '#9BAE8E', 'tile', 11, true),
+  ('Vert olive',        '#7C7E4F', 'tile', 12, true),
+  ('Vert mousse',       '#5E7A3C', 'tile', 13, true),
+  ('Vert sapin',        '#3E5A33', 'tile', 14, true),
+  ('Vert foncé',        '#2C4327', 'tile', 15, true),
+  ('Vert-de-gris',      '#6E7A6E', 'tile', 16, true),
+  -- Bleus
+  ('Bleu glacier',      '#C5D6D8', 'tile', 17, true),
+  ('Bleu gris',         '#A7BCC2', 'tile', 18, true),
+  ('Bleu ciel',         '#8FC0D4', 'tile', 19, true),
+  ('Bleu clair',        '#6FA8C7', 'tile', 20, true),
+  ('Bleu franc',        '#4E86B0', 'tile', 21, true),
+  ('Bleu pétrole',      '#2E6E7E', 'tile', 22, true),
+  ('Bleu canard',       '#1F5660', 'tile', 23, true),
+  ('Pervenche',         '#8E9FD6', 'tile', 24, true),
+  ('Bleu outremer',     '#3F4FA0', 'tile', 25, true),
+  ('Bleu nuit',         '#232C66', 'tile', 26, true),
+  -- Jaunes & ambres
+  ('Jaune paille',      '#E5D08A', 'tile', 27, true),
+  ('Jaune doux',        '#E8C75E', 'tile', 28, true),
+  ('Jaune d''or',       '#F0B53C', 'tile', 29, true),
+  ('Ambre',             '#E8A02E', 'tile', 30, true),
+  ('Moutarde',          '#C99A3A', 'tile', 31, true),
+  ('Kaki',              '#8A7C3E', 'tile', 32, true),
+  -- Oranges & terracotta
+  ('Orange',            '#E08A3C', 'tile', 33, true),
+  ('Terracotta',        '#C9663E', 'tile', 34, true),
+  ('Brique',            '#B5512F', 'tile', 35, true),
+  ('Rouille',           '#A8482B', 'tile', 36, true),
+  -- Roses & mauves
+  ('Rose poudré',       '#E8C9C4', 'tile', 37, true),
+  ('Blush',             '#E3B7B2', 'tile', 38, true),
+  ('Vieux rose',        '#CFA0A0', 'tile', 39, true),
+  ('Rose terre',        '#C97E78', 'tile', 40, true),
+  ('Rose corail',       '#D87560', 'tile', 41, true),
+  ('Mauve',             '#C3B0C4', 'tile', 42, true),
+  -- Rouges & bordeaux
+  ('Rouge brique',      '#B23A2E', 'tile', 43, true),
+  ('Rouge profond',     '#9E2B25', 'tile', 44, true),
+  ('Bordeaux',          '#6E2420', 'tile', 45, true),
+  ('Lie de vin',        '#5A2530', 'tile', 46, true),
+  -- Violets
+  ('Aubergine',         '#4A2A4D', 'tile', 47, true),
+  ('Prune sombre',      '#3E2440', 'tile', 48, true),
+  -- Sombres
+  ('Gris ardoise',      '#5A6066', 'tile', 49, true),
+  ('Brun',              '#4E3A2E', 'tile', 50, true),
+  ('Anthracite',        '#2C2C2E', 'tile', 51, true),
+  ('Noir zellige',      '#1A1A1C', 'tile', 52, true);
 
 -- Palette joints (6 couleurs)
 insert into public.colors (nom, hex, type, ordre, actif) values
-  ('Joint Blanc',     '#FFFFFF', 'grout', 1, true),
-  ('Joint Gris Clair','#CCCCCC', 'grout', 2, true),
-  ('Joint Gris',      '#888888', 'grout', 3, true),
-  ('Joint Anthracite','#333333', 'grout', 4, true),
-  ('Joint Noir',      '#111111', 'grout', 5, true),
-  ('Joint Sable',     '#C8B89A', 'grout', 6, true);
+  ('Joint Ivoire',     '#F3EFE7', 'grout', 1, true),
+  ('Joint Blanc',      '#FFFFFF', 'grout', 2, true),
+  ('Joint Sable',      '#C8B89A', 'grout', 3, true),
+  ('Joint Gris',       '#808080', 'grout', 4, true),
+  ('Joint Anthracite', '#333333', 'grout', 5, true),
+  ('Joint Noir',       '#111111', 'grout', 6, true);
 
 -- Promotions de démonstration
 insert into public.promotions (
