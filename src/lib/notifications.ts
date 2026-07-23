@@ -354,6 +354,49 @@ export async function emailCodeRetrait(
   await envoyerEmail(params.beneficiaireEmail, contenuCodeRetrait(params));
 }
 
+/** Intervention récurrente à venir → code envoyé au prestataire */
+export function contenuAccesRecurrent(params: {
+  beneficiaireNom: string | null;
+  logement: string;
+  code6: string;
+  interventionLe: string;
+  dureeHeures: number;
+  commerce: string | null;
+  adresseCommerce: string | null;
+}): ContenuEmail {
+  const quand = new Date(params.interventionLe).toLocaleString("fr-FR", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+  return {
+    sujet: `Votre accès à « ${params.logement} » — ${quand}`,
+    html: gabarit(
+      "Votre code pour la prochaine intervention 🔁",
+      `<p style="margin:0 0 12px">Bonjour ${params.beneficiaireNom ?? ""},</p>
+       <p style="margin:0 0 12px">Voici votre code pour récupérer les clés du logement
+       <strong>${params.logement}</strong>, pour l'intervention du <strong>${quand}</strong> :</p>
+       ${blocCode(params.code6)}
+       ${
+         params.commerce
+           ? encadre(`📍 <strong>${params.commerce}</strong><br>${params.adresseCommerce ?? ""}`)
+           : ""
+       }
+       <p style="margin:0;font-size:13px;color:${COULEURS.texteSecondaire}">
+       Ce code n'est valable que ${params.dureeHeures} h autour de votre intervention.
+       Vous en recevrez un nouveau avant la prochaine — inutile de conserver celui-ci.</p>`
+    ),
+  };
+}
+
+export async function emailAccesRecurrent(
+  params: Parameters<typeof contenuAccesRecurrent>[0] & { beneficiaireEmail: string }
+) {
+  await envoyerEmail(params.beneficiaireEmail, contenuAccesRecurrent(params));
+}
+
 /** Clé en retard → relance à l'hôte */
 export function contenuRappelRetour(params: {
   hoteNom: string | null;

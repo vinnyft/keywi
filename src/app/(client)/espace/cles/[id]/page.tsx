@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { actionDefinirEcheance } from "@/lib/actions/client";
+import { AccesRecurrents, type AccesRecurrent } from "@/components/client/AccesRecurrents";
 import { DepotCasier } from "@/components/client/DepotCasier";
 import { PartageCode } from "@/components/client/PartageCode";
 import { SuiviCleTempsReel } from "@/components/client/SuiviCleTempsReel";
@@ -60,7 +61,7 @@ export default async function PageDetailCle({
     cle.statut !== "en_attente" &&
     cle.statut !== "perdue";
 
-  const [{ data: codes }, { data: mouvements }] = await Promise.all([
+  const [{ data: codes }, { data: mouvements }, { data: recurrents }] = await Promise.all([
     supabase
       .from("access_codes")
       .select("*")
@@ -69,6 +70,11 @@ export default async function PageDetailCle({
     supabase
       .from("movements")
       .select("*")
+      .eq("key_id", id)
+      .order("created_at", { ascending: false }),
+    supabase
+      .from("acces_recurrents")
+      .select("id, beneficiaire_nom, beneficiaire_email, jours_semaine, heure_debut, duree_heures, actif")
       .eq("key_id", id)
       .order("created_at", { ascending: false }),
   ]);
@@ -231,6 +237,11 @@ export default async function PageDetailCle({
           {depotCasierPossible && commerce && (
             <DepotCasier cleId={cle.id} casierNom={commerce.nom} />
           )}
+          <AccesRecurrents
+            cleId={cle.id}
+            acces={JSON.parse(JSON.stringify(recurrents ?? [])) as AccesRecurrent[]}
+          />
+
           <PartageCode
             cleId={cle.id}
             logement={cle.logement}

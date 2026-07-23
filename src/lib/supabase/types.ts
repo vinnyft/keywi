@@ -34,6 +34,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      acces_recurrents: {
+        Row: {
+          actif: boolean
+          beneficiaire_email: string | null
+          beneficiaire_nom: string | null
+          created_at: string
+          derniere_occurrence: string | null
+          duree_heures: number
+          heure_debut: string
+          id: string
+          jours_semaine: number[]
+          key_id: string
+        }
+        Insert: {
+          actif?: boolean
+          beneficiaire_email?: string | null
+          beneficiaire_nom?: string | null
+          created_at?: string
+          derniere_occurrence?: string | null
+          duree_heures?: number
+          heure_debut?: string
+          id?: string
+          jours_semaine: number[]
+          key_id: string
+        }
+        Update: {
+          actif?: boolean
+          beneficiaire_email?: string | null
+          beneficiaire_nom?: string | null
+          created_at?: string
+          derniere_occurrence?: string | null
+          duree_heures?: number
+          heure_debut?: string
+          id?: string
+          jours_semaine?: number[]
+          key_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "acces_recurrents_key_id_fkey"
+            columns: ["key_id"]
+            isOneToOne: false
+            referencedRelation: "keys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       access_codes: {
         Row: {
           beneficiaire_email: string | null
@@ -576,6 +623,7 @@ export type Database = {
       est_admin: { Args: never; Returns: boolean }
       generer_code_badge: { Args: never; Returns: string }
       generer_code_retrait: { Args: never; Returns: string }
+      generer_codes_recurrents: { Args: never; Returns: Json }
       get_my_role: {
         Args: never
         Returns: Database["public"]["Enums"]["user_role"]
@@ -613,6 +661,10 @@ export type Database = {
         Returns: boolean
       }
       preparer_depot: { Args: { p_badge_uid: string }; Returns: Json }
+      prochaine_occurrence: {
+        Args: { p_heure: string; p_jours: number[] }
+        Returns: string
+      }
       relancer_retards: { Args: never; Returns: Json }
       remuneration_mois: {
         Args: { p_mois?: string; p_relay_point_id: string }
