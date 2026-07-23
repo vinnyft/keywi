@@ -11,7 +11,12 @@ import Stripe from "stripe";
 export const TARIFS = {
   /** Dépôt à l'unité : 7,90 € TTC */
   depotUnitaire: { centimes: 790, libelle: "Dépôt de clés Keywi (à l'unité)" },
-  /** Abonnement hôte : 5,49 €/mois (sous KeyNest, ~5,95 £) */
+  /**
+   * Abonnement hôte : 5,49 €/mois par trousseau.
+   * Calibré sur le coût réel du réseau : un cycle dépôt + retrait
+   * rémunère le commerçant jusqu'à 2,40 € (voir remuneration_paliers),
+   * le reste couvre le badge NFC, le support et la marge.
+   */
   abonnementHote: { centimes: 549, libelle: "Abonnement hôte Keywi (mensuel)" },
 } as const;
 

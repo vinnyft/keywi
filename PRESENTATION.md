@@ -9,8 +9,18 @@
 
 **Keywi est une plateforme française de gestion de clés par points relais** :
 on dépose ses clés dans un commerce de quartier partenaire (café, librairie,
-pressing…), et on gère les accès à distance grâce à des codes de retrait —
-une alternative française à KeyNest.
+pressing…), et on gère les accès à distance grâce à des codes de retrait.
+
+Deux partis pris structurent le produit :
+
+1. **Le badge physique NFC.** Chaque trousseau porte un badge scanné au
+   dépôt *et* re-scanné au retrait. Cette vérification croisée rend
+   l'erreur de case matériellement impossible — là où un simple code
+   ne prouve que l'identité du retirant, pas celle du trousseau remis.
+2. **Le commerce de quartier rémunéré.** Chaque mouvement scanné
+   rémunère le commerçant selon des paliers progressifs. Le réseau n'est
+   pas un maillage logistique de plus : c'est un revenu complémentaire
+   pour le commerce de proximité.
 
 ---
 
@@ -145,7 +155,9 @@ Keywi/
 ## 7. Modèle économique (intégré au produit)
 
 - **Côté client** : dépôt à l'unité **7,90 €**, ou abonnement hôte
-  **5,49 €/mois** par trousseau (positionné sous KeyNest, ~5,95 £).
+  **5,49 €/mois** par trousseau. Le prix découle du coût du réseau : un
+  cycle dépôt + retrait rémunère le commerçant jusqu'à 2,40 €, le reste
+  couvre le badge NFC, le support et la marge.
 - **Côté commerçant** : rémunération progressive par mouvement scanné —
   0,80 € jusqu'au 50ᵉ du mois, 1,00 € jusqu'au 150ᵉ, puis 1,20 € (paliers
   paramétrables en base).
