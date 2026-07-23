@@ -211,6 +211,7 @@ export type Database = {
       keys: {
         Row: {
           badge_uid: string | null
+          certificat_token: string
           code_badge_imprime: string
           created_at: string
           date_retour_attendue: string | null
@@ -227,6 +228,7 @@ export type Database = {
         }
         Insert: {
           badge_uid?: string | null
+          certificat_token?: string
           code_badge_imprime: string
           created_at?: string
           date_retour_attendue?: string | null
@@ -243,6 +245,7 @@ export type Database = {
         }
         Update: {
           badge_uid?: string | null
+          certificat_token?: string
           code_badge_imprime?: string
           created_at?: string
           date_retour_attendue?: string | null
@@ -605,6 +608,7 @@ export type Database = {
         Args: { p_code: string; p_relay_point_id: string }
         Returns: Json
       }
+      certificat_public: { Args: { p_token: string }; Returns: Json }
       chercher_retrait: { Args: { p_code: string }; Returns: Json }
       confirmer_depot: { Args: { p_key_id: string }; Returns: Json }
       confirmer_retrait: {
@@ -676,6 +680,7 @@ export type Database = {
         Args: { p_badge: string }
         Returns: {
           badge_uid: string | null
+          certificat_token: string
           code_badge_imprime: string
           created_at: string
           date_retour_attendue: string | null

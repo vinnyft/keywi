@@ -11,6 +11,7 @@ import {
 import { createClient } from "@/lib/supabase/server";
 import { actionDefinirEcheance } from "@/lib/actions/client";
 import { AccesRecurrents, type AccesRecurrent } from "@/components/client/AccesRecurrents";
+import { CertificatCle } from "@/components/client/CertificatCle";
 import { DepotCasier } from "@/components/client/DepotCasier";
 import { PartageCode } from "@/components/client/PartageCode";
 import { SuiviCleTempsReel } from "@/components/client/SuiviCleTempsReel";
@@ -230,6 +231,12 @@ export default async function PageDetailCle({
               </ol>
             )}
           </section>
+
+          <CertificatCle
+            cleId={cle.id}
+            token={cle.certificat_token}
+            nbMouvements={mouvements?.length ?? 0}
+          />
         </div>
 
         {/* Colonne codes de retrait */}
