@@ -78,6 +78,47 @@ export type Database = {
           },
         ]
       }
+      api_keys: {
+        Row: {
+          cle_hash: string
+          created_at: string
+          derniere_utilisation: string | null
+          hote_id: string
+          id: string
+          nom: string
+          prefixe: string
+          revoquee_le: string | null
+        }
+        Insert: {
+          cle_hash: string
+          created_at?: string
+          derniere_utilisation?: string | null
+          hote_id: string
+          id?: string
+          nom: string
+          prefixe: string
+          revoquee_le?: string | null
+        }
+        Update: {
+          cle_hash?: string
+          created_at?: string
+          derniere_utilisation?: string | null
+          hote_id?: string
+          id?: string
+          nom?: string
+          prefixe?: string
+          revoquee_le?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "api_keys_hote_id_fkey"
+            columns: ["hote_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       candidatures_commercants: {
         Row: {
           adresse: string
@@ -486,6 +527,17 @@ export type Database = {
     }
     Functions: {
       annuler_depot: { Args: { p_key_id: string }; Returns: Json }
+      api_creer_code_retrait: {
+        Args: {
+          p_beneficiaire_email?: string
+          p_beneficiaire_nom?: string
+          p_expire_at?: string
+          p_hote_id: string
+          p_key_id: string
+        }
+        Returns: Json
+      }
+      api_resoudre_cle: { Args: { p_hash: string }; Returns: Json }
       attribuer_case: {
         Args: { p_relay_point_id: string }
         Returns: {
