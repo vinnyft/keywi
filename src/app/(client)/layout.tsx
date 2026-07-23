@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { KeyRound, PackagePlus, Bell } from "lucide-react";
+import { KeyRound, PackagePlus, Bell, Table2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { Logo } from "@/components/ui/Logo";
 import { actionDeconnexion } from "@/lib/actions/auth";
@@ -32,7 +32,10 @@ export default async function ClientLayout({
   const liens = [
     { href: "/espace", icone: KeyRound, libelle: "Mes clés" },
     ...(estHote
-      ? [{ href: "/espace/deposer", icone: PackagePlus, libelle: "Déposer" }]
+      ? [
+          { href: "/espace/registre", icone: Table2, libelle: "Registre" },
+          { href: "/espace/deposer", icone: PackagePlus, libelle: "Déposer" },
+        ]
       : []),
     { href: "/espace/notifications", icone: Bell, libelle: "Notifications" },
   ];
