@@ -17,7 +17,7 @@ export default async function PageDeposer() {
   // Points relais actifs + nombre de cases libres pour la carte
   const { data: points } = await supabase
     .from("relay_points")
-    .select("id, nom, adresse, code_postal, ville, lat, lng, horaires")
+    .select("id, nom, adresse, code_postal, ville, lat, lng, horaires, type")
     .eq("statut", "actif")
     .order("nom");
 

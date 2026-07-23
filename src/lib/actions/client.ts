@@ -3,7 +3,12 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { emailCodeRetrait } from "@/lib/notifications";
+import {
+  emailCodeRetrait,
+  emailDepotEffectue,
+  emailRetourEffectue,
+  emailClesDisponibles,
+} from "@/lib/notifications";
 import { TARIFS, getStripe, stripeDisponible } from "@/lib/stripe";
 
 /**
@@ -249,4 +254,72 @@ export async function actionDeposerCle(input: {
   await admin.from("keys").update({ paiement_statut: "paye" }).eq("id", cle.id);
 
   return { ok: true, simule: true, keyId: cle.id, badge: badge as string };
+}
+
+type ResultatCasier = { ok: boolean; [cle: string]: unknown };
+
+function txt(valeur: unknown): string {
+  return valeur == null ? "" : String(valeur);
+}
+
+/**
+ * Dépôt self-service dans un casier connecté : l'hôte, devant le
+ * casier, obtient un numéro de case et y range son trousseau.
+ * Pas de commerçant — la RPC fait tout en une transaction.
+ */
+export async function actionCasierDeposer(keyId: string): Promise<ResultatCasier> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return { ok: false, erreur: "Session expirée." };
+
+  const { data, error } = await supabase.rpc("casier_deposer", { p_key_id: keyId });
+  if (error) return { ok: false, message: error.message };
+
+  const r = (data ?? { ok: false }) as unknown as ResultatCasier;
+
+  if (r.ok) {
+    // Emails : l'hôte se confirme à lui-même le dépôt, les
+    // bénéficiaires apprennent que les clés sont disponibles
+    const { data: profil } = await supabase
+      .from("profiles")
+      .select("email, nom")
+      .eq("id", user.id)
+      .single();
+
+    const commun = {
+      hoteEmail: txt(profil?.email),
+      hoteNom: profil?.nom ?? null,
+      logement: txt(r.logement),
+      commerce: txt(r.casier),
+      adresseCommerce: txt(r.adresse_casier),
+    };
+    if (r.type_operation === "retour") {
+      await emailRetourEffectue(commun);
+    } else {
+      await emailDepotEffectue(commun);
+    }
+
+    const beneficiaires = Array.isArray(r.beneficiaires)
+      ? (r.beneficiaires as Array<Record<string, unknown>>)
+      : [];
+    for (const b of beneficiaires) {
+      if (b.email) {
+        await emailClesDisponibles({
+          beneficiaireEmail: txt(b.email),
+          beneficiaireNom: (b.nom as string | null) ?? null,
+          logement: txt(r.logement),
+          commerce: txt(r.casier),
+          adresseCommerce: txt(r.adresse_casier),
+          code6: txt(b.code_6),
+        });
+      }
+    }
+    // Pas de revalidatePath ici : re-rendre la page démonterait
+    // l'écran plein écran qui affiche le numéro de case. Le
+    // rafraîchissement se fait au clic sur « Terminé ».
+  }
+
+  return r;
 }

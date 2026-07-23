@@ -7,6 +7,31 @@ export type Json =
   | Json[]
 
 export type Database = {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       access_codes: {
@@ -358,6 +383,7 @@ export type Database = {
           owner_id: string | null
           photo_url: string | null
           statut: Database["public"]["Enums"]["relay_status"]
+          type: Database["public"]["Enums"]["relay_type"]
           ville: string
         }
         Insert: {
@@ -374,6 +400,7 @@ export type Database = {
           owner_id?: string | null
           photo_url?: string | null
           statut?: Database["public"]["Enums"]["relay_status"]
+          type?: Database["public"]["Enums"]["relay_type"]
           ville?: string
         }
         Update: {
@@ -390,6 +417,7 @@ export type Database = {
           owner_id?: string | null
           photo_url?: string | null
           statut?: Database["public"]["Enums"]["relay_status"]
+          type?: Database["public"]["Enums"]["relay_type"]
           ville?: string
         }
         Relationships: [
@@ -473,6 +501,11 @@ export type Database = {
           isSetofReturn: false
         }
       }
+      casier_deposer: { Args: { p_key_id: string }; Returns: Json }
+      casier_retirer: {
+        Args: { p_code: string; p_relay_point_id: string }
+        Returns: Json
+      }
       chercher_retrait: { Args: { p_code: string }; Returns: Json }
       confirmer_depot: { Args: { p_key_id: string }; Returns: Json }
       confirmer_retrait: {
@@ -496,7 +529,6 @@ export type Database = {
         Returns: Database["public"]["Enums"]["user_role"]
       }
       guest_mes_cles: { Args: never; Returns: Json }
-      relancer_retards: { Args: never; Returns: Json }
       mon_point_relais: {
         Args: never
         Returns: {
@@ -513,6 +545,7 @@ export type Database = {
           owner_id: string | null
           photo_url: string | null
           statut: Database["public"]["Enums"]["relay_status"]
+          type: Database["public"]["Enums"]["relay_type"]
           ville: string
         }
         SetofOptions: {
@@ -528,6 +561,7 @@ export type Database = {
         Returns: boolean
       }
       preparer_depot: { Args: { p_badge_uid: string }; Returns: Json }
+      relancer_retards: { Args: never; Returns: Json }
       remuneration_mois: {
         Args: { p_mois?: string; p_relay_point_id: string }
         Returns: Json
@@ -540,12 +574,14 @@ export type Database = {
           badge_uid: string | null
           code_badge_imprime: string
           created_at: string
+          date_retour_attendue: string | null
           hote_id: string
           id: string
           logement: string
           paiement_statut: Database["public"]["Enums"]["paiement_status"]
           photo_url: string | null
           relay_point_id: string | null
+          retard_notifie: boolean
           slot_id: string | null
           statut: Database["public"]["Enums"]["key_status"]
           updated_at: string
@@ -572,6 +608,7 @@ export type Database = {
       movement_type: "depot" | "retrait" | "retour"
       paiement_status: "en_attente" | "paye" | "offert" | "echoue"
       relay_status: "actif" | "inactif" | "en_attente"
+      relay_type: "commerce" | "casier"
       slot_status: "libre" | "occupee"
       user_role: "hote" | "voyageur" | "commercant" | "admin"
     }
@@ -699,6 +736,9 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {
       access_code_status: ["actif", "utilise", "revoque", "expire"],
@@ -714,6 +754,7 @@ export const Constants = {
       movement_type: ["depot", "retrait", "retour"],
       paiement_status: ["en_attente", "paye", "offert", "echoue"],
       relay_status: ["actif", "inactif", "en_attente"],
+      relay_type: ["commerce", "casier"],
       slot_status: ["libre", "occupee"],
       user_role: ["hote", "voyageur", "commercant", "admin"],
     },

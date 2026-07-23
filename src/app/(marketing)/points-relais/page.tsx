@@ -14,7 +14,7 @@ export default async function PagePointsRelais() {
 
   const { data: points } = await supabase
     .from("relay_points")
-    .select("id, nom, adresse, code_postal, ville, lat, lng, horaires, description")
+    .select("id, nom, adresse, code_postal, ville, lat, lng, horaires, description, type")
     .eq("statut", "actif")
     .order("nom");
 

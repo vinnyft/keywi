@@ -19,18 +19,31 @@ export interface PointRelaisCarte {
   lat: number;
   lng: number;
   casesLibres?: number;
+  /** « casier » = armoire automatique 24/7, sinon commerce partenaire */
+  type?: "commerce" | "casier";
 }
 
 const PARIS_CENTRE: [number, number] = [48.8655, 2.3645];
 
-function marqueur(selectionne: boolean) {
+/**
+ * Deux pictogrammes : une clé pour les commerces partenaires,
+ * une grille de cases pour les casiers connectés (accès 24/7).
+ */
+function marqueur(selectionne: boolean, estCasier: boolean) {
+  const fond = selectionne ? "#3A5230" : estCasier ? "#8A7252" : "#5C7A4A";
+  const pictoCasier = `
+      <rect x="10" y="10" width="7" height="6" rx="1.2" fill="white"/>
+      <rect x="19" y="10" width="7" height="6" rx="1.2" fill="white"/>
+      <rect x="10" y="18" width="7" height="6" rx="1.2" fill="white"/>
+      <rect x="19" y="18" width="7" height="6" rx="1.2" fill="white" opacity="0.55"/>`;
+  const pictoCle = `
+      <circle cx="15" cy="16" r="4.5" stroke="white" stroke-width="2.8" fill="none"/>
+      <path d="M18.5 19.5 L26 27 M23 24 L26 21" stroke="white" stroke-width="2.8" stroke-linecap="round"/>`;
   return divIcon({
     className: "",
     html: `<svg width="36" height="44" viewBox="0 0 36 44" xmlns="http://www.w3.org/2000/svg">
-      <path d="M18 0C8 0 0 8 0 18c0 12 18 26 18 26s18-14 18-26C36 8 28 0 18 0z"
-            fill="${selectionne ? "#3A5230" : "#5C7A4A"}"/>
-      <circle cx="15" cy="16" r="4.5" stroke="white" stroke-width="2.8" fill="none"/>
-      <path d="M18.5 19.5 L26 27 M23 24 L26 21" stroke="white" stroke-width="2.8" stroke-linecap="round"/>
+      <path d="M18 0C8 0 0 8 0 18c0 12 18 26 18 26s18-14 18-26C36 8 28 0 18 0z" fill="${fond}"/>
+      ${estCasier ? pictoCasier : pictoCle}
     </svg>`,
     iconSize: [36, 44],
     iconAnchor: [18, 44],
@@ -64,11 +77,26 @@ export default function CarteRelais({
         <Marker
           key={p.id}
           position={[p.lat, p.lng]}
-          icon={marqueur(p.id === pointSelectionne)}
+          icon={marqueur(p.id === pointSelectionne, p.type === "casier")}
           eventHandlers={surSelection ? { click: () => surSelection(p) } : undefined}
         >
           <Popup>
             <strong>{p.nom}</strong>
+            {p.type === "casier" && (
+              <span
+                style={{
+                  marginLeft: 6,
+                  background: "#8A7252",
+                  color: "white",
+                  borderRadius: 99,
+                  padding: "1px 7px",
+                  fontSize: 11,
+                  fontWeight: 700,
+                }}
+              >
+                24/7
+              </span>
+            )}
             <br />
             {p.adresse}, {p.code_postal} {p.ville}
             {p.casesLibres != null && (

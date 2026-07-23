@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { actionDefinirEcheance } from "@/lib/actions/client";
+import { DepotCasier } from "@/components/client/DepotCasier";
 import { PartageCode } from "@/components/client/PartageCode";
 import { SuiviCleTempsReel } from "@/components/client/SuiviCleTempsReel";
 
@@ -46,7 +47,7 @@ export default async function PageDetailCle({
   const { data: cle } = await supabase
     .from("keys")
     .select(
-      "*, relay_points(nom, adresse, code_postal, ville), slots(numero)"
+      "*, relay_points(nom, adresse, code_postal, ville, type), slots(numero)"
     )
     .eq("id", id)
     .maybeSingle();
@@ -73,6 +74,12 @@ export default async function PageDetailCle({
   ]);
 
   const commerce = cle.relay_points;
+
+  // Casier connecté : l'hôte dépose lui-même, sans comptoir
+  const depotCasierPossible =
+    commerce?.type === "casier" &&
+    cle.paiement_statut !== "en_attente" &&
+    (cle.statut === "en_attente" || cle.statut === "retiree");
 
   return (
     <div>
@@ -220,7 +227,10 @@ export default async function PageDetailCle({
         </div>
 
         {/* Colonne codes de retrait */}
-        <div className="lg:col-span-2">
+        <div className="space-y-5 lg:col-span-2">
+          {depotCasierPossible && commerce && (
+            <DepotCasier cleId={cle.id} casierNom={commerce.nom} />
+          )}
           <PartageCode
             cleId={cle.id}
             logement={cle.logement}
