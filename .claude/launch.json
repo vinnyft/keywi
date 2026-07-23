@@ -9,6 +9,13 @@
         "export PATH=$HOME/.local/node/bin:$PATH && npm run dev"
       ],
       "port": 3000
+    },
+    {
+      "name": "vagues-ocean-static",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": ["-c", "cd /Users/melivincent/Desktop/vagues-ocean-seminaires && python3 -m http.server ${PORT:-4173}"],
+      "port": 4173,
+      "autoPort": true
     }
   ]
 }

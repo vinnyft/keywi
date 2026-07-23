@@ -1,7 +1,14 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { PackagePlus, PackageMinus, RotateCcw, KeyRound, Bell } from "lucide-react";
+import {
+  PackagePlus,
+  PackageMinus,
+  RotateCcw,
+  KeyRound,
+  Bell,
+  CalendarClock,
+} from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRealtime } from "@/hooks/useRealtime";
 import { actionMarquerLue } from "@/lib/actions/client";
@@ -53,6 +60,12 @@ const CONFIGS: Record<
       }`,
     icone: KeyRound,
     classe: "bg-primaire-pale text-primaire-fonce",
+  },
+  cle_en_retard: {
+    titre: (p) =>
+      `Retour attendu dépassé pour « ${p.logement} »${p.commerce ? ` (${p.commerce})` : ""}`,
+    icone: CalendarClock,
+    classe: "bg-red-100 text-red-700",
   },
 };
 

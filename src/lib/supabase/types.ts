@@ -100,12 +100,14 @@ export type Database = {
           badge_uid: string | null
           code_badge_imprime: string
           created_at: string
+          date_retour_attendue: string | null
           hote_id: string
           id: string
           logement: string
           paiement_statut: Database["public"]["Enums"]["paiement_status"]
           photo_url: string | null
           relay_point_id: string | null
+          retard_notifie: boolean
           slot_id: string | null
           statut: Database["public"]["Enums"]["key_status"]
           updated_at: string
@@ -114,12 +116,14 @@ export type Database = {
           badge_uid?: string | null
           code_badge_imprime: string
           created_at?: string
+          date_retour_attendue?: string | null
           hote_id: string
           id?: string
           logement: string
           paiement_statut?: Database["public"]["Enums"]["paiement_status"]
           photo_url?: string | null
           relay_point_id?: string | null
+          retard_notifie?: boolean
           slot_id?: string | null
           statut?: Database["public"]["Enums"]["key_status"]
           updated_at?: string
@@ -128,12 +132,14 @@ export type Database = {
           badge_uid?: string | null
           code_badge_imprime?: string
           created_at?: string
+          date_retour_attendue?: string | null
           hote_id?: string
           id?: string
           logement?: string
           paiement_statut?: Database["public"]["Enums"]["paiement_status"]
           photo_url?: string | null
           relay_point_id?: string | null
+          retard_notifie?: boolean
           slot_id?: string | null
           statut?: Database["public"]["Enums"]["key_status"]
           updated_at?: string
@@ -490,6 +496,7 @@ export type Database = {
         Returns: Database["public"]["Enums"]["user_role"]
       }
       guest_mes_cles: { Args: never; Returns: Json }
+      relancer_retards: { Args: never; Returns: Json }
       mon_point_relais: {
         Args: never
         Returns: {

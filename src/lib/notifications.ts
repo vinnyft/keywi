@@ -354,6 +354,43 @@ export async function emailCodeRetrait(
   await envoyerEmail(params.beneficiaireEmail, contenuCodeRetrait(params));
 }
 
+/** Clé en retard → relance à l'hôte */
+export function contenuRappelRetour(params: {
+  hoteNom: string | null;
+  logement: string;
+  echeance: string;
+  commerce: string | null;
+  adresseCommerce: string | null;
+}): ContenuEmail {
+  const dateEcheance = new Date(params.echeance).toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+  });
+  const lieu = params.commerce
+    ? encadre(`📍 <strong>${params.commerce}</strong><br>${params.adresseCommerce ?? ""}`)
+    : "";
+  return {
+    sujet: `⏰ Clés « ${params.logement} » : retour attendu depuis le ${dateEcheance}`,
+    html: gabarit(
+      "Votre clé n'est pas revenue ⏰",
+      `<p style="margin:0 0 12px">Bonjour ${params.hoteNom ?? ""},</p>
+       <p style="margin:0 0 12px">Vous attendiez le retour des clés du logement
+       <strong>${params.logement}</strong> pour le <strong>${dateEcheance}</strong> —
+       elles n'ont pas encore été rendues.</p>
+       ${lieu}
+       <p style="margin:0">Vérifiez leur statut, contactez le détenteur ou
+       repoussez l'échéance depuis votre espace.</p>
+       ${bouton("Voir la clé", `${SITE}/espace`)}`
+    ),
+  };
+}
+
+export async function emailRappelRetour(
+  params: Parameters<typeof contenuRappelRetour>[0] & { hoteEmail: string }
+) {
+  await envoyerEmail(params.hoteEmail, contenuRappelRetour(params));
+}
+
 /* ------------------------------------------------------------------
    Réponses aux candidatures commerçants (envoyées depuis /admin)
    ------------------------------------------------------------------ */

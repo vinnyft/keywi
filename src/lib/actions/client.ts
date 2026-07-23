@@ -85,6 +85,27 @@ export async function actionRevoquerCode(formData: FormData) {
   revalidatePath(`/espace/cles/${keyId}`);
 }
 
+/**
+ * Fixe (ou efface) la date de retour attendue d'une clé.
+ * Changer l'échéance réarme la relance (retard_notifie repasse à false).
+ */
+export async function actionDefinirEcheance(formData: FormData) {
+  const keyId = String(formData.get("key_id") ?? "");
+  const brut = String(formData.get("date_retour_attendue") ?? "").trim();
+  // <input type="date"> → fin de journée locale, pour ne pas être
+  // « en retard » dès le matin du jour choisi
+  const echeance = brut ? new Date(`${brut}T23:59:59`).toISOString() : null;
+
+  const supabase = await createClient();
+  await supabase
+    .from("keys")
+    .update({ date_retour_attendue: echeance, retard_notifie: false })
+    .eq("id", keyId);
+
+  revalidatePath(`/espace/cles/${keyId}`);
+  revalidatePath("/espace/keyhost");
+}
+
 /** Marque une notification comme lue */
 export async function actionMarquerLue(id: string) {
   const supabase = await createClient();

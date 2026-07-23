@@ -49,7 +49,7 @@ export default async function PageKeyHost() {
       supabase
         .from("keys")
         .select(
-          "id, logement, statut, paiement_statut, code_badge_imprime, relay_point_id, relay_points(nom), slots(numero)"
+          "id, logement, statut, paiement_statut, code_badge_imprime, relay_point_id, date_retour_attendue, relay_points(nom), slots(numero)"
         )
         .eq("hote_id", user!.id)
         .order("created_at", { ascending: false }),
@@ -155,6 +155,7 @@ export default async function PageKeyHost() {
                 <th scope="col" className="px-4 py-3 font-medium">Statut</th>
                 <th scope="col" className="px-4 py-3 font-medium">Point relais</th>
                 <th scope="col" className="px-4 py-3 font-medium">Case</th>
+                <th scope="col" className="px-4 py-3 font-medium">Échéance</th>
                 <th scope="col" className="px-4 py-3 text-right font-medium">Jours occupés</th>
                 <th scope="col" className="px-4 py-3 text-right font-medium">Revenus</th>
                 <th scope="col" className="px-4 py-3"><span className="sr-only">Détail</span></th>
@@ -172,6 +173,26 @@ export default async function PageKeyHost() {
                   <td className="px-4 py-3"><StatutCle statut={l.statut} /></td>
                   <td className="px-4 py-3 text-gray-600">{l.relay_points?.nom ?? "—"}</td>
                   <td className="px-4 py-3">{l.slots ? `n° ${l.slots.numero}` : "—"}</td>
+                  <td className="px-4 py-3">
+                    {l.date_retour_attendue ? (
+                      new Date(l.date_retour_attendue) < new Date() &&
+                      l.statut !== "en_attente" &&
+                      l.statut !== "perdue" ? (
+                        <span className="inline-flex rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700">
+                          En retard
+                        </span>
+                      ) : (
+                        <span className="text-gray-600">
+                          {new Date(l.date_retour_attendue).toLocaleDateString("fr-FR", {
+                            day: "numeric",
+                            month: "short",
+                          })}
+                        </span>
+                      )
+                    ) : (
+                      "—"
+                    )}
+                  </td>
                   <td className="px-4 py-3 text-right font-semibold">
                     {l.jours < 0.05 ? "—" : l.jours < 1 ? "< 1 j" : `${l.jours.toFixed(1)} j`}
                   </td>
