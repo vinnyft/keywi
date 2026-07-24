@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "regions": ["cdg1"],
+  "crons": [
+    {
+      "path": "/api/cron/relances",
+      "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/cron/acces-recurrents",
+      "schedule": "0 * * * *"
+    }
+  ]
+}

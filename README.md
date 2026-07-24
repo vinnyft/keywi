@@ -151,3 +151,60 @@ supabase/
 
 Voir [TESTS.md](TESTS.md) : scénario manuel de bout en bout (dépôt scanné →
 case attribuée → notifications → retrait → case libérée).
+
+## Mettre en production
+
+### 1. Base de données
+
+Créer un projet sur [supabase.com](https://supabase.com), puis pousser le
+schéma et le jeu de démonstration :
+
+```bash
+supabase link --project-ref <ref-du-projet>
+supabase db push          # applique migrations/0001 → 0010
+```
+
+Dans **Authentication → URL Configuration**, renseigner :
+
+- *Site URL* : `https://keywi.fr`
+- *Redirect URLs* : `https://keywi.fr/**`
+
+Sans cela, Supabase **rejette silencieusement** les `redirectTo` : liens
+magiques et réinitialisations de mot de passe renvoient vers l'accueil.
+
+### 2. Application
+
+Déployer sur [Vercel](https://vercel.com) (`vercel.json` est déjà configuré :
+région Paris et tâches planifiées). Variables d'environnement à définir —
+voir `.env.example` :
+
+| Variable | Rôle |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` / `..._ANON_KEY` | Accès public à la base |
+| `SUPABASE_SERVICE_ROLE_KEY` | Traitements serveur (webhook, borne, API) |
+| `NEXT_PUBLIC_SITE_URL` | `https://keywi.fr` — liens dans les emails |
+| `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Paiement réel |
+| `RESEND_API_KEY` / `EMAIL_FROM` | Envoi réel des emails |
+| `CRON_SECRET` | **Indispensable** — protège `/api/cron/*` |
+
+> `CRON_SECRET` : Vercel l'envoie automatiquement en `Authorization: Bearer`
+> aux tâches planifiées. Sans lui, n'importe qui peut déclencher les relances
+> et la génération de codes. Générer avec `openssl rand -base64 32`.
+
+### 3. Services externes
+
+- **Stripe** : ajouter un webhook vers `https://keywi.fr/api/stripe/webhook`
+  sur l'événement `checkout.session.completed`, et reporter le secret de
+  signature. Sans clé Stripe, le paiement reste **simulé**.
+- **Resend** : vérifier le domaine `keywi.fr` pour pouvoir expédier depuis
+  `notifications@keywi.fr`. Sans clé, les emails sont **journalisés en
+  console** au lieu d'être envoyés.
+
+### Tâches planifiées
+
+Configurées dans `vercel.json`, elles ne tournent qu'une fois déployées :
+
+| Tâche | Fréquence | Rôle |
+|---|---|---|
+| `/api/cron/relances` | chaque jour à 9 h | relance les clés en retard |
+| `/api/cron/acces-recurrents` | toutes les heures | génère les codes des interventions à venir |
