@@ -487,6 +487,47 @@ export function contenuCandidatureRefusee(params: {
   };
 }
 
+/**
+ * Point relais créé → accès de l'app comptoir envoyés au commerçant.
+ * Contient le lien de définition du mot de passe : le compte est
+ * créé sans mot de passe connu, le commerçant choisit le sien.
+ */
+export function contenuBienvenueCommercant(params: {
+  nomContact: string;
+  nomCommerce: string;
+  adresse: string;
+  nbCases: number;
+  lienAcces: string;
+}): ContenuEmail {
+  return {
+    sujet: `Votre point relais Keywi est ouvert — ${params.nomCommerce}`,
+    html: gabarit(
+      "Votre point relais est en ligne 🎉",
+      `<p style="margin:0 0 12px">Bonjour ${params.nomContact},</p>
+       <p style="margin:0 0 12px"><strong>${params.nomCommerce}</strong> fait
+       désormais partie du réseau Keywi. Votre comptoir apparaît dès maintenant
+       sur la carte publique.</p>
+       ${encadre(
+         `📍 <strong>${params.nomCommerce}</strong><br>${params.adresse}<br>
+          🗄️ <strong>${params.nbCases} cases</strong> numérotées à votre disposition`
+       )}
+       <p style="margin:0 0 12px">Première étape : choisissez votre mot de passe
+       pour accéder à l'application comptoir.</p>
+       ${bouton("Choisir mon mot de passe", params.lienAcces)}
+       <p style="margin:16px 0 0;font-size:13px;color:${COULEURS.texteSecondaire}">
+       Ensuite, tout tient en deux gestes : scanner le badge quand un client
+       dépose ses clés, saisir le code à 6 caractères quand un bénéficiaire
+       vient les chercher. Chaque mouvement scanné vous est rémunéré.</p>`
+    ),
+  };
+}
+
+export async function emailBienvenueCommercant(
+  params: Parameters<typeof contenuBienvenueCommercant>[0] & { email: string }
+) {
+  await envoyerEmail(params.email, contenuBienvenueCommercant(params));
+}
+
 /** Envoi de la réponse à une candidature (validée ou refusée) */
 export async function emailReponseCandidature(params: {
   email: string;
