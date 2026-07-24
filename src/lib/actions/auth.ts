@@ -96,3 +96,70 @@ export async function actionDeconnexion() {
   await supabase.auth.signOut();
   redirect("/");
 }
+
+type EtatReinit = { erreur: string | null; envoye: boolean };
+
+/**
+ * Demande de réinitialisation : envoie un lien de récupération.
+ * La réponse est volontairement identique que l'adresse existe ou
+ * non — sinon le formulaire permettrait d'énumérer les comptes.
+ */
+export async function actionMotDePasseOublie(
+  _etat: EtatReinit,
+  formData: FormData
+): Promise<EtatReinit> {
+  const email = String(formData.get("email") ?? "").trim();
+  if (!email) return { erreur: "Renseignez votre email.", envoye: false };
+
+  const supabase = await createClient();
+  await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: `${SITE}/api/auth/callback?type=recovery`,
+  });
+
+  return { erreur: null, envoye: true };
+}
+
+type EtatNouveauMdp = { erreur: string | null };
+
+/**
+ * Définit le nouveau mot de passe. La session ouverte par le lien
+ * de récupération fait office d'autorisation.
+ */
+export async function actionNouveauMotDePasse(
+  _etat: EtatNouveauMdp,
+  formData: FormData
+): Promise<EtatNouveauMdp> {
+  const mdp = String(formData.get("mot_de_passe") ?? "");
+  const confirmation = String(formData.get("confirmation") ?? "");
+
+  if (mdp.length < 8) {
+    return { erreur: "Le mot de passe doit faire au moins 8 caractères." };
+  }
+  if (mdp !== confirmation) {
+    return { erreur: "Les deux mots de passe ne correspondent pas." };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) {
+    return { erreur: "Lien expiré. Redemandez un email de réinitialisation." };
+  }
+
+  const { error } = await supabase.auth.updateUser({ password: mdp });
+  if (error) {
+    // Supabase refuse notamment un mot de passe identique au précédent :
+    // le dire explicitement évite à l'utilisateur de tourner en rond
+    const identique =
+      error.message.includes("should be different") ||
+      error.code === "same_password";
+    return {
+      erreur: identique
+        ? "Ce mot de passe est identique à l'ancien. Choisissez-en un autre."
+        : "Mise à jour impossible. Le lien a peut-être expiré — redemandez un email.",
+    };
+  }
+
+  redirect("/espace");
+}

@@ -72,9 +72,17 @@ function FormulaireConnexion() {
             />
           </div>
           <div>
-            <label htmlFor="mot_de_passe" className="block text-sm font-medium">
-              Mot de passe
-            </label>
+            <div className="flex items-baseline justify-between gap-2">
+              <label htmlFor="mot_de_passe" className="block text-sm font-medium">
+                Mot de passe
+              </label>
+              <Link
+                href="/mot-de-passe-oublie"
+                className="text-sm font-medium text-primaire underline"
+              >
+                Oublié ?
+              </Link>
+            </div>
             <input
               id="mot_de_passe"
               name="mot_de_passe"
