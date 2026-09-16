@@ -6,13 +6,8 @@ import { MapPin, ArrowLeft, CheckCircle2, CreditCard } from "lucide-react";
 import { CarteRelaisDynamique } from "@/components/carte/CarteRelaisDynamique";
 import type { PointRelaisCarte } from "@/components/carte/CarteRelais";
 import { actionDeposerCle } from "@/lib/actions/client";
-
-/**
- * Flux de dépôt côté hôte :
- *  1. choix d'un point relais (liste + carte) ;
- *  2. nom du logement ;
- *  3. paiement (Stripe test ou simulé en local) → badge généré.
- */
+import { useLocale } from "@/lib/useLocale";
+import { localise } from "@/lib/i18n";
 
 interface PointDispo extends PointRelaisCarte {
   casesLibres: number;
@@ -20,10 +15,49 @@ interface PointDispo extends PointRelaisCarte {
 
 export function FluxDeposer({ points }: { points: PointDispo[] }) {
   const router = useRouter();
+  const locale = useLocale();
+  const en = locale === "en";
   const [selection, setSelection] = useState<PointDispo | null>(null);
   const [logement, setLogement] = useState("");
   const [attente, setAttente] = useState(false);
   const [erreur, setErreur] = useState<string | null>(null);
+
+  const t = en
+    ? {
+        changer: "Change drop-off point",
+        nomLogement: "Property name",
+        nomAide: "This name helps you recognise the key in your dashboard.",
+        placeholder: "Studio Bretagne, Bastille flat…",
+        produit: "Keywi key drop-off (one-off)",
+        produitAide: "One-time payment. A tag to stick on the keyring is generated right away.",
+        erreurDefaut: "Something went wrong.",
+        payer: "Pay and generate the tag",
+        redirection: "Redirecting to payment…",
+        choix: "Choose the drop-off point where you'll leave your keyring. Slot availability is shown in real time.",
+        caseSingulier: "free slot",
+        casePluriel: "free slots",
+        complet: "Currently full",
+        aucun: "No active drop-off point yet.",
+      }
+    : {
+        changer: "Changer de point relais",
+        nomLogement: "Nom du logement",
+        nomAide: "Ce nom vous aide à reconnaître la clé dans votre tableau de bord.",
+        placeholder: "Studio Bretagne, Appart Bastille…",
+        produit: "Dépôt de clés Keywi (à l'unité)",
+        produitAide: "Paiement unique. Un badge à coller sur le trousseau est généré aussitôt.",
+        erreurDefaut: "Une erreur est survenue.",
+        payer: "Payer et générer le badge",
+        redirection: "Redirection vers le paiement…",
+        choix: "Choisissez le point relais où vous déposerez votre trousseau. La disponibilité des cases est indiquée en temps réel.",
+        caseSingulier: "case libre",
+        casePluriel: "cases libres",
+        complet: "Complet actuellement",
+        aucun: "Aucun point relais actif pour l'instant.",
+      };
+
+  const dispo = (n: number) =>
+    n > 0 ? `${n} ${n > 1 ? t.casePluriel : t.caseSingulier}` : t.complet;
 
   async function payer() {
     if (!selection || logement.trim().length < 2) return;
@@ -32,9 +66,10 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
     const r = await actionDeposerCle({
       relayPointId: selection.id,
       logement: logement.trim(),
+      locale,
     });
     if (!r.ok) {
-      setErreur(r.erreur ?? "Une erreur est survenue.");
+      setErreur(r.erreur ?? t.erreurDefaut);
       setAttente(false);
       return;
     }
@@ -42,10 +77,9 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
       window.location.href = r.url; // Stripe Checkout
       return;
     }
-    router.push(`/espace/cles/${r.keyId}?paiement=simule`);
+    router.push(localise(`/espace/cles/${r.keyId}?paiement=simule`, locale));
   }
 
-  // Étape 2 : nom du logement + paiement
   if (selection) {
     return (
       <div className="mx-auto max-w-lg">
@@ -53,7 +87,7 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
           onClick={() => setSelection(null)}
           className="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-encre"
         >
-          <ArrowLeft size={16} aria-hidden="true" /> Changer de point relais
+          <ArrowLeft size={16} aria-hidden="true" /> {t.changer}
         </button>
 
         <div className="mt-3 rounded-2xl border border-gray-200 bg-white p-5">
@@ -74,7 +108,7 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
           >
             <div>
               <label htmlFor="logement" className="block text-sm font-medium">
-                Nom du logement
+                {t.nomLogement}
               </label>
               <input
                 id="logement"
@@ -83,22 +117,17 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
                 required
                 autoFocus
                 className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2"
-                placeholder="Studio Bretagne, Appart Bastille…"
+                placeholder={t.placeholder}
               />
-              <p className="mt-1 text-xs text-gray-500">
-                Ce nom vous aide à reconnaître la clé dans votre tableau de bord.
-              </p>
+              <p className="mt-1 text-xs text-gray-500">{t.nomAide}</p>
             </div>
 
             <div className="rounded-xl bg-sable p-4 text-sm">
               <div className="flex items-center justify-between">
-                <span>Dépôt de clés Keywi (à l&apos;unité)</span>
-                <span className="font-bold">7,90 €</span>
+                <span>{t.produit}</span>
+                <span className="font-bold">{en ? "€7.90" : "7,90 €"}</span>
               </div>
-              <p className="mt-1 text-xs text-gray-500">
-                Paiement unique. Un badge à coller sur le trousseau est généré
-                aussitôt.
-              </p>
+              <p className="mt-1 text-xs text-gray-500">{t.produitAide}</p>
             </div>
 
             {erreur && (
@@ -113,7 +142,7 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-primaire px-4 py-3 font-semibold text-white hover:bg-primaire-fonce disabled:opacity-60"
             >
               <CreditCard size={18} aria-hidden="true" />
-              {attente ? "Redirection vers le paiement…" : "Payer et générer le badge"}
+              {attente ? t.redirection : t.payer}
             </button>
           </form>
         </div>
@@ -121,15 +150,11 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
     );
   }
 
-  // Étape 1 : choix du point relais
   return (
     <div>
       <div className="flex items-start gap-2">
         <CheckCircle2 size={20} className="mt-0.5 shrink-0 text-primaire" aria-hidden="true" />
-        <p className="text-gray-700">
-          Choisissez le point relais où vous déposerez votre trousseau. La
-          disponibilité des cases est indiquée en temps réel.
-        </p>
+        <p className="text-gray-700">{t.choix}</p>
       </div>
 
       <div className="mt-5 grid gap-6 lg:grid-cols-5">
@@ -153,16 +178,14 @@ export function FluxDeposer({ points }: { points: PointDispo[] }) {
                     p.casesLibres > 0 ? "text-menthe" : "text-red-700"
                   }`}
                 >
-                  {p.casesLibres > 0
-                    ? `${p.casesLibres} case${p.casesLibres > 1 ? "s" : ""} libre${p.casesLibres > 1 ? "s" : ""}`
-                    : "Complet actuellement"}
+                  {dispo(p.casesLibres)}
                 </p>
               </button>
             </li>
           ))}
           {points.length === 0 && (
             <li className="rounded-2xl border border-gray-200 bg-white p-5 text-gray-600">
-              Aucun point relais actif pour l&apos;instant.
+              {t.aucun}
             </li>
           )}
         </ul>

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { emailAccesRecurrent } from "@/lib/notifications";
+import { verifierCron } from "@/lib/cron-auth";
 
 /**
  * Tâche planifiée — accès récurrents.
@@ -11,17 +12,12 @@ import { emailAccesRecurrent } from "@/lib/notifications";
  * rapprochées ne produisent pas deux codes pour la même
  * intervention.
  *
- * Protection : si CRON_SECRET est défini, l'en-tête
- * `Authorization: Bearer <CRON_SECRET>` est exigé.
+ * Protection : `Authorization: Bearer <CRON_SECRET>`, exigé dès que
+ * le secret existe et obligatoire en production (voir `verifierCron`).
  */
 export async function GET(request: Request) {
-  const secret = process.env.CRON_SECRET;
-  if (secret) {
-    const entete = request.headers.get("authorization");
-    if (entete !== `Bearer ${secret}`) {
-      return NextResponse.json({ erreur: "Non autorisé" }, { status: 401 });
-    }
-  }
+  const refus = verifierCron(request);
+  if (refus) return refus;
 
   const admin = createAdminClient();
   const { data, error } = await admin.rpc("generer_codes_recurrents");

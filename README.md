@@ -47,8 +47,15 @@ arrondissements de Paris, 5 hôtes, 15 clés aux statuts variés.
 Pour réinitialiser la base à l'état de démo à tout moment :
 
 ```bash
-supabase db reset
+npm run db:reset
 ```
+
+> **Si la CLI prétend que rien ne tourne** alors que
+> `http://127.0.0.1:54321` répond : elle interroge le démon Docker du
+> contexte actif, et votre stack tourne ailleurs (Lima, Colima,
+> OrbStack). Les scripts `npm run supabase`, `npm run db:reset` et
+> `npm run db:up` passent par une enveloppe qui trouve le bon démon —
+> voir [DEPLOIEMENT.md](DEPLOIEMENT.md).
 
 ### 3. Variables d'environnement
 
@@ -146,6 +153,15 @@ supabase/
 - **Temps réel** : les tables `keys`, `slots`, `movements`, `notifications`
   sont publiées sur Supabase Realtime ; les dashboards se mettent à jour
   sans rechargement.
+- **Assistant intégré** : un bot d'assistance (arbre de décision, sans
+  IA ni appel réseau) répond aux questions courantes et bascule vers
+  `sav@keywi.fr` quand l'arbre ne suffit pas
+  (`src/content/assistance.ts`, `src/components/support/AssistanceBot.tsx`).
+- **Tenue en charge** : pages publiques statiques ou en ISR (carte des
+  points relais), proxy d'authentification restreint aux espaces privés,
+  et limitation de débit en base sur les points sensibles. Le volet
+  infrastructure (WAF, pooler) est décrit dans
+  [DEPLOIEMENT.md](DEPLOIEMENT.md) § 6.
 
 ## Tester le parcours complet
 
@@ -154,51 +170,18 @@ case attribuée → notifications → retrait → case libérée).
 
 ## Mettre en production
 
-### 1. Base de données
+Guide complet — Supabase, Stripe, variables d'environnement et
+vérifications après déploiement : **[DEPLOIEMENT.md](DEPLOIEMENT.md)**.
 
-Créer un projet sur [supabase.com](https://supabase.com), puis pousser le
-schéma et le jeu de démonstration :
+Trois garde-fous à connaître, tous volontaires : en production, un
+`STRIPE_SECRET_KEY` absent fait **refuser le dépôt** (plutôt que de
+l'offrir), un `STRIPE_WEBHOOK_SECRET` absent fait **refuser le
+webhook**, et un `CRON_SECRET` absent fait **refuser les tâches
+planifiées**. Mieux vaut une fonction indisponible qu'une fonction
+ouverte à tous.
 
-```bash
-supabase link --project-ref <ref-du-projet>
-supabase db push          # applique migrations/0001 → 0010
-```
-
-Dans **Authentication → URL Configuration**, renseigner :
-
-- *Site URL* : `https://keywi.fr`
-- *Redirect URLs* : `https://keywi.fr/**`
-
-Sans cela, Supabase **rejette silencieusement** les `redirectTo` : liens
-magiques et réinitialisations de mot de passe renvoient vers l'accueil.
-
-### 2. Application
-
-Déployer sur [Vercel](https://vercel.com) (`vercel.json` est déjà configuré :
-région Paris et tâches planifiées). Variables d'environnement à définir —
-voir `.env.example` :
-
-| Variable | Rôle |
-|---|---|
-| `NEXT_PUBLIC_SUPABASE_URL` / `..._ANON_KEY` | Accès public à la base |
-| `SUPABASE_SERVICE_ROLE_KEY` | Traitements serveur (webhook, borne, API) |
-| `NEXT_PUBLIC_SITE_URL` | `https://keywi.fr` — liens dans les emails |
-| `STRIPE_SECRET_KEY` / `STRIPE_WEBHOOK_SECRET` | Paiement réel |
-| `RESEND_API_KEY` / `EMAIL_FROM` | Envoi réel des emails |
-| `CRON_SECRET` | **Indispensable** — protège `/api/cron/*` |
-
-> `CRON_SECRET` : Vercel l'envoie automatiquement en `Authorization: Bearer`
-> aux tâches planifiées. Sans lui, n'importe qui peut déclencher les relances
-> et la génération de codes. Générer avec `openssl rand -base64 32`.
-
-### 3. Services externes
-
-- **Stripe** : ajouter un webhook vers `https://keywi.fr/api/stripe/webhook`
-  sur l'événement `checkout.session.completed`, et reporter le secret de
-  signature. Sans clé Stripe, le paiement reste **simulé**.
-- **Resend** : vérifier le domaine `keywi.fr` pour pouvoir expédier depuis
-  `notifications@keywi.fr`. Sans clé, les emails sont **journalisés en
-  console** au lieu d'être envoyés.
+L'état de la sécurité et du RGPD est décrit dans
+[AUDIT-RGPD.md](AUDIT-RGPD.md).
 
 ### Tâches planifiées
 
@@ -208,3 +191,4 @@ Configurées dans `vercel.json`, elles ne tournent qu'une fois déployées :
 |---|---|---|
 | `/api/cron/relances` | chaque jour à 9 h | relance les clés en retard |
 | `/api/cron/acces-recurrents` | toutes les heures | génère les codes des interventions à venir |
+| `/api/cron/purge` | chaque jour à 3 h 30 | applique les durées de conservation (RGPD) |

@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { execFile } from "node:child_process";
+import { execFile, execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import { promisify } from "node:util";
 
@@ -31,6 +31,51 @@ function conteneurDb(): string {
     // config illisible : on retombe sur la convention
   }
   return "supabase_db_keywi";
+}
+
+/**
+ * Endroit où parler à Docker.
+ *
+ * Le stack local peut tourner sous Docker Desktop, Lima, Colima ou
+ * OrbStack — chacun expose son démon sur un socket différent. Plutôt
+ * que de parier sur l'un d'eux (ce qui casse dès qu'on change de
+ * backend), on cherche celui qui héberge réellement le conteneur.
+ * Même logique que scripts/supabase.sh, réduite à ce dont les
+ * tests ont besoin. Résultat mémoïsé.
+ */
+let dockerHostResolu: string | undefined | null = null;
+
+function resoudreDockerHost(): string | undefined {
+  if (dockerHostResolu !== null) return dockerHostResolu ?? undefined;
+
+  const conteneur = conteneurDb();
+  const home = process.env.HOME ?? "";
+  const candidats = [
+    process.env.DOCKER_HOST,
+    `unix://${home}/.docker/run/docker.sock`,
+    `unix://${home}/.lima/docker/sock/docker.sock`,
+    `unix://${home}/.colima/default/docker.sock`,
+    `unix://${home}/.orbstack/run/docker.sock`,
+    "unix:///var/run/docker.sock",
+  ].filter((s): s is string => Boolean(s));
+
+  for (const host of candidats) {
+    try {
+      execFileSync("docker", ["inspect", conteneur], {
+        env: { ...process.env, DOCKER_HOST: host },
+        stdio: "ignore",
+      });
+      dockerHostResolu = host;
+      return host;
+    } catch {
+      // Ce démon n'a pas le conteneur : on essaie le suivant.
+    }
+  }
+
+  // Aucun candidat concluant : on laisse l'appelant échouer avec un
+  // message docker explicite plutôt que d'avaler l'erreur ici.
+  dockerHostResolu = undefined;
+  return undefined;
 }
 
 /**
@@ -77,17 +122,14 @@ commit;
 `;
 
 async function psql(sql: string): Promise<string> {
+  const dockerHost = resoudreDockerHost();
   const { stdout } = await executer(
     "docker",
     ["exec", "-i", conteneurDb(), "psql", "-U", "postgres", "-t", "-A", "-c", sql],
     {
-      env: {
-        ...process.env,
-        // Colima/Lima expose le démon sur un socket non standard
-        DOCKER_HOST:
-          process.env.DOCKER_HOST ??
-          `unix://${process.env.HOME}/.lima/docker/sock/docker.sock`,
-      },
+      env: dockerHost
+        ? { ...process.env, DOCKER_HOST: dockerHost }
+        : process.env,
     }
   );
   return stdout.trim();

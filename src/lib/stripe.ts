@@ -3,9 +3,13 @@ import "server-only";
 import Stripe from "stripe";
 
 /**
- * Client Stripe (mode test).
+ * Client Stripe.
+ *
  * Sans STRIPE_SECRET_KEY, le projet bascule en « paiement simulé » :
- * le flux complet reste testable en local sans compte Stripe.
+ * le flux complet reste testable en local sans compte Stripe. Ce
+ * repli valide les paiements d'office — il n'a donc rien à faire en
+ * production, où une clé manquante est une panne et non un mode de
+ * fonctionnement. `modePaiement()` est le seul point de décision.
  */
 
 export const TARIFS = {
@@ -22,6 +26,19 @@ export const TARIFS = {
 
 export function stripeDisponible(): boolean {
   return Boolean(process.env.STRIPE_SECRET_KEY);
+}
+
+/** `stripe` : encaissement réel · `simule` : validé d'office (dev seul) */
+export type ModePaiement = "stripe" | "simule";
+
+/**
+ * Mode de paiement actif, ou `null` si aucun n'est utilisable —
+ * c'est-à-dire en production sans clé Stripe. L'appelant doit alors
+ * refuser la commande plutôt que de la valider dans le vide.
+ */
+export function modePaiement(): ModePaiement | null {
+  if (process.env.STRIPE_SECRET_KEY) return "stripe";
+  return process.env.NODE_ENV === "production" ? null : "simule";
 }
 
 export function getStripe(): Stripe {

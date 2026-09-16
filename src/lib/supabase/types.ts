@@ -90,6 +90,7 @@ export type Database = {
           expire_at: string | null
           id: string
           key_id: string
+          langue: string
           qr_payload: string
           statut: Database["public"]["Enums"]["access_code_status"]
         }
@@ -101,6 +102,7 @@ export type Database = {
           expire_at?: string | null
           id?: string
           key_id: string
+          langue?: string
           qr_payload: string
           statut?: Database["public"]["Enums"]["access_code_status"]
         }
@@ -112,6 +114,7 @@ export type Database = {
           expire_at?: string | null
           id?: string
           key_id?: string
+          langue?: string
           qr_payload?: string
           statut?: Database["public"]["Enums"]["access_code_status"]
         }
@@ -133,6 +136,7 @@ export type Database = {
           hote_id: string
           id: string
           nom: string
+          portees: string[]
           prefixe: string
           revoquee_le: string | null
         }
@@ -143,6 +147,7 @@ export type Database = {
           hote_id: string
           id?: string
           nom: string
+          portees?: string[]
           prefixe: string
           revoquee_le?: string | null
         }
@@ -153,6 +158,7 @@ export type Database = {
           hote_id?: string
           id?: string
           nom?: string
+          portees?: string[]
           prefixe?: string
           revoquee_le?: string | null
         }
@@ -434,25 +440,31 @@ export type Database = {
       }
       profiles: {
         Row: {
+          anonymise_le: string | null
           created_at: string
           email: string | null
           id: string
+          langue: string
           nom: string | null
           role: Database["public"]["Enums"]["user_role"]
           telephone: string | null
         }
         Insert: {
+          anonymise_le?: string | null
           created_at?: string
           email?: string | null
           id: string
+          langue?: string
           nom?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           telephone?: string | null
         }
         Update: {
+          anonymise_le?: string | null
           created_at?: string
           email?: string | null
           id?: string
+          langue?: string
           nom?: string | null
           role?: Database["public"]["Enums"]["user_role"]
           telephone?: string | null
@@ -571,6 +583,30 @@ export type Database = {
           },
         ]
       }
+      tentatives: {
+        Row: {
+          action: string
+          created_at: string
+          empreinte_cle: string
+          empreinte_ip: string | null
+          id: number
+        }
+        Insert: {
+          action: string
+          created_at?: string
+          empreinte_cle: string
+          empreinte_ip?: string | null
+          id?: number
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          empreinte_cle?: string
+          empreinte_ip?: string | null
+          id?: number
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -587,6 +623,7 @@ export type Database = {
         }
         Returns: Json
       }
+      apercu_suppression_compte: { Args: never; Returns: Json }
       api_resoudre_cle: { Args: { p_hash: string }; Returns: Json }
       attribuer_case: {
         Args: { p_relay_point_id: string }
@@ -625,6 +662,7 @@ export type Database = {
         Returns: Json
       }
       est_admin: { Args: never; Returns: boolean }
+      finaliser_suppression_auth: { Args: { p_user_id: string }; Returns: Json }
       generer_code_badge: { Args: never; Returns: string }
       generer_code_retrait: { Args: never; Returns: string }
       generer_codes_recurrents: { Args: never; Returns: Json }
@@ -660,6 +698,7 @@ export type Database = {
         }
       }
       possede_cle: { Args: { p_key_id: string }; Returns: boolean }
+      purger_donnees: { Args: never; Returns: Json }
       possede_point_relais: {
         Args: { p_relay_point_id: string }
         Returns: boolean
@@ -675,7 +714,23 @@ export type Database = {
         Returns: Json
       }
       revoquer_code: { Args: { p_access_code_id: string }; Returns: Json }
+      reinitialiser_limite: {
+        Args: { p_action: string; p_empreinte_cle: string }
+        Returns: undefined
+      }
       stats_publiques: { Args: never; Returns: Json }
+      supprimer_mon_compte: { Args: never; Returns: Json }
+      verifier_limite: {
+        Args: {
+          p_action: string
+          p_empreinte_cle: string
+          p_empreinte_ip: string | null
+          p_fenetre_secondes: number
+          p_max_cle: number
+          p_max_ip: number
+        }
+        Returns: Json
+      }
       trouver_cle_par_badge: {
         Args: { p_badge: string }
         Returns: {

@@ -12,10 +12,12 @@ import {
 import { createClient } from "@/lib/supabase/client";
 import { useRealtime } from "@/hooks/useRealtime";
 import { actionMarquerLue } from "@/lib/actions/client";
+import { useLocale } from "@/lib/useLocale";
 
 /**
  * Centre de notifications in-app : alimenté en base par les
- * fonctions RPC, livré en direct par Supabase Realtime.
+ * fonctions RPC, livré en direct par Supabase Realtime. Les libellés
+ * suivent la langue courante.
  */
 
 interface Notification {
@@ -33,41 +35,79 @@ interface Notification {
   created_at: string;
 }
 
-const CONFIGS: Record<
-  string,
-  { titre: (p: Notification["payload"]) => string; icone: typeof Bell; classe: string }
-> = {
-  depot_effectue: {
-    titre: (p) => `Vos clés « ${p.logement} » ont bien été déposées chez ${p.commerce}`,
-    icone: PackagePlus,
-    classe: "bg-primaire-pale text-primaire-fonce",
-  },
-  retour_effectue: {
-    titre: (p) => `Vos clés « ${p.logement} » sont de retour chez ${p.commerce}`,
-    icone: RotateCcw,
-    classe: "bg-ambre-pale text-ambre",
-  },
-  retrait_effectue: {
-    titre: (p) =>
-      `Clés « ${p.logement} » récupérées par ${p.beneficiaire ?? "le bénéficiaire"} chez ${p.commerce}`,
-    icone: PackageMinus,
-    classe: "bg-menthe-pale text-menthe",
-  },
-  cles_disponibles: {
-    titre: (p) =>
-      `Les clés de « ${p.logement} » sont disponibles${p.commerce ? ` chez ${p.commerce}` : ""}${
-        p.code_6 ? ` — code ${p.code_6}` : ""
-      }`,
-    icone: KeyRound,
-    classe: "bg-primaire-pale text-primaire-fonce",
-  },
-  cle_en_retard: {
-    titre: (p) =>
-      `Retour attendu dépassé pour « ${p.logement} »${p.commerce ? ` (${p.commerce})` : ""}`,
-    icone: CalendarClock,
-    classe: "bg-red-100 text-red-700",
-  },
+type Config = {
+  titre: (p: Notification["payload"]) => string;
+  icone: typeof Bell;
+  classe: string;
 };
+
+function configs(en: boolean): Record<string, Config> {
+  if (en) {
+    return {
+      depot_effectue: {
+        titre: (p) => `Your keys “${p.logement}” have been dropped off at ${p.commerce}`,
+        icone: PackagePlus,
+        classe: "bg-primaire-pale text-primaire-fonce",
+      },
+      retour_effectue: {
+        titre: (p) => `Your keys “${p.logement}” are back at ${p.commerce}`,
+        icone: RotateCcw,
+        classe: "bg-ambre-pale text-ambre",
+      },
+      retrait_effectue: {
+        titre: (p) =>
+          `Keys “${p.logement}” picked up by ${p.beneficiaire ?? "the recipient"} at ${p.commerce}`,
+        icone: PackageMinus,
+        classe: "bg-menthe-pale text-menthe",
+      },
+      cles_disponibles: {
+        titre: (p) =>
+          `The keys for “${p.logement}” are available${p.commerce ? ` at ${p.commerce}` : ""}${
+            p.code_6 ? ` — code ${p.code_6}` : ""
+          }`,
+        icone: KeyRound,
+        classe: "bg-primaire-pale text-primaire-fonce",
+      },
+      cle_en_retard: {
+        titre: (p) => `Return overdue for “${p.logement}”${p.commerce ? ` (${p.commerce})` : ""}`,
+        icone: CalendarClock,
+        classe: "bg-red-100 text-red-700",
+      },
+    };
+  }
+  return {
+    depot_effectue: {
+      titre: (p) => `Vos clés « ${p.logement} » ont bien été déposées chez ${p.commerce}`,
+      icone: PackagePlus,
+      classe: "bg-primaire-pale text-primaire-fonce",
+    },
+    retour_effectue: {
+      titre: (p) => `Vos clés « ${p.logement} » sont de retour chez ${p.commerce}`,
+      icone: RotateCcw,
+      classe: "bg-ambre-pale text-ambre",
+    },
+    retrait_effectue: {
+      titre: (p) =>
+        `Clés « ${p.logement} » récupérées par ${p.beneficiaire ?? "le bénéficiaire"} chez ${p.commerce}`,
+      icone: PackageMinus,
+      classe: "bg-menthe-pale text-menthe",
+    },
+    cles_disponibles: {
+      titre: (p) =>
+        `Les clés de « ${p.logement} » sont disponibles${p.commerce ? ` chez ${p.commerce}` : ""}${
+          p.code_6 ? ` — code ${p.code_6}` : ""
+        }`,
+      icone: KeyRound,
+      classe: "bg-primaire-pale text-primaire-fonce",
+    },
+    cle_en_retard: {
+      titre: (p) =>
+        `Retour attendu dépassé pour « ${p.logement} »${p.commerce ? ` (${p.commerce})` : ""}`,
+      icone: CalendarClock,
+      classe: "bg-red-100 text-red-700",
+    },
+  };
+}
 
 export function CentreNotifications({
   userId,
@@ -76,6 +116,9 @@ export function CentreNotifications({
   userId: string;
   notificationsInitiales: Notification[];
 }) {
+  const locale = useLocale();
+  const en = locale === "en";
+  const CONFIGS = configs(en);
   const [notifications, setNotifications] = useState(notificationsInitiales);
 
   const recharger = useCallback(async () => {
@@ -96,8 +139,9 @@ export function CentreNotifications({
       <h1 className="text-2xl font-bold">Notifications</h1>
       {notifications.length === 0 ? (
         <p className="mt-6 rounded-2xl border border-gray-200 bg-white p-8 text-center text-gray-600">
-          Aucune notification. Les dépôts et retraits de vos clés apparaîtront ici
-          en temps réel.
+          {en
+            ? "No notifications yet. Drop-offs and pickups of your keys will appear here in real time."
+            : "Aucune notification. Les dépôts et retraits de vos clés apparaîtront ici en temps réel."}
         </p>
       ) : (
         <ul className="mt-5 space-y-2" aria-live="polite">
@@ -125,7 +169,7 @@ export function CentreNotifications({
                     {config.titre(n.payload)}
                   </p>
                   <p className="mt-0.5 text-xs text-gray-500">
-                    {new Date(n.created_at).toLocaleString("fr-FR", {
+                    {new Date(n.created_at).toLocaleString(en ? "en-IE" : "fr-FR", {
                       dateStyle: "medium",
                       timeStyle: "short",
                     })}
@@ -134,7 +178,6 @@ export function CentreNotifications({
                 {!n.lu && (
                   <button
                     onClick={() => {
-                      // Optimiste : marquée lue localement puis en base
                       setNotifications((prev) =>
                         prev.map((x) => (x.id === n.id ? { ...x, lu: true } : x))
                       );
@@ -142,7 +185,7 @@ export function CentreNotifications({
                     }}
                     className="shrink-0 text-xs font-medium text-primaire underline"
                   >
-                    Marquer lue
+                    {en ? "Mark read" : "Marquer lue"}
                   </button>
                 )}
               </li>

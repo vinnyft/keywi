@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { Search, Download, ChevronRight, CalendarClock } from "lucide-react";
 import { StatutCle } from "@/components/ui/StatutCle";
+import { useLocale } from "@/lib/useLocale";
+import { localise, type Locale } from "@/lib/i18n";
 import type { Database } from "@/lib/supabase/types";
 
 /**
@@ -29,13 +31,15 @@ export interface LigneRegistre {
   dernierMouvement: string | null;
 }
 
-const FILTRES_STATUT: { valeur: "tous" | KeyStatus | "retard"; libelle: string }[] = [
-  { valeur: "tous", libelle: "Tous" },
-  { valeur: "retard", libelle: "En retard" },
-  { valeur: "en_attente", libelle: "En attente" },
-  { valeur: "deposee", libelle: "Déposées" },
-  { valeur: "prete_retrait", libelle: "Prêtes au retrait" },
-  { valeur: "retiree", libelle: "Retirées" },
+type ValeurFiltre = "tous" | KeyStatus | "retard";
+
+const FILTRES_STATUT: { valeur: ValeurFiltre; libelle: Record<Locale, string> }[] = [
+  { valeur: "tous", libelle: { fr: "Tous", en: "All" } },
+  { valeur: "retard", libelle: { fr: "En retard", en: "Overdue" } },
+  { valeur: "en_attente", libelle: { fr: "En attente", en: "Pending" } },
+  { valeur: "deposee", libelle: { fr: "Déposées", en: "Dropped off" } },
+  { valeur: "prete_retrait", libelle: { fr: "Prêtes au retrait", en: "Ready for pickup" } },
+  { valeur: "retiree", libelle: { fr: "Retirées", en: "Picked up" } },
 ];
 
 function estEnRetard(l: LigneRegistre) {
@@ -47,12 +51,60 @@ function estEnRetard(l: LigneRegistre) {
   );
 }
 
-const dateCourte = (d: string) =>
-  new Date(d).toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "2-digit" });
-
 export function RegistreCles({ lignes }: { lignes: LigneRegistre[] }) {
+  const locale = useLocale();
+  const en = locale === "en";
   const [recherche, setRecherche] = useState("");
-  const [filtre, setFiltre] = useState<"tous" | KeyStatus | "retard">("tous");
+  const [filtre, setFiltre] = useState<ValeurFiltre>("tous");
+
+  const dateCourte = (d: string) =>
+    new Date(d).toLocaleDateString(en ? "en-IE" : "fr-FR", {
+      day: "numeric",
+      month: "short",
+      year: "2-digit",
+    });
+
+  const t = en
+    ? {
+        rechercheLabel: "Search a property, a tag or a place",
+        recherchePlaceholder: "Property, tag, drop-off point…",
+        exportCsv: "Export CSV",
+        filtrerLabel: "Filter by status",
+        resultats: (n: number, total: number) =>
+          `${n} keyring${n > 1 ? "s" : ""} of ${total}`,
+        aucun: "No keyring matches this search.",
+        thLogement: "Property",
+        thStatut: "Status",
+        thLieu: "Place",
+        thCase: "Slot",
+        thEcheance: "Deadline",
+        thMouvements: "Movements",
+        thDernier: "Latest",
+        thDetail: "Details",
+        enRetard: "Overdue",
+        caseNum: (n: number) => `no. ${n}`,
+        detailDe: (l: string) => `Details of ${l}`,
+      }
+    : {
+        rechercheLabel: "Rechercher un logement, un badge ou un lieu",
+        recherchePlaceholder: "Logement, badge, point relais…",
+        exportCsv: "Export CSV",
+        filtrerLabel: "Filtrer par statut",
+        resultats: (n: number, total: number) =>
+          `${n} trousseau${n > 1 ? "x" : ""} sur ${total}`,
+        aucun: "Aucun trousseau ne correspond à cette recherche.",
+        thLogement: "Logement",
+        thStatut: "Statut",
+        thLieu: "Lieu",
+        thCase: "Case",
+        thEcheance: "Échéance",
+        thMouvements: "Mouvements",
+        thDernier: "Dernier",
+        thDetail: "Détail",
+        enRetard: "En retard",
+        caseNum: (n: number) => `n° ${n}`,
+        detailDe: (l: string) => `Détail de ${l}`,
+      };
 
   const resultats = useMemo(() => {
     const q = recherche.trim().toLowerCase();
@@ -82,27 +134,30 @@ export function RegistreCles({ lignes }: { lignes: LigneRegistre[] }) {
             aria-hidden="true"
           />
           <label htmlFor="recherche-registre" className="sr-only">
-            Rechercher un logement, un badge ou un lieu
+            {t.rechercheLabel}
           </label>
           <input
             id="recherche-registre"
             type="search"
             value={recherche}
             onChange={(e) => setRecherche(e.target.value)}
-            placeholder="Logement, badge, point relais…"
+            placeholder={t.recherchePlaceholder}
             className="w-full rounded-lg border border-gray-300 py-2 pl-9 pr-3 text-sm"
           />
         </div>
+        {/* Téléchargement de fichier (route API renvoyant un CSV), pas une
+            navigation de page : l'ancre est correcte, <Link> ne convient pas. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
         <a
           href="/api/export/mouvements"
           className="inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-semibold hover:bg-gray-50"
         >
-          <Download size={16} aria-hidden="true" /> Export CSV
+          <Download size={16} aria-hidden="true" /> {t.exportCsv}
         </a>
       </div>
 
       {/* Filtres */}
-      <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Filtrer par statut">
+      <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label={t.filtrerLabel}>
         {FILTRES_STATUT.map((f) => {
           const actif = filtre === f.valeur;
           const compteur = f.valeur === "retard" ? nbRetard : null;
@@ -117,7 +172,7 @@ export function RegistreCles({ lignes }: { lignes: LigneRegistre[] }) {
                   : "border border-gray-300 text-gray-700 hover:bg-gray-50"
               }`}
             >
-              {f.libelle}
+              {f.libelle[locale]}
               {compteur != null && compteur > 0 && (
                 <span
                   className={`ml-1.5 rounded-full px-1.5 text-xs font-bold ${
@@ -133,41 +188,44 @@ export function RegistreCles({ lignes }: { lignes: LigneRegistre[] }) {
       </div>
 
       <p className="mt-3 text-sm text-gray-600" aria-live="polite">
-        {resultats.length} trousseau{resultats.length > 1 ? "x" : ""} sur {lignes.length}
+        {t.resultats(resultats.length, lignes.length)}
       </p>
 
       {/* Tableau */}
       {resultats.length === 0 ? (
         <p className="mt-4 rounded-2xl border border-gray-200 bg-white p-8 text-center text-gray-600">
-          Aucun trousseau ne correspond à cette recherche.
+          {t.aucun}
         </p>
       ) : (
         <div className="mt-4 overflow-x-auto rounded-2xl border border-gray-200 bg-white">
           <table className="w-full text-sm">
             <thead className="border-b border-gray-200 text-left text-gray-600">
               <tr>
-                <th scope="col" className="px-4 py-3 font-medium">Logement</th>
-                <th scope="col" className="px-4 py-3 font-medium">Statut</th>
-                <th scope="col" className="px-4 py-3 font-medium">Lieu</th>
-                <th scope="col" className="px-4 py-3 font-medium">Case</th>
-                <th scope="col" className="px-4 py-3 font-medium">Échéance</th>
-                <th scope="col" className="px-4 py-3 text-right font-medium">Mouvements</th>
-                <th scope="col" className="px-4 py-3 font-medium">Dernier</th>
-                <th scope="col" className="px-4 py-3"><span className="sr-only">Détail</span></th>
+                <th scope="col" className="px-4 py-3 font-medium">{t.thLogement}</th>
+                <th scope="col" className="px-4 py-3 font-medium">{t.thStatut}</th>
+                <th scope="col" className="px-4 py-3 font-medium">{t.thLieu}</th>
+                <th scope="col" className="px-4 py-3 font-medium">{t.thCase}</th>
+                <th scope="col" className="px-4 py-3 font-medium">{t.thEcheance}</th>
+                <th scope="col" className="px-4 py-3 text-right font-medium">{t.thMouvements}</th>
+                <th scope="col" className="px-4 py-3 font-medium">{t.thDernier}</th>
+                <th scope="col" className="px-4 py-3"><span className="sr-only">{t.thDetail}</span></th>
               </tr>
             </thead>
             <tbody>
               {resultats.map((l) => (
                 <tr key={l.id} className="border-b border-gray-100 last:border-0 hover:bg-sable/60">
                   <td className="px-4 py-3">
-                    <Link href={`/espace/cles/${l.id}`} className="font-semibold hover:text-primaire">
+                    <Link
+                      href={localise(`/espace/cles/${l.id}`, locale)}
+                      className="font-semibold hover:text-primaire"
+                    >
                       {l.logement}
                     </Link>
                     <span className="block font-mono text-xs text-gray-500">
                       {l.code_badge_imprime}
                     </span>
                   </td>
-                  <td className="px-4 py-3"><StatutCle statut={l.statut} /></td>
+                  <td className="px-4 py-3"><StatutCle statut={l.statut} locale={locale} /></td>
                   <td className="px-4 py-3 text-gray-600">
                     {l.lieu ?? "—"}
                     {l.lieuType === "casier" && (
@@ -176,12 +234,12 @@ export function RegistreCles({ lignes }: { lignes: LigneRegistre[] }) {
                       </span>
                     )}
                   </td>
-                  <td className="px-4 py-3">{l.caseNumero ? `n° ${l.caseNumero}` : "—"}</td>
+                  <td className="px-4 py-3">{l.caseNumero ? t.caseNum(l.caseNumero) : "—"}</td>
                   <td className="px-4 py-3">
                     {l.date_retour_attendue ? (
                       estEnRetard(l) ? (
                         <span className="inline-flex items-center gap-1 rounded-full bg-red-100 px-2 py-0.5 text-xs font-semibold text-red-700">
-                          <CalendarClock size={11} aria-hidden="true" /> En retard
+                          <CalendarClock size={11} aria-hidden="true" /> {t.enRetard}
                         </span>
                       ) : (
                         <span className="text-gray-600">
@@ -197,7 +255,10 @@ export function RegistreCles({ lignes }: { lignes: LigneRegistre[] }) {
                     {l.dernierMouvement ? dateCourte(l.dernierMouvement) : "—"}
                   </td>
                   <td className="px-4 py-3 text-right">
-                    <Link href={`/espace/cles/${l.id}`} aria-label={`Détail de ${l.logement}`}>
+                    <Link
+                      href={localise(`/espace/cles/${l.id}`, locale)}
+                      aria-label={t.detailDe(l.logement)}
+                    >
                       <ChevronRight size={16} className="text-gray-400" aria-hidden="true" />
                     </Link>
                   </td>

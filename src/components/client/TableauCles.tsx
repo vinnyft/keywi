@@ -6,6 +6,8 @@ import { ChevronRight } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRealtime } from "@/hooks/useRealtime";
 import { StatutCle } from "@/components/ui/StatutCle";
+import { useLocale } from "@/lib/useLocale";
+import { localise } from "@/lib/i18n";
 import type { Database } from "@/lib/supabase/types";
 
 /**
@@ -34,6 +36,8 @@ export function TableauCles({
   hoteId: string;
   clesInitiales: CleAffichee[];
 }) {
+  const locale = useLocale();
+  const en = locale === "en";
   const [cles, setCles] = useState<CleAffichee[]>(clesInitiales);
 
   const recharger = useCallback(async () => {
@@ -54,9 +58,12 @@ export function TableauCles({
   if (cles.length === 0) {
     return (
       <p className="mt-6 rounded-2xl border border-gray-200 bg-white p-8 text-center text-gray-600">
-        Vous n&apos;avez pas encore de clé enregistrée.{" "}
-        <Link href="/espace/deposer" className="font-semibold text-primaire underline">
-          Déposez votre première clé
+        {en ? "You don't have any registered key yet. " : "Vous n'avez pas encore de clé enregistrée. "}
+        <Link
+          href={localise("/espace/deposer", locale)}
+          className="font-semibold text-primaire underline"
+        >
+          {en ? "Drop off your first key" : "Déposez votre première clé"}
         </Link>
         .
       </p>
@@ -68,27 +75,30 @@ export function TableauCles({
       {cles.map((cle) => (
         <li key={cle.id}>
           <Link
-            href={`/espace/cles/${cle.id}`}
+            href={localise(`/espace/cles/${cle.id}`, locale)}
             className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 transition hover:border-primaire"
           >
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap items-center gap-2">
                 <p className="font-bold">{cle.logement}</p>
-                <StatutCle statut={cle.statut} />
+                <StatutCle statut={cle.statut} locale={locale} />
                 {cle.paiement_statut === "en_attente" && (
                   <span className="rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-semibold text-red-700">
-                    Paiement requis
+                    {en ? "Payment required" : "Paiement requis"}
                   </span>
                 )}
               </div>
               <p className="mt-1 truncate text-sm text-gray-600">
                 {cle.relay_points
                   ? `${cle.relay_points.nom} — ${cle.relay_points.adresse}`
-                  : "Point relais non choisi"}
-                {cle.slots ? ` · case n° ${cle.slots.numero}` : ""}
+                  : en
+                    ? "Drop-off point not chosen"
+                    : "Point relais non choisi"}
+                {cle.slots ? ` · ${en ? "slot no." : "case n°"} ${cle.slots.numero}` : ""}
               </p>
               <p className="mt-0.5 text-xs text-gray-500">
-                Badge : <span className="font-mono font-semibold">{cle.code_badge_imprime}</span>
+                {en ? "Tag: " : "Badge : "}
+                <span className="font-mono font-semibold">{cle.code_badge_imprime}</span>
               </p>
             </div>
             <ChevronRight size={20} className="shrink-0 text-gray-400" aria-hidden="true" />

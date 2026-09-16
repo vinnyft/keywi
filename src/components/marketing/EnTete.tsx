@@ -4,21 +4,32 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { Logo } from "@/components/ui/Logo";
-import { CAS_USAGE } from "@/content/cas-usage";
+import { SelecteurLangue } from "@/components/ui/SelecteurLangue";
+import { listeCasUsage } from "@/content/cas-usage";
+import { localise, type Locale } from "@/lib/i18n";
+import type { Dictionnaire } from "@/lib/dictionaries";
 
 /**
- * En-tête du site public : menus Produits et Cas d'usage en
- * listes déroulantes accessibles (boutons + aria-expanded),
- * burger sur mobile.
+ * En-tête du site public : menus Produits et Cas d'usage en listes
+ * déroulantes accessibles, sélecteur de langue, burger sur mobile.
+ * Libellés et liens dépendent de la langue courante.
  */
-export function EnTete() {
+export function EnTete({
+  dict,
+  locale,
+}: {
+  dict: Dictionnaire["nav"];
+  locale: Locale;
+}) {
   const [menuMobile, setMenuMobile] = useState(false);
   const [menuOuvert, setMenuOuvert] = useState<string | null>(null);
+  const l = (chemin: string) => localise(chemin, locale);
+  const casUsage = listeCasUsage(locale);
 
   const produits = [
-    { href: "/produits/points-relais", libelle: "Points relais", note: "Le réseau public Keywi" },
-    { href: "/produits/casiers", libelle: "Casiers connectés", note: "Bientôt disponible" },
-    { href: "/produits/logiciel-suivi", libelle: "Logiciel de suivi de clés", note: "Bientôt disponible" },
+    { href: "/produits/points-relais", ...dict.produitsItems.pointsRelais },
+    { href: "/produits/casiers", ...dict.produitsItems.casiers },
+    { href: "/produits/logiciel-suivi", ...dict.produitsItems.logiciel },
   ];
 
   function basculer(menu: string) {
@@ -28,29 +39,28 @@ export function EnTete() {
   return (
     <header className="sticky top-0 z-40 border-b border-gray-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
-        <Logo taille={32} />
+        <Logo taille={32} lien={l("/")} />
 
         {/* Navigation bureau */}
         <nav aria-label="Navigation principale" className="hidden items-center gap-1 lg:flex">
-          {/* Menu Produits */}
           <div className="relative">
             <button
               onClick={() => basculer("produits")}
               aria-expanded={menuOuvert === "produits"}
               className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100"
             >
-              Produits <ChevronDown size={14} aria-hidden="true" />
+              {dict.produits} <ChevronDown size={14} aria-hidden="true" />
             </button>
             {menuOuvert === "produits" && (
               <ul className="absolute left-0 top-full mt-1 w-72 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
                 {produits.map((p) => (
                   <li key={p.href}>
                     <Link
-                      href={p.href}
+                      href={l(p.href)}
                       onClick={() => setMenuOuvert(null)}
                       className="block rounded-lg px-3 py-2 hover:bg-gray-50"
                     >
-                      <span className="block text-sm font-semibold">{p.libelle}</span>
+                      <span className="block text-sm font-semibold">{p.label}</span>
                       <span className="block text-xs text-gray-500">{p.note}</span>
                     </Link>
                   </li>
@@ -59,21 +69,20 @@ export function EnTete() {
             )}
           </div>
 
-          {/* Menu Cas d'usage */}
           <div className="relative">
             <button
               onClick={() => basculer("cas")}
               aria-expanded={menuOuvert === "cas"}
               className="flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100"
             >
-              Cas d&apos;usage <ChevronDown size={14} aria-hidden="true" />
+              {dict.casUsage} <ChevronDown size={14} aria-hidden="true" />
             </button>
             {menuOuvert === "cas" && (
               <ul className="absolute left-0 top-full mt-1 w-72 rounded-xl border border-gray-200 bg-white p-2 shadow-lg">
-                {CAS_USAGE.map((c) => (
+                {casUsage.map((c) => (
                   <li key={c.slug}>
                     <Link
-                      href={`/cas-usage/${c.slug}`}
+                      href={l(`/cas-usage/${c.slug}`)}
                       onClick={() => setMenuOuvert(null)}
                       className="block rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-50"
                     >
@@ -85,41 +94,44 @@ export function EnTete() {
             )}
           </div>
 
-          <Link href="/points-relais" className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100">
-            Trouver un point relais
+          <Link href={l("/points-relais")} className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100">
+            {dict.trouverPointRelais}
           </Link>
-          <Link href="/devenir-point-relais" className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100">
-            Devenir point relais
+          <Link href={l("/devenir-point-relais")} className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100">
+            {dict.devenirPointRelais}
           </Link>
-          <Link href="/tarifs" className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100">
-            Tarifs
+          <Link href={l("/tarifs")} className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100">
+            {dict.tarifs}
           </Link>
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
+          <SelecteurLangue />
           <Link
-            href="/connexion"
+            href={l("/connexion")}
             className="rounded-lg px-3 py-2 text-sm font-medium hover:bg-gray-100"
           >
-            Connexion
+            {dict.connexion}
           </Link>
           <Link
-            href="/espace/deposer"
+            href={l("/espace/deposer")}
             className="rounded-lg bg-primaire px-4 py-2 text-sm font-semibold text-white hover:bg-primaire-fonce"
           >
-            Déposer mes clés
+            {dict.deposerMesCles}
           </Link>
         </div>
 
         {/* Burger mobile */}
-        <button
-          className="lg:hidden"
-          onClick={() => setMenuMobile(!menuMobile)}
-          aria-expanded={menuMobile}
-          aria-label={menuMobile ? "Fermer le menu" : "Ouvrir le menu"}
-        >
-          {menuMobile ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="flex items-center gap-3 lg:hidden">
+          <SelecteurLangue />
+          <button
+            onClick={() => setMenuMobile(!menuMobile)}
+            aria-expanded={menuMobile}
+            aria-label={menuMobile ? dict.fermerMenu : dict.ouvrirMenu}
+          >
+            {menuMobile ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Navigation mobile */}
@@ -127,30 +139,30 @@ export function EnTete() {
         <nav aria-label="Navigation mobile" className="border-t border-gray-200 bg-white px-4 py-3 lg:hidden">
           <ul className="space-y-1">
             {[
-              { href: "/produits/points-relais", libelle: "Produits" },
-              { href: "/cas-usage/hotes-airbnb", libelle: "Cas d'usage" },
-              { href: "/points-relais", libelle: "Trouver un point relais" },
-              { href: "/devenir-point-relais", libelle: "Devenir point relais" },
-              { href: "/tarifs", libelle: "Tarifs" },
-              { href: "/connexion", libelle: "Connexion" },
-            ].map((l) => (
-              <li key={l.href}>
+              { href: "/produits/points-relais", libelle: dict.produits },
+              { href: "/cas-usage/hotes-airbnb", libelle: dict.casUsage },
+              { href: "/points-relais", libelle: dict.trouverPointRelais },
+              { href: "/devenir-point-relais", libelle: dict.devenirPointRelais },
+              { href: "/tarifs", libelle: dict.tarifs },
+              { href: "/connexion", libelle: dict.connexion },
+            ].map((item) => (
+              <li key={item.href}>
                 <Link
-                  href={l.href}
+                  href={l(item.href)}
                   onClick={() => setMenuMobile(false)}
                   className="block rounded-lg px-3 py-2.5 font-medium hover:bg-gray-50"
                 >
-                  {l.libelle}
+                  {item.libelle}
                 </Link>
               </li>
             ))}
             <li>
               <Link
-                href="/espace/deposer"
+                href={l("/espace/deposer")}
                 onClick={() => setMenuMobile(false)}
                 className="mt-2 block rounded-lg bg-primaire px-3 py-2.5 text-center font-semibold text-white"
               >
-                Déposer mes clés
+                {dict.deposerMesCles}
               </Link>
             </li>
           </ul>

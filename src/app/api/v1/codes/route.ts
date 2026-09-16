@@ -1,4 +1,10 @@
-import { authentifierRequete, nonAutorise, erreurApi } from "@/lib/api-auth";
+import {
+  authentifierRequete,
+  erreurApi,
+  exigerPortee,
+  limiterApi,
+  nonAutorise,
+} from "@/lib/api-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { emailCodeRetrait } from "@/lib/notifications";
 
@@ -14,6 +20,12 @@ import { emailCodeRetrait } from "@/lib/notifications";
 export async function POST(request: Request) {
   const ctx = await authentifierRequete(request);
   if (!ctx) return nonAutorise();
+
+  const trop = await limiterApi(ctx);
+  if (trop) return trop;
+
+  const horsPortee = exigerPortee(ctx, "creer");
+  if (horsPortee) return horsPortee;
 
   const corps = (await request.json().catch(() => null)) as {
     key_id?: string;

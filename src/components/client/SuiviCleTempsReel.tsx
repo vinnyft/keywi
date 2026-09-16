@@ -4,6 +4,7 @@ import { useCallback, useState } from "react";
 import { useRealtime } from "@/hooks/useRealtime";
 import { createClient } from "@/lib/supabase/client";
 import { StatutCle } from "@/components/ui/StatutCle";
+import { useLocale } from "@/lib/useLocale";
 import type { Database } from "@/lib/supabase/types";
 
 type KeyStatus = Database["public"]["Enums"]["key_status"];
@@ -19,6 +20,7 @@ export function SuiviCleTempsReel({
   cleId: string;
   statutInitial: KeyStatus;
 }) {
+  const locale = useLocale();
   const [statut, setStatut] = useState<KeyStatus>(statutInitial);
 
   const recharger = useCallback(async () => {
@@ -35,7 +37,7 @@ export function SuiviCleTempsReel({
 
   return (
     <span aria-live="polite">
-      <StatutCle statut={statut} />
+      <StatutCle statut={statut} locale={locale} />
     </span>
   );
 }

@@ -1,4 +1,9 @@
-import { authentifierRequete, nonAutorise } from "@/lib/api-auth";
+import {
+  authentifierRequete,
+  exigerPortee,
+  limiterApi,
+  nonAutorise,
+} from "@/lib/api-auth";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 /**
@@ -9,6 +14,12 @@ import { createAdminClient } from "@/lib/supabase/admin";
 export async function GET(request: Request) {
   const ctx = await authentifierRequete(request);
   if (!ctx) return nonAutorise();
+
+  const trop = await limiterApi(ctx);
+  if (trop) return trop;
+
+  const horsPortee = exigerPortee(ctx, "lire");
+  if (horsPortee) return horsPortee;
 
   const admin = createAdminClient();
   const { data, error } = await admin

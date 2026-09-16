@@ -2,6 +2,8 @@
 
 import { QRCodeSVG } from "qrcode.react";
 import { MapPin, Clock, KeyRound, Navigation } from "lucide-react";
+import { useLocale } from "@/lib/useLocale";
+import type { Locale } from "@/lib/i18n";
 
 /**
  * Liste des clés partagées avec un bénéficiaire (vue Guest).
@@ -29,27 +31,62 @@ export interface CleGuest {
   cout_centimes: number;
 }
 
-const euros = (centimes: number) =>
-  (centimes / 100).toLocaleString("fr-FR", { style: "currency", currency: "EUR" });
+const euros = (centimes: number, en: boolean) =>
+  (centimes / 100).toLocaleString(en ? "en-IE" : "fr-FR", {
+    style: "currency",
+    currency: "EUR",
+  });
 
 function disponible(statut: CleGuest["cle_statut"]) {
   return statut === "deposee" || statut === "prete_retrait" || statut === "retour";
 }
 
-function depuis(date: string | null): string | null {
+function depuis(date: string | null, en: boolean): string | null {
   if (!date) return null;
   const jours = (Date.now() - new Date(date).getTime()) / 86_400_000;
-  if (jours < 1) return "aujourd'hui";
-  if (jours < 2) return "depuis hier";
-  return `depuis ${Math.floor(jours)} jours`;
+  if (jours < 1) return en ? "today" : "aujourd'hui";
+  if (jours < 2) return en ? "since yesterday" : "depuis hier";
+  const n = Math.floor(jours);
+  return en ? `for ${n} days` : `depuis ${n} jours`;
 }
 
 export function ClesGuest({ cles }: { cles: CleGuest[] }) {
+  const locale: Locale = useLocale();
+  const en = locale === "en";
+
+  const t = en
+    ? {
+        aucun:
+          "No key shared with you for now. When a host sends you a pickup code, it will appear here.",
+        disponible: "Available",
+        pasEncore: "Not dropped off yet",
+        codeRetrait: "Pickup code",
+        auPointDepuis: (d: string) => `At the drop-off point ${d}`,
+        alerte: "You'll get an alert as soon as the keys are dropped off at the point. Your code: ",
+        horaires: "Hours",
+        itineraire: "Directions",
+        depotRegle: (m: string) => `Drop-off paid by the host: ${m}`,
+        codeValable: (d: string) => ` · code valid until ${d}`,
+      }
+    : {
+        aucun:
+          "Aucune clé partagée avec vous pour le moment. Quand un hôte vous enverra un code de retrait, il apparaîtra ici.",
+        disponible: "Disponible",
+        pasEncore: "Pas encore déposée",
+        codeRetrait: "Code de retrait",
+        auPointDepuis: (d: string) => `Au point relais ${d}`,
+        alerte:
+          "Vous recevrez une alerte dès que les clés seront déposées au point relais. Votre code : ",
+        horaires: "Horaires",
+        itineraire: "Itinéraire",
+        depotRegle: (m: string) => `Dépôt réglé par l'hôte : ${m}`,
+        codeValable: (d: string) => ` · code valable jusqu'au ${d}`,
+      };
+
   if (cles.length === 0) {
     return (
       <p className="mt-6 rounded-2xl border border-gray-200 bg-white p-8 text-center text-gray-600">
-        Aucune clé partagée avec vous pour le moment. Quand un hôte vous
-        enverra un code de retrait, il apparaîtra ici.
+        {t.aucun}
       </p>
     );
   }
@@ -75,7 +112,7 @@ export function ClesGuest({ cles }: { cles: CleGuest[] }) {
                   pret ? "bg-menthe-pale text-menthe" : "bg-ambre-pale text-ambre"
                 }`}
               >
-                {pret ? "Disponible" : "Pas encore déposée"}
+                {pret ? t.disponible : t.pasEncore}
               </span>
             </div>
 
@@ -89,21 +126,20 @@ export function ClesGuest({ cles }: { cles: CleGuest[] }) {
                   />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-500">Code de retrait</p>
+                  <p className="text-xs text-gray-500">{t.codeRetrait}</p>
                   <p className="font-mono text-2xl font-black tracking-[0.2em] text-primaire-fonce">
                     {cle.code_6}
                   </p>
                   {cle.depose_le && (
                     <p className="mt-1 text-xs text-gray-500">
-                      Au point relais {depuis(cle.depose_le)}
+                      {t.auPointDepuis(depuis(cle.depose_le, en) ?? "")}
                     </p>
                   )}
                 </div>
               </div>
             ) : (
               <p className="mt-3 rounded-lg bg-sable p-3 text-sm text-gray-600">
-                Vous recevrez une alerte dès que les clés seront déposées au
-                point relais. Votre code : {" "}
+                {t.alerte}
                 <span className="font-mono font-semibold">{cle.code_6}</span>
               </p>
             )}
@@ -120,7 +156,7 @@ export function ClesGuest({ cles }: { cles: CleGuest[] }) {
                 {cle.horaires && Object.keys(cle.horaires).length > 0 && (
                   <details className="mt-1 pl-5">
                     <summary className="flex cursor-pointer items-center gap-1 font-medium text-gray-700">
-                      <Clock size={13} aria-hidden="true" /> Horaires
+                      <Clock size={13} aria-hidden="true" /> {t.horaires}
                     </summary>
                     <dl className="mt-1 space-y-0.5 text-gray-600">
                       {Object.entries(cle.horaires).map(([jours, heures]) => (
@@ -139,19 +175,21 @@ export function ClesGuest({ cles }: { cles: CleGuest[] }) {
                     rel="noopener noreferrer"
                     className="mt-2 inline-flex items-center gap-1.5 pl-5 text-sm font-semibold text-primaire underline"
                   >
-                    <Navigation size={13} aria-hidden="true" /> Itinéraire
+                    <Navigation size={13} aria-hidden="true" /> {t.itineraire}
                   </a>
                 )}
               </div>
             )}
 
             <p className="mt-3 text-xs text-gray-400">
-              Dépôt réglé par l&apos;hôte : {euros(cle.cout_centimes)}
+              {t.depotRegle(euros(cle.cout_centimes, en))}
               {cle.expire_at &&
-                ` · code valable jusqu'au ${new Date(cle.expire_at).toLocaleDateString(
-                  "fr-FR",
-                  { day: "numeric", month: "long" }
-                )}`}
+                t.codeValable(
+                  new Date(cle.expire_at).toLocaleDateString(en ? "en-IE" : "fr-FR", {
+                    day: "numeric",
+                    month: "long",
+                  })
+                )}
             </p>
           </li>
         );

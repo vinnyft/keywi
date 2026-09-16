@@ -8,6 +8,8 @@ import {
   actionChercherRetrait,
   actionConfirmerRetrait,
 } from "@/lib/actions/commercant";
+import { useLocale } from "@/lib/useLocale";
+import { localise } from "@/lib/i18n";
 
 /**
  * Flux de retrait d'une clé, côté commerçant :
@@ -33,8 +35,64 @@ type Etape =
   | { nom: "erreur"; message: string };
 
 export function FluxRetrait() {
+  const locale = useLocale();
+  const en = locale === "en";
   const [etape, setEtape] = useState<Etape>({ nom: "code" });
   const [code, setCode] = useState("");
+
+  const t = en
+    ? {
+        accueil: "Home",
+        codeTitre: "Customer's pickup code",
+        codeIntro:
+          "The customer shows you a 6-character code or a QR code (content “Keywi:XXXXXX”).",
+        codeLabel: "6-character pickup code",
+        rechercher: "Find the key",
+        rechercheAria: "Search in progress",
+        rechercheCode: "Searching the code…",
+        verifCroisee: "Cross-checking the tag…",
+        sortez: "Take the keyring out of",
+        caseAria: (n: number) => `Slot number ${n}`,
+        caseNum: (n: number) => `Slot no. ${n}`,
+        pour: "for",
+        scanTitre: "Verification: re-scan the keyring tag",
+        scanAide:
+          "This double check makes sure the keyring taken out of the slot really is the customer's.",
+        retraitConfirme: "Pickup confirmed",
+        succesLigne: (l: string, b: string) => `Hand the keyring “${l}” to ${b}.`,
+        succesLibere: (n: number) => `Slot no. ${n} is freed, the host is notified.`,
+        nouveau: "New pickup",
+        retraitImpossible: "Pickup failed",
+        recommencer: "Start over",
+        codeInconnu: "Unknown pickup code.",
+        verifEchec: "Tag verification failed — start the pickup over.",
+      }
+    : {
+        accueil: "Accueil",
+        codeTitre: "Code de retrait du client",
+        codeIntro:
+          "Le client vous présente un code à 6 caractères ou un QR code (contenu « Keywi:XXXXXX »).",
+        codeLabel: "Code de retrait à 6 caractères",
+        rechercher: "Rechercher la clé",
+        rechercheAria: "Recherche en cours",
+        rechercheCode: "Recherche du code…",
+        verifCroisee: "Vérification croisée du badge…",
+        sortez: "Sortez le trousseau de la",
+        caseAria: (n: number) => `Case numéro ${n}`,
+        caseNum: (n: number) => `Case n° ${n}`,
+        pour: "pour",
+        scanTitre: "Vérification : re-scannez le badge du trousseau",
+        scanAide:
+          "Cette double vérification garantit que le trousseau sorti de la case est bien celui du client.",
+        retraitConfirme: "Retrait confirmé",
+        succesLigne: (l: string, b: string) => `Remettez le trousseau « ${l} » à ${b}.`,
+        succesLibere: (n: number) => `La case n° ${n} est libérée, l'hôte est notifié.`,
+        nouveau: "Nouveau retrait",
+        retraitImpossible: "Retrait impossible",
+        recommencer: "Recommencer",
+        codeInconnu: "Code de retrait inconnu.",
+        verifEchec: "La vérification du badge a échoué — recommencez le retrait.",
+      };
 
   async function chercher(codeSaisi: string) {
     setEtape({ nom: "recherche" });
@@ -42,7 +100,7 @@ export function FluxRetrait() {
     if (!resultat.ok) {
       setEtape({
         nom: "erreur",
-        message: (resultat.message as string) ?? "Code de retrait inconnu.",
+        message: (resultat.message as string) ?? t.codeInconnu,
       });
       return;
     }
@@ -63,9 +121,7 @@ export function FluxRetrait() {
     if (!resultat.ok) {
       setEtape({
         nom: "erreur",
-        message:
-          (resultat.message as string) ??
-          "La vérification du badge a échoué — recommencez le retrait.",
+        message: (resultat.message as string) ?? t.verifEchec,
       });
       return;
     }
@@ -80,19 +136,16 @@ export function FluxRetrait() {
   return (
     <div className="space-y-4">
       <Link
-        href="/commercant"
+        href={localise("/commercant", locale)}
         className="inline-flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-encre"
       >
-        <ArrowLeft size={16} aria-hidden="true" /> Accueil
+        <ArrowLeft size={16} aria-hidden="true" /> {t.accueil}
       </Link>
 
       {etape.nom === "code" && (
         <section className="rounded-2xl border border-gray-200 bg-white p-5">
-          <h2 className="text-lg font-bold">Code de retrait du client</h2>
-          <p className="mt-1 text-sm text-gray-600">
-            Le client vous présente un code à 6 caractères ou un QR code
-            (contenu « Keywi:XXXXXX »).
-          </p>
+          <h2 className="text-lg font-bold">{t.codeTitre}</h2>
+          <p className="mt-1 text-sm text-gray-600">{t.codeIntro}</p>
           <form
             className="mt-4 space-y-3"
             onSubmit={(e) => {
@@ -101,7 +154,7 @@ export function FluxRetrait() {
             }}
           >
             <label htmlFor="code-retrait" className="sr-only">
-              Code de retrait à 6 caractères
+              {t.codeLabel}
             </label>
             <input
               id="code-retrait"
@@ -118,7 +171,7 @@ export function FluxRetrait() {
               disabled={code.trim().length < 6}
               className="w-full rounded-lg bg-primaire px-4 py-3 font-semibold text-white hover:bg-primaire-fonce disabled:opacity-50"
             >
-              Rechercher la clé
+              {t.rechercher}
             </button>
           </form>
         </section>
@@ -130,12 +183,10 @@ export function FluxRetrait() {
           <div
             className="size-10 animate-spin rounded-full border-4 border-primaire border-t-transparent"
             role="status"
-            aria-label="Recherche en cours"
+            aria-label={t.rechercheAria}
           />
           <p className="font-medium text-gray-700">
-            {etape.nom === "recherche"
-              ? "Recherche du code…"
-              : "Vérification croisée du badge…"}
+            {etape.nom === "recherche" ? t.rechercheCode : t.verifCroisee}
           </p>
         </div>
       )}
@@ -144,38 +195,35 @@ export function FluxRetrait() {
         <>
           {/* Où se trouve le trousseau */}
           <div className="rounded-2xl bg-encre p-6 text-center text-white">
-            <p className="text-white/70">Sortez le trousseau de la</p>
-            <p className="my-1 text-7xl font-black" aria-label={`Case numéro ${etape.caseNumero}`}>
+            <p className="text-white/70">{t.sortez}</p>
+            <p className="my-1 text-7xl font-black" aria-label={t.caseAria(etape.caseNumero)}>
               {etape.caseNumero}
             </p>
-            <p className="text-xl font-bold">Case n° {etape.caseNumero}</p>
+            <p className="text-xl font-bold">{t.caseNum(etape.caseNumero)}</p>
             <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm">
               <KeyRound size={14} aria-hidden="true" />
               {etape.logement}
-              {etape.beneficiaire ? ` — pour ${etape.beneficiaire}` : ""}
+              {etape.beneficiaire ? ` — ${t.pour} ${etape.beneficiaire}` : ""}
             </p>
           </div>
 
           {/* Re-scan croisé anti-erreur */}
           <ScannerBadge
-            titre="Vérification : re-scannez le badge du trousseau"
+            titre={t.scanTitre}
             onScan={(badge) => verifierBadge(etape.code, badge, etape.caseNumero)}
           />
-          <p className="text-center text-sm text-gray-600">
-            Cette double vérification garantit que le trousseau sorti de la case
-            est bien celui du client.
-          </p>
+          <p className="text-center text-sm text-gray-600">{t.scanAide}</p>
         </>
       )}
 
       {etape.nom === "succes" && (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-gray-200 bg-white px-6 py-12 text-center">
           <CheckCircle2 size={56} className="text-menthe" aria-hidden="true" />
-          <h2 className="text-xl font-bold">Retrait confirmé</h2>
+          <h2 className="text-xl font-bold">{t.retraitConfirme}</h2>
           <p className="text-gray-600">
-            Remettez le trousseau « {etape.logement} » à {etape.beneficiaire}.
+            {t.succesLigne(etape.logement, etape.beneficiaire)}
             <br />
-            La case n° {etape.caseNumero} est libérée, l&apos;hôte est notifié.
+            {t.succesLibere(etape.caseNumero)}
           </p>
           <button
             onClick={() => {
@@ -184,7 +232,7 @@ export function FluxRetrait() {
             }}
             className="mt-2 rounded-lg bg-primaire px-5 py-2.5 font-semibold text-white hover:bg-primaire-fonce"
           >
-            Nouveau retrait
+            {t.nouveau}
           </button>
         </div>
       )}
@@ -192,7 +240,7 @@ export function FluxRetrait() {
       {etape.nom === "erreur" && (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-red-200 bg-red-50 px-6 py-12 text-center">
           <XCircle size={56} className="text-red-600" aria-hidden="true" />
-          <h2 className="text-xl font-bold text-red-800">Retrait impossible</h2>
+          <h2 className="text-xl font-bold text-red-800">{t.retraitImpossible}</h2>
           <p className="text-red-700">{etape.message}</p>
           <button
             onClick={() => {
@@ -201,7 +249,7 @@ export function FluxRetrait() {
             }}
             className="mt-2 rounded-lg bg-encre px-5 py-2.5 font-semibold text-white hover:bg-encre-2"
           >
-            Recommencer
+            {t.recommencer}
           </button>
         </div>
       )}

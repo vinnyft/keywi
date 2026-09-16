@@ -24,15 +24,20 @@ export function hacher(cle: string): string {
   return createHash("sha256").update(cle).digest("hex");
 }
 
+/** Droits que peut porter une clé API */
+export type PorteeApi = "lire" | "creer";
+
 export interface ContexteApi {
+  apiKeyId: string;
   hoteId: string;
   nomCle: string;
+  portees: PorteeApi[];
 }
 
 /**
  * Valide l'en-tête `Authorization: Bearer <clé>` d'une requête.
- * Retourne le contexte (hôte propriétaire) ou null si la clé est
- * absente, malformée, inconnue ou révoquée.
+ * Retourne le contexte (hôte propriétaire, portées) ou null si la
+ * clé est absente, malformée, inconnue ou révoquée.
  */
 export async function authentifierRequete(
   request: Request
@@ -51,12 +56,57 @@ export async function authentifierRequete(
 
   const r = (data ?? { ok: false }) as {
     ok: boolean;
+    api_key_id?: string;
     hote_id?: string;
     nom?: string;
+    portees?: string[];
   };
-  if (!r.ok || !r.hote_id) return null;
+  if (!r.ok || !r.hote_id || !r.api_key_id) return null;
 
-  return { hoteId: r.hote_id, nomCle: r.nom ?? "" };
+  return {
+    apiKeyId: r.api_key_id,
+    hoteId: r.hote_id,
+    nomCle: r.nom ?? "",
+    portees: (r.portees ?? []).filter(
+      (p): p is PorteeApi => p === "lire" || p === "creer"
+    ),
+  };
+}
+
+/**
+ * Vérifie qu'une clé porte la portée requise. Retourne une réponse
+ * 403 à renvoyer telle quelle, ou null si l'accès est permis.
+ */
+export function exigerPortee(
+  ctx: ContexteApi,
+  portee: PorteeApi
+): Response | null {
+  if (ctx.portees.includes(portee)) return null;
+  return Response.json(
+    {
+      erreur: `Cette clé API n'a pas la portée « ${portee} » requise pour cette opération.`,
+    },
+    { status: 403 }
+  );
+}
+
+/**
+ * Limite le débit d'une clé API. Le compteur est porté par la clé —
+ * une clé fuitée ne peut pas marteler l'API depuis mille IP — avec
+ * un plafond IP en second rideau. Retourne une réponse 429 à
+ * renvoyer telle quelle, ou null si la requête peut passer.
+ */
+export async function limiterApi(ctx: ContexteApi): Promise<Response | null> {
+  const { verifierLimite } = await import("@/lib/limitation");
+  const verdict = await verifierLimite("api", ctx.apiKeyId);
+  if (verdict.autorise) return null;
+  return Response.json(
+    { erreur: "Trop de requêtes. Réessayez dans un instant." },
+    {
+      status: 429,
+      headers: { "Retry-After": String(verdict.reessayerDans) },
+    }
+  );
 }
 
 /** Réponse d'erreur JSON normalisée de l'API */

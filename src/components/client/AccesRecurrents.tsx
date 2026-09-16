@@ -7,6 +7,8 @@ import {
   actionBasculerRecurrent,
   actionSupprimerRecurrent,
 } from "@/lib/actions/recurrents";
+import { useLocale } from "@/lib/useLocale";
+import type { Locale } from "@/lib/i18n";
 
 /**
  * Gestion des accès récurrents d'une clé : le prestataire qui
@@ -24,11 +26,14 @@ export interface AccesRecurrent {
   actif: boolean;
 }
 
-const JOURS = ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"];
+const JOURS: Record<Locale, string[]> = {
+  fr: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+  en: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+};
 
 /** « Mar, Jeu » à partir de [2, 4] */
-function libelleJours(jours: number[]) {
-  return [...jours].sort((a, b) => a - b).map((j) => JOURS[j]).join(", ");
+function libelleJours(jours: number[], locale: Locale) {
+  return [...jours].sort((a, b) => a - b).map((j) => JOURS[locale][j]).join(", ");
 }
 
 export function AccesRecurrents({
@@ -38,6 +43,8 @@ export function AccesRecurrents({
   cleId: string;
   acces: AccesRecurrent[];
 }) {
+  const locale = useLocale();
+  const en = locale === "en";
   const [ouvert, setOuvert] = useState(false);
   const [etat, soumettre, attente] = useActionState(actionCreerRecurrent, {
     erreur: null,
@@ -47,25 +54,72 @@ export function AccesRecurrents({
   // Le formulaire se referme une fois la récurrence créée
   const afficheFormulaire = ouvert && !etat.ok;
 
+  const t = en
+    ? {
+        titre: "Recurring access",
+        intro:
+          "For a provider who returns: the code is generated and sent before each visit.",
+        ajouter: "Add",
+        enPause: "Paused",
+        codeValable: (h: number) => `code valid for ${h} h`,
+        a: "at",
+        aucun:
+          "No recurring access yet. Perfect for weekly cleaning or a regular provider.",
+        mettreEnPause: "Pause",
+        reactiver: "Resume",
+        pause: "Pause",
+        reprendre: "Resume",
+        supprimer: "Delete this recurrence",
+        prestataire: "Provider's first name",
+        joursIntervention: "Visit days *",
+        heureArrivee: "Arrival time",
+        validiteCode: "Code validity",
+        h: (n: number) => `${n} hours`,
+        enregistrement: "Saving…",
+        creer: "Create the recurrence",
+        annuler: "Cancel",
+      }
+    : {
+        titre: "Accès récurrents",
+        intro:
+          "Pour un prestataire qui revient : le code est généré et envoyé avant chaque intervention.",
+        ajouter: "Ajouter",
+        enPause: "En pause",
+        codeValable: (h: number) => `code valable ${h} h`,
+        a: "à",
+        aucun:
+          "Aucun accès récurrent. Idéal pour le ménage hebdomadaire ou un prestataire régulier.",
+        mettreEnPause: "Mettre en pause",
+        reactiver: "Réactiver",
+        pause: "Pause",
+        reprendre: "Reprendre",
+        supprimer: "Supprimer cette récurrence",
+        prestataire: "Prénom du prestataire",
+        joursIntervention: "Jours d'intervention *",
+        heureArrivee: "Heure d'arrivée",
+        validiteCode: "Validité du code",
+        h: (n: number) => `${n} heures`,
+        enregistrement: "Enregistrement…",
+        creer: "Créer la récurrence",
+        annuler: "Annuler",
+      };
+
   return (
     <section className="rounded-2xl border border-gray-200 bg-white p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div>
           <h2 className="flex items-center gap-2 font-bold">
             <Repeat size={18} className="text-primaire" aria-hidden="true" />
-            Accès récurrents
+            {t.titre}
           </h2>
-          <p className="mt-1 text-sm text-gray-600">
-            Pour un prestataire qui revient : le code est généré et envoyé
-            avant chaque intervention.
-          </p>
+          <p className="mt-1 text-sm text-gray-600">{t.intro}</p>
         </div>
         {!afficheFormulaire && (
           <button
             onClick={() => setOuvert(true)}
             className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-semibold hover:bg-gray-50"
           >
-            <Plus size={15} aria-hidden="true" /> Ajouter
+            <Plus size={15} aria-hidden="true" /> {t.ajouter}
           </button>
         )}
       </div>
@@ -80,13 +134,13 @@ export function AccesRecurrents({
                   {a.beneficiaire_nom ?? a.beneficiaire_email}
                   {!a.actif && (
                     <span className="ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-500">
-                      En pause
+                      {t.enPause}
                     </span>
                   )}
                 </p>
                 <p className="text-sm text-gray-600">
-                  {libelleJours(a.jours_semaine)} à {a.heure_debut.slice(0, 5)} ·
-                  code valable {a.duree_heures} h
+                  {libelleJours(a.jours_semaine, locale)} {t.a}{" "}
+                  {a.heure_debut.slice(0, 5)} · {t.codeValable(a.duree_heures)}
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -97,15 +151,15 @@ export function AccesRecurrents({
                   <button
                     type="submit"
                     className="inline-flex items-center gap-1 rounded-lg border border-gray-300 px-2.5 py-1.5 text-xs font-medium hover:bg-gray-50"
-                    aria-label={a.actif ? "Mettre en pause" : "Réactiver"}
+                    aria-label={a.actif ? t.mettreEnPause : t.reactiver}
                   >
                     {a.actif ? (
                       <>
-                        <Pause size={13} aria-hidden="true" /> Pause
+                        <Pause size={13} aria-hidden="true" /> {t.pause}
                       </>
                     ) : (
                       <>
-                        <Play size={13} aria-hidden="true" /> Reprendre
+                        <Play size={13} aria-hidden="true" /> {t.reprendre}
                       </>
                     )}
                   </button>
@@ -116,7 +170,7 @@ export function AccesRecurrents({
                   <button
                     type="submit"
                     className="rounded-lg p-1.5 text-red-700 hover:bg-red-50"
-                    aria-label="Supprimer cette récurrence"
+                    aria-label={t.supprimer}
                   >
                     <Trash2 size={15} aria-hidden="true" />
                   </button>
@@ -128,21 +182,19 @@ export function AccesRecurrents({
       )}
 
       {acces.length === 0 && !afficheFormulaire && (
-        <p className="mt-3 rounded-xl bg-sable p-3 text-sm text-gray-600">
-          Aucun accès récurrent. Idéal pour le ménage hebdomadaire ou un
-          prestataire régulier.
-        </p>
+        <p className="mt-3 rounded-xl bg-sable p-3 text-sm text-gray-600">{t.aucun}</p>
       )}
 
       {/* Formulaire de création */}
       {afficheFormulaire && (
         <form action={soumettre} className="mt-4 space-y-4 border-t border-gray-100 pt-4">
           <input type="hidden" name="key_id" value={cleId} />
+          <input type="hidden" name="locale" value={locale} />
 
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label htmlFor="rec_nom" className="block text-sm font-medium">
-                Prénom du prestataire
+                {t.prestataire}
               </label>
               <input
                 id="rec_nom"
@@ -161,15 +213,15 @@ export function AccesRecurrents({
                 type="email"
                 required
                 className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2"
-                placeholder="sofia@exemple.fr"
+                placeholder={en ? "sofia@example.com" : "sofia@exemple.fr"}
               />
             </div>
           </div>
 
           <fieldset>
-            <legend className="text-sm font-medium">Jours d&apos;intervention *</legend>
+            <legend className="text-sm font-medium">{t.joursIntervention}</legend>
             <div className="mt-2 flex flex-wrap gap-2">
-              {JOURS.map((j, i) => (
+              {JOURS[locale].map((j, i) => (
                 <label
                   key={j}
                   className="cursor-pointer rounded-lg border border-gray-300 px-3 py-1.5 text-sm font-medium has-checked:border-primaire has-checked:bg-primaire-pale has-checked:text-primaire-fonce"
@@ -184,7 +236,7 @@ export function AccesRecurrents({
           <div className="grid gap-3 sm:grid-cols-2">
             <div>
               <label htmlFor="rec_heure" className="block text-sm font-medium">
-                Heure d&apos;arrivée
+                {t.heureArrivee}
               </label>
               <input
                 id="rec_heure"
@@ -196,7 +248,7 @@ export function AccesRecurrents({
             </div>
             <div>
               <label htmlFor="rec_duree" className="block text-sm font-medium">
-                Validité du code
+                {t.validiteCode}
               </label>
               <select
                 id="rec_duree"
@@ -204,10 +256,10 @@ export function AccesRecurrents({
                 defaultValue="12"
                 className="mt-1 w-full rounded-lg border border-gray-300 bg-white px-3 py-2"
               >
-                <option value="4">4 heures</option>
-                <option value="8">8 heures</option>
-                <option value="12">12 heures</option>
-                <option value="24">24 heures</option>
+                <option value="4">{t.h(4)}</option>
+                <option value="8">{t.h(8)}</option>
+                <option value="12">{t.h(12)}</option>
+                <option value="24">{t.h(24)}</option>
               </select>
             </div>
           </div>
@@ -224,14 +276,14 @@ export function AccesRecurrents({
               disabled={attente}
               className="rounded-lg bg-primaire px-4 py-2.5 font-semibold text-white hover:bg-primaire-fonce disabled:opacity-60"
             >
-              {attente ? "Enregistrement…" : "Créer la récurrence"}
+              {attente ? t.enregistrement : t.creer}
             </button>
             <button
               type="button"
               onClick={() => setOuvert(false)}
               className="rounded-lg border border-gray-300 px-4 py-2.5 font-semibold hover:bg-gray-50"
             >
-              Annuler
+              {t.annuler}
             </button>
           </div>
         </form>

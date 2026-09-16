@@ -8,7 +8,8 @@ import type { PointRelaisCarte } from "@/components/carte/CarteRelais";
 
 /**
  * Recherche de point relais : champ adresse/code postal + carte
- * Leaflet + fiches détaillées (horaires, disponibilité).
+ * Leaflet + fiches détaillées (horaires, disponibilité). Les libellés
+ * sont fournis par la page (localisés) via la prop `t`.
  */
 
 interface PointRelaisPublic extends PointRelaisCarte {
@@ -17,7 +18,28 @@ interface PointRelaisPublic extends PointRelaisCarte {
   casesLibres: number;
 }
 
-export function RechercheRelais({ points }: { points: PointRelaisPublic[] }) {
+export interface TextesRecherche {
+  rechercheLabel: string;
+  placeholder: string;
+  horaires: string;
+  deposerIci: string;
+  aucun: string;
+  complet: string;
+  caseSingulier: string;
+  casePluriel: string;
+  voirAvant: string;
+  voirApres: string;
+}
+
+export function RechercheRelais({
+  points,
+  t,
+  deposerHref,
+}: {
+  points: PointRelaisPublic[];
+  t: TextesRecherche;
+  deposerHref: string;
+}) {
   const [recherche, setRecherche] = useState("");
   const [selection, setSelection] = useState<string | null>(null);
 
@@ -33,14 +55,14 @@ export function RechercheRelais({ points }: { points: PointRelaisPublic[] }) {
     <div className="mt-6 grid gap-6 lg:grid-cols-5">
       <div className="lg:col-span-2">
         <label htmlFor="recherche-relais" className="sr-only">
-          Rechercher par adresse ou code postal
+          {t.rechercheLabel}
         </label>
         <input
           id="recherche-relais"
           type="search"
           value={recherche}
           onChange={(e) => setRecherche(e.target.value)}
-          placeholder="Adresse, code postal… (ex. 75011)"
+          placeholder={t.placeholder}
           className="w-full rounded-xl border border-gray-300 px-4 py-3"
         />
 
@@ -55,7 +77,7 @@ export function RechercheRelais({ points }: { points: PointRelaisPublic[] }) {
                 <button
                   className="w-full text-left"
                   onClick={() => setSelection(p.id)}
-                  aria-label={`Voir ${p.nom} sur la carte`}
+                  aria-label={`${t.voirAvant}${p.nom}${t.voirApres}`}
                 >
                   <h2 className="flex items-center gap-1.5 font-bold">
                     <MapPin size={15} className="shrink-0 text-primaire" aria-hidden="true" />
@@ -71,7 +93,7 @@ export function RechercheRelais({ points }: { points: PointRelaisPublic[] }) {
                 {p.horaires && (
                   <details className="mt-2 text-sm">
                     <summary className="flex cursor-pointer items-center gap-1 font-medium text-gray-700">
-                      <Clock size={13} aria-hidden="true" /> Horaires
+                      <Clock size={13} aria-hidden="true" /> {t.horaires}
                     </summary>
                     <dl className="mt-1 space-y-0.5 pl-5 text-gray-600">
                       {Object.entries(p.horaires).map(([jours, heures]) => (
@@ -90,14 +112,14 @@ export function RechercheRelais({ points }: { points: PointRelaisPublic[] }) {
                     }`}
                   >
                     {p.casesLibres > 0
-                      ? `${p.casesLibres} case${p.casesLibres > 1 ? "s" : ""} libre${p.casesLibres > 1 ? "s" : ""}`
-                      : "Complet actuellement"}
+                      ? `${p.casesLibres} ${p.casesLibres > 1 ? t.casePluriel : t.caseSingulier}`
+                      : t.complet}
                   </span>
                   <Link
-                    href="/espace/deposer"
+                    href={deposerHref}
                     className="text-sm font-semibold text-primaire underline"
                   >
-                    Déposer ici
+                    {t.deposerIci}
                   </Link>
                 </p>
               </article>
@@ -105,7 +127,7 @@ export function RechercheRelais({ points }: { points: PointRelaisPublic[] }) {
           ))}
           {filtres.length === 0 && (
             <li className="rounded-2xl border border-gray-200 bg-white p-5 text-gray-600">
-              Aucun point relais ne correspond — essayez un autre code postal.
+              {t.aucun}
             </li>
           )}
         </ul>

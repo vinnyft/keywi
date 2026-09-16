@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { emailRappelRetour } from "@/lib/notifications";
+import { verifierCron } from "@/lib/cron-auth";
 
 /**
  * Job de relance des clés en retard (échéance dépassée).
@@ -13,14 +14,8 @@ import { emailRappelRetour } from "@/lib/notifications";
  *   Authorization: Bearer <CRON_SECRET>
  */
 export async function GET(request: Request) {
-  // Protection optionnelle par secret (activée si CRON_SECRET est défini)
-  const secret = process.env.CRON_SECRET;
-  if (secret) {
-    const auth = request.headers.get("authorization");
-    if (auth !== `Bearer ${secret}`) {
-      return NextResponse.json({ erreur: "Non autorisé" }, { status: 401 });
-    }
-  }
+  const refus = verifierCron(request);
+  if (refus) return refus;
 
   const admin = createAdminClient();
   const { data, error } = await admin.rpc("relancer_retards");

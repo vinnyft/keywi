@@ -2,6 +2,7 @@ import "server-only";
 
 import { cookies } from "next/headers";
 import { createServerClient } from "@supabase/ssr";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
 
 /**
@@ -34,5 +35,23 @@ export async function createClient() {
         },
       },
     }
+  );
+}
+
+/**
+ * Client public, sans cookies ni session.
+ *
+ * Pour les pages qui n'affichent que des données publiques (la
+ * carte des points relais, par exemple). Ne pas lire les cookies
+ * laisse la page cacheable : elle peut alors être régénérée par ISR
+ * (`export const revalidate = …`) et servie par le CDN, au lieu de
+ * frapper Supabase à chaque visite. La RLS reste appliquée sous le
+ * rôle `anon` — seul le public voit le public.
+ */
+export function createPublicClient() {
+  return createSupabaseClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    { auth: { persistSession: false, autoRefreshToken: false } }
   );
 }

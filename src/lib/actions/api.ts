@@ -18,6 +18,13 @@ export async function actionCreerCleApi(
 ): Promise<EtatCle> {
   const nom = String(formData.get("nom") ?? "").trim() || "Clé sans nom";
 
+  // Portées cochées dans le formulaire. Au moins une, sinon la clé ne
+  // servirait à rien : on retombe sur « lire » seul, le moindre droit.
+  const portees = (["lire", "creer"] as const).filter((p) =>
+    formData.getAll("portees").includes(p)
+  );
+  if (portees.length === 0) portees.push("lire");
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -31,6 +38,7 @@ export async function actionCreerCleApi(
     nom,
     prefixe,
     cle_hash: hash,
+    portees,
   });
 
   if (error) {

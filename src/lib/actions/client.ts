@@ -9,7 +9,8 @@ import {
   emailRetourEffectue,
   emailClesDisponibles,
 } from "@/lib/notifications";
-import { TARIFS, getStripe, stripeDisponible } from "@/lib/stripe";
+import { TARIFS, getStripe, modePaiement } from "@/lib/stripe";
+import { localise, type Locale } from "@/lib/i18n";
 
 /**
  * Actions de l'espace client (hôte / voyageur) et candidature
@@ -33,6 +34,9 @@ export async function actionCreerCode(
   const jours = Number(formData.get("validite_jours") ?? "0");
   const expireAt =
     jours > 0 ? new Date(Date.now() + jours * 86_400_000).toISOString() : null;
+  // Langue choisie par l'hôte au partage : sert à l'email immédiat et,
+  // stockée sur le code, aux emails ultérieurs au bénéficiaire.
+  const locale: Locale = formData.get("locale") === "en" ? "en" : "fr";
 
   const supabase = await createClient();
   const { data, error } = await supabase.rpc("creer_code_retrait", {
@@ -45,6 +49,16 @@ export async function actionCreerCode(
   const r = (data ?? null) as { ok?: boolean; code_6?: string } | null;
   if (error || !r?.ok) {
     return { erreur: "Impossible de générer le code. Réessayez.", code: null };
+  }
+
+  // Mémorise la langue du bénéficiaire sur le code (service role : la
+  // RLS ne rend pas access_codes modifiable par l'hôte directement).
+  if (r.code_6) {
+    await createAdminClient()
+      .from("access_codes")
+      .update({ langue: locale })
+      .eq("key_id", keyId)
+      .eq("code_6", r.code_6);
   }
 
   // Envoi du code par email au bénéficiaire (si renseigné)
@@ -72,6 +86,7 @@ export async function actionCreerCode(
         ? `${relais.adresse}, ${relais.code_postal} ${relais.ville}`
         : null,
       cleEnDepot: Boolean((data as { cle_en_depot?: boolean }).cle_en_depot),
+      locale,
     });
   }
 
@@ -123,6 +138,7 @@ export async function actionCandidature(
   _etat: EtatCandidature,
   formData: FormData
 ): Promise<EtatCandidature> {
+  const en = String(formData.get("locale") ?? "fr") === "en";
   const champs = {
     nom_commerce: String(formData.get("nom_commerce") ?? "").trim(),
     nom_contact: String(formData.get("nom_contact") ?? "").trim(),
@@ -135,7 +151,12 @@ export async function actionCandidature(
   };
 
   if (!champs.nom_commerce || !champs.nom_contact || !champs.email) {
-    return { erreur: "Merci de renseigner les champs obligatoires.", envoye: false };
+    return {
+      erreur: en
+        ? "Please fill in the required fields."
+        : "Merci de renseigner les champs obligatoires.",
+      envoye: false,
+    };
   }
 
   // Insertion via service role : le formulaire est public (anon)
@@ -143,7 +164,12 @@ export async function actionCandidature(
   const { error } = await admin.from("candidatures_commercants").insert(champs);
 
   if (error) {
-    return { erreur: "Envoi impossible pour le moment. Réessayez.", envoye: false };
+    return {
+      erreur: en
+        ? "Couldn't send right now. Please try again."
+        : "Envoi impossible pour le moment. Réessayez.",
+      envoye: false,
+    };
   }
   return { erreur: null, envoye: true };
 }
@@ -165,23 +191,52 @@ type ResultatDepot = {
 export async function actionDeposerCle(input: {
   relayPointId: string;
   logement: string;
+  locale?: Locale;
 }): Promise<ResultatDepot> {
   const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const en = input.locale === "en";
+  const locale: Locale = en ? "en" : "fr";
   const logement = input.logement.trim();
   if (!logement || !input.relayPointId) {
-    return { ok: false, erreur: "Choisissez un point relais et nommez le logement." };
+    return {
+      ok: false,
+      erreur: en
+        ? "Choose a drop-off point and name the property."
+        : "Choisissez un point relais et nommez le logement.",
+    };
+  }
+
+  // Vérifié avant d'écrire quoi que ce soit : en production sans clé
+  // Stripe, mieux vaut refuser que d'enregistrer une clé impayée —
+  // ou pire, de la valider d'office comme le fait le mode simulé.
+  const mode = modePaiement();
+  if (mode === null) {
+    console.error("STRIPE_SECRET_KEY manquant en production : dépôt refusé.");
+    return {
+      ok: false,
+      erreur: en
+        ? "Payment is temporarily unavailable. Please try again later."
+        : "Le paiement est momentanément indisponible. Réessayez plus tard.",
+    };
   }
 
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) return { ok: false, erreur: "Session expirée, reconnectez-vous." };
+  if (!user)
+    return {
+      ok: false,
+      erreur: en ? "Session expired, please log in again." : "Session expirée, reconnectez-vous.",
+    };
 
   // Badge imprimé unique (RPC dédiée)
   const { data: badge, error: errBadge } = await supabase.rpc("generer_code_badge");
   if (errBadge || !badge) {
-    return { ok: false, erreur: "Impossible de générer le badge. Réessayez." };
+    return {
+      ok: false,
+      erreur: en ? "Couldn't generate the tag. Please try again." : "Impossible de générer le badge. Réessayez.",
+    };
   }
 
   // Enregistrement de la clé (RLS : hote_id = auth.uid())
@@ -196,14 +251,17 @@ export async function actionDeposerCle(input: {
     .select("id")
     .single();
   if (errCle || !cle) {
-    return { ok: false, erreur: "Enregistrement de la clé impossible." };
+    return {
+      ok: false,
+      erreur: en ? "Couldn't register the key." : "Enregistrement de la clé impossible.",
+    };
   }
 
   // Les paiements sont réservés au service role (RLS sans policy d'écriture)
   const admin = createAdminClient();
   const montant = TARIFS.depotUnitaire.centimes;
 
-  if (stripeDisponible()) {
+  if (mode === "stripe") {
     const { data: paiement } = await admin
       .from("paiements")
       .insert({
@@ -224,12 +282,14 @@ export async function actionDeposerCle(input: {
           price_data: {
             currency: "eur",
             unit_amount: montant,
-            product_data: { name: TARIFS.depotUnitaire.libelle },
+            product_data: {
+              name: en ? "Keywi key drop-off (one-off)" : TARIFS.depotUnitaire.libelle,
+            },
           },
         },
       ],
-      success_url: `${SITE}/espace/cles/${cle.id}?paiement=succes`,
-      cancel_url: `${SITE}/espace/cles/${cle.id}?paiement=annule`,
+      success_url: `${SITE}${localise(`/espace/cles/${cle.id}`, locale)}?paiement=succes`,
+      cancel_url: `${SITE}${localise(`/espace/cles/${cle.id}`, locale)}?paiement=annule`,
       metadata: { key_id: cle.id },
     });
 
@@ -243,7 +303,7 @@ export async function actionDeposerCle(input: {
     return { ok: true, url: session.url ?? undefined };
   }
 
-  // Paiement simulé (local sans Stripe) : validé immédiatement
+  // Paiement simulé (développement sans Stripe) : validé d'office
   await admin.from("paiements").insert({
     hote_id: user.id,
     key_id: cle.id,

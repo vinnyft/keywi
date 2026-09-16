@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRealtime } from "@/hooks/useRealtime";
+import { useLocale } from "@/lib/useLocale";
 
 /**
  * Grille visuelle des cases du point relais : libre (vert pâle) ou
@@ -18,7 +19,28 @@ interface CaseAffichee {
 }
 
 export function GrilleCases({ relayPointId }: { relayPointId: string }) {
+  const en = useLocale() === "en";
   const [cases, setCases] = useState<CaseAffichee[] | null>(null);
+
+  const t = en
+    ? {
+        chargement: "Loading slots",
+        mesCases: "My slots",
+        occupees: (n: number) => `${n} occupied`,
+        etatCases: "Slot status",
+        occupee: "Occupied",
+        libre: "Free",
+        maj: "The grid updates automatically on every drop-off or pickup.",
+      }
+    : {
+        chargement: "Chargement des cases",
+        mesCases: "Mes cases",
+        occupees: (n: number) => `${n} occupée${n > 1 ? "s" : ""}`,
+        etatCases: "État des cases",
+        occupee: "Occupée",
+        libre: "Libre",
+        maj: "La grille se met à jour automatiquement à chaque dépôt ou retrait.",
+      };
 
   const charger = useCallback(async () => {
     const supabase = createClient();
@@ -63,7 +85,7 @@ export function GrilleCases({ relayPointId }: { relayPointId: string }) {
         <div
           className="size-10 animate-spin rounded-full border-4 border-primaire border-t-transparent"
           role="status"
-          aria-label="Chargement des cases"
+          aria-label={t.chargement}
         />
       </div>
     );
@@ -74,15 +96,15 @@ export function GrilleCases({ relayPointId }: { relayPointId: string }) {
   return (
     <div>
       <div className="mb-4 flex items-baseline justify-between">
-        <h2 className="text-lg font-bold">Mes cases</h2>
+        <h2 className="text-lg font-bold">{t.mesCases}</h2>
         <p className="text-sm text-gray-600">
-          {occupees} occupée{occupees > 1 ? "s" : ""} / {cases.length}
+          {t.occupees(occupees)} / {cases.length}
         </p>
       </div>
 
       <ul
         className="grid grid-cols-4 gap-2 sm:grid-cols-5"
-        aria-label="État des cases"
+        aria-label={t.etatCases}
       >
         {cases.map((c) => (
           <li
@@ -95,15 +117,13 @@ export function GrilleCases({ relayPointId }: { relayPointId: string }) {
           >
             <span className="text-xl font-black">{c.numero}</span>
             <span className="line-clamp-2 w-full px-0.5 text-[10px] leading-tight">
-              {c.statut === "occupee" ? (c.logement ?? "Occupée") : "Libre"}
+              {c.statut === "occupee" ? (c.logement ?? t.occupee) : t.libre}
             </span>
           </li>
         ))}
       </ul>
 
-      <p className="mt-4 text-xs text-gray-500">
-        La grille se met à jour automatiquement à chaque dépôt ou retrait.
-      </p>
+      <p className="mt-4 text-xs text-gray-500">{t.maj}</p>
     </div>
   );
 }

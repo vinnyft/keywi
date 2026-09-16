@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { normaliserBadge } from "@/lib/badge";
 
 /**
  * Lecture d'un badge RFID/NFC, abstraite en trois modes :
@@ -73,9 +74,11 @@ export function useRfidScan({ onScan, actif = true }: UseRfidScanOptions) {
     const reader = new window.NDEFReader!();
 
     reader.addEventListener("reading", (event) => {
-      // serialNumber est l'UID du badge, au format aa:bb:cc:…
+      // serialNumber est l'UID du badge, au format aa:bb:cc:… ;
+      // normalisé (majuscules, sans séparateurs) pour un appariement
+      // stable quel que soit le lecteur.
       if (event.serialNumber) {
-        onScanRef.current(event.serialNumber.toUpperCase(), "nfc");
+        onScanRef.current(normaliserBadge(event.serialNumber), "nfc");
       }
     });
     reader.addEventListener("readingerror", () => {
@@ -114,8 +117,9 @@ export function useRfidScan({ onScan, actif = true }: UseRfidScanOptions) {
       dernierAppui = maintenant;
 
       if (e.key === "Enter") {
-        if (tampon.length >= 6) {
-          onScanRef.current(tampon.toUpperCase(), "hid");
+        const uid = normaliserBadge(tampon);
+        if (uid.length >= 6) {
+          onScanRef.current(uid, "hid");
         }
         tampon = "";
       } else if (e.key.length === 1) {
@@ -134,7 +138,7 @@ export function useRfidScan({ onScan, actif = true }: UseRfidScanOptions) {
 
   // --- Mode manuel : le formulaire appelle soumettreManuel ---------
   const soumettreManuel = useCallback((code: string) => {
-    const propre = code.trim().toUpperCase();
+    const propre = normaliserBadge(code);
     if (propre.length < 6) {
       setErreur("Le code du badge comporte au moins 6 caractères.");
       return;

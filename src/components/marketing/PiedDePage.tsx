@@ -1,41 +1,49 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
-import { CAS_USAGE } from "@/content/cas-usage";
+import { listeCasUsage } from "@/content/cas-usage";
+import { localise, type Locale } from "@/lib/i18n";
+import type { Dictionnaire } from "@/lib/dictionaries";
 
-/** Pied de page complet du site public */
-export function PiedDePage() {
+/** Pied de page complet du site public, localisé. */
+export function PiedDePage({
+  dict,
+  locale,
+}: {
+  dict: Dictionnaire["footer"];
+  locale: Locale;
+}) {
+  const l = (chemin: string) => localise(chemin, locale);
+  const casUsage = listeCasUsage(locale);
+
   return (
     <footer className="bg-encre text-white">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <Logo taille={32} sombre />
-          <p className="mt-3 text-sm text-white/70">
-            Le réseau français de points relais pour clés. Déposez près de chez
-            vous, gérez les accès à distance.
-          </p>
+          <Logo taille={32} sombre lien={l("/")} />
+          <p className="mt-3 text-sm text-white/70">{dict.tagline}</p>
         </div>
 
-        <nav aria-label="Produits">
+        <nav aria-label={dict.produits}>
           <h2 className="text-sm font-bold uppercase tracking-wider text-white/50">
-            Produits
+            {dict.produits}
           </h2>
           <ul className="mt-3 space-y-2 text-sm">
-            <li><Link className="hover:underline" href="/produits/points-relais">Points relais</Link></li>
-            <li><Link className="hover:underline" href="/produits/casiers">Casiers connectés</Link></li>
-            <li><Link className="hover:underline" href="/produits/logiciel-suivi">Logiciel de suivi</Link></li>
-            <li><Link className="hover:underline" href="/tarifs">Tarifs</Link></li>
-            <li><Link className="hover:underline" href="/devenir-point-relais">Devenir point relais</Link></li>
+            <li><Link className="hover:underline" href={l("/produits/points-relais")}>{dict.pointsRelais}</Link></li>
+            <li><Link className="hover:underline" href={l("/produits/casiers")}>{dict.casiers}</Link></li>
+            <li><Link className="hover:underline" href={l("/produits/logiciel-suivi")}>{dict.logicielSuivi}</Link></li>
+            <li><Link className="hover:underline" href={l("/tarifs")}>{dict.tarifs}</Link></li>
+            <li><Link className="hover:underline" href={l("/devenir-point-relais")}>{dict.devenirPointRelais}</Link></li>
           </ul>
         </nav>
 
-        <nav aria-label="Cas d'usage">
+        <nav aria-label={dict.casUsage}>
           <h2 className="text-sm font-bold uppercase tracking-wider text-white/50">
-            Cas d&apos;usage
+            {dict.casUsage}
           </h2>
           <ul className="mt-3 space-y-2 text-sm">
-            {CAS_USAGE.map((c) => (
+            {casUsage.map((c) => (
               <li key={c.slug}>
-                <Link className="hover:underline" href={`/cas-usage/${c.slug}`}>
+                <Link className="hover:underline" href={l(`/cas-usage/${c.slug}`)}>
                   {c.menu}
                 </Link>
               </li>
@@ -43,21 +51,22 @@ export function PiedDePage() {
           </ul>
         </nav>
 
-        <nav aria-label="Keywi">
+        <nav aria-label={dict.keywi}>
           <h2 className="text-sm font-bold uppercase tracking-wider text-white/50">
-            Keywi
+            {dict.keywi}
           </h2>
           <ul className="mt-3 space-y-2 text-sm">
-            <li><Link className="hover:underline" href="/a-propos">À propos</Link></li>
-            <li><Link className="hover:underline" href="/contact">Contact</Link></li>
-            <li><Link className="hover:underline" href="/faq">FAQ</Link></li>
-            <li><Link className="hover:underline" href="/cgv">CGV</Link></li>
-            <li><Link className="hover:underline" href="/confidentialite">Confidentialité</Link></li>
+            <li><Link className="hover:underline" href={l("/a-propos")}>{dict.aPropos}</Link></li>
+            <li><Link className="hover:underline" href={l("/contact")}>{dict.contact}</Link></li>
+            <li><Link className="hover:underline" href={l("/faq")}>{dict.faq}</Link></li>
+            <li><Link className="hover:underline" href={l("/cgv")}>{dict.cgv}</Link></li>
+            <li><Link className="hover:underline" href={l("/confidentialite")}>{dict.confidentialite}</Link></li>
+            <li><Link className="hover:underline" href={l("/mentions-legales")}>{dict.mentionsLegales}</Link></li>
           </ul>
         </nav>
       </div>
       <div className="border-t border-white/10 py-4 text-center text-xs text-white/50">
-        © {new Date().getFullYear()} Keywi — Tous droits réservés. Fait avec ♥ à Paris.
+        © {new Date().getFullYear()} Keywi — {dict.droits}
       </div>
     </footer>
   );

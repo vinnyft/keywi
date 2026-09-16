@@ -2,8 +2,14 @@ import { createClient } from "@/lib/supabase/server";
 
 /**
  * Keywi Pro — export CSV de l'historique des mouvements.
- * La RLS restreint déjà les mouvements visibles à ceux des clés
- * de l'hôte connecté : aucun filtre supplémentaire n'est requis.
+ *
+ * La RLS ne suffit pas ici : elle ouvre aussi la lecture au
+ * commerçant (tout son point relais) et à l'admin (toute la
+ * plateforme). Sans filtre explicite, « exporter mes données »
+ * rendrait à un admin le journal de tous les utilisateurs,
+ * bénéficiaires nommés compris. On restreint donc l'export aux
+ * trousseaux dont le demandeur est l'hôte — la RLS reste le
+ * garde-fou, pas le filtre.
  *
  * GET /api/export/mouvements → fichier .csv
  */
@@ -32,8 +38,9 @@ export async function GET() {
   const { data: mouvements, error } = await supabase
     .from("movements")
     .select(
-      "created_at, type, details, keys(logement, code_badge_imprime), relay_points(nom, adresse, code_postal, ville)"
+      "created_at, type, details, keys!inner(logement, code_badge_imprime, hote_id), relay_points(nom, adresse, code_postal, ville)"
     )
+    .eq("keys.hote_id", user.id)
     .order("created_at", { ascending: false });
 
   if (error) {
