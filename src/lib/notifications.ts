@@ -23,8 +23,12 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const EXPEDITEUR = process.env.EMAIL_FROM ?? "KeyWe <notifications@keywe.io>";
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+// `||` (et non `??`) : une variable d'environnement définie mais VIDE
+// (`EMAIL_FROM=""`) doit retomber sur la valeur par défaut. Sinon
+// l'app tente d'envoyer depuis un expéditeur vide et Resend refuse
+// tout — panne silencieuse déjà rencontrée en production.
+const EXPEDITEUR = process.env.EMAIL_FROM || "KeyWe <notifications@keywe.io>";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 /** URL publique localisée : `/espace` → `/en/espace` en anglais. */
 function lienSite(chemin: string, en: boolean): string {
