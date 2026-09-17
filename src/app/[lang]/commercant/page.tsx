@@ -71,8 +71,8 @@ export default async function AccueilCommercant({
           </span>
           <span className="text-white/80">
             {en
-              ? "A customer drops off a keyring with a Keywi tag"
-              : "Un client dépose un trousseau muni d'un badge Keywi"}
+              ? "A customer drops off a keyring with a KeyWe tag"
+              : "Un client dépose un trousseau muni d'un badge KeyWe"}
           </span>
         </span>
       </Link>

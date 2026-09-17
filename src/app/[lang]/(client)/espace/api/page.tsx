@@ -51,7 +51,7 @@ export default async function PageApi({
     ? {
         titre: "API keys",
         intro:
-          "Drive your Keywi keys from your own tools: automate pickup-code creation on every booking.",
+          "Drive your KeyWe keys from your own tools: automate pickup-code creation on every booking.",
         doc: "Documentation",
         vosCles: "Your keys",
         aucune: "No key yet. Generate one above to get started.",
@@ -64,7 +64,7 @@ export default async function PageApi({
     : {
         titre: "Clés API",
         intro:
-          "Pilotez vos clés Keywi depuis vos propres outils : automatisez la création des codes de retrait à chaque réservation.",
+          "Pilotez vos clés KeyWe depuis vos propres outils : automatisez la création des codes de retrait à chaque réservation.",
         doc: "Documentation",
         vosCles: "Vos clés",
         aucune: "Aucune clé pour l'instant. Générez-en une ci-dessus pour commencer.",

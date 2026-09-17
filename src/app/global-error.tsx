@@ -52,7 +52,7 @@ export default function ErreurGlobale({
         >
           K
         </div>
-        <h1 style={{ margin: 0, fontSize: 24 }}>Keywi est momentanément indisponible</h1>
+        <h1 style={{ margin: 0, fontSize: 24 }}>KeyWe est momentanément indisponible</h1>
         <p style={{ margin: 0, maxWidth: 420, color: "#6B7A6B" }}>
           Une erreur est survenue au chargement de l&apos;application. Vos
           données ne sont pas affectées.

@@ -1,7 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 
 /**
- * Keywi Pro — export CSV de l'historique des mouvements.
+ * KeyWe Pro — export CSV de l'historique des mouvements.
  *
  * La RLS ne suffit pas ici : elle ouvre aussi la lecture au
  * commerçant (tout son point relais) et à l'admin (toute la

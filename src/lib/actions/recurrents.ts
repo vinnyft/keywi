@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 
 /**
  * Accès récurrents : l'hôte définit une intervention qui revient
- * (ménage du mardi, jardinier du samedi…). Keywi génère le code
+ * (ménage du mardi, jardinier du samedi…). KeyWe génère le code
  * avant chaque passage — l'hôte n'a plus rien à faire.
  */
 

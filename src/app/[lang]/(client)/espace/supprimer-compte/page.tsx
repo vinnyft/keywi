@@ -53,7 +53,7 @@ export default async function PageSupprimerCompte({
         mesDonnees: "My data",
         titre: "Delete my account",
         intro:
-          "At Keywi, deleting doesn't mean “hiding”. Your identity is destroyed in the database; what remains can no longer be traced back to you.",
+          "At KeyWe, deleting doesn't mean “hiding”. Your identity is destroyed in the database; what remains can no longer be traced back to you.",
         avant: "Before you go",
         avantAide:
           "Once the account is deleted, your history is no longer recoverable. Take it with you if you need it.",
@@ -81,7 +81,7 @@ export default async function PageSupprimerCompte({
         mesDonnees: "Mes données",
         titre: "Supprimer mon compte",
         intro:
-          "Chez Keywi, supprimer ne veut pas dire « masquer ». Votre identité est détruite en base ; ce qui subsiste ne permet plus de remonter jusqu'à vous.",
+          "Chez KeyWe, supprimer ne veut pas dire « masquer ». Votre identité est détruite en base ; ce qui subsiste ne permet plus de remonter jusqu'à vous.",
         avant: "Avant de partir",
         avantAide:
           "Une fois le compte supprimé, votre historique n'est plus récupérable. Emportez-le si vous en avez besoin.",

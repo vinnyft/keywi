@@ -19,8 +19,8 @@ export async function generateMetadata({
     title: loc === "en" ? "Smart lockers" : "Casiers connectés",
     description:
       loc === "en"
-        ? "Keywi lockers: drop off and pick up your keys 24/7, no counter, with the same pickup code."
-        : "Les casiers Keywi : déposez et récupérez vos clés 24 h/24, sans comptoir, avec le même code de retrait.",
+        ? "KeyWe lockers: drop off and pick up your keys 24/7, no counter, with the same pickup code."
+        : "Les casiers KeyWe : déposez et récupérez vos clés 24 h/24, sans comptoir, avec le même code de retrait.",
     alternates: alternatesLangues("/produits/casiers", loc),
   };
 }
@@ -29,7 +29,7 @@ function contenu(locale: Locale) {
   if (locale === "en") {
     return {
       badge: "Available in Paris",
-      h1: "Keywi smart lockers",
+      h1: "KeyWe smart lockers",
       lede: "For keys that can't wait: automated lockers open 24/7, unlocked by the same 6-character code as our drop-off points.",
       deposer: "Drop off in a locker",
       voirCarte: "See the map",
@@ -50,7 +50,7 @@ function contenu(locale: Locale) {
   }
   return {
     badge: "Disponible à Paris",
-    h1: "Casiers connectés Keywi",
+    h1: "Casiers connectés KeyWe",
     lede: "Pour les clés qui n'attendent pas : des casiers automatiques accessibles 24 h/24, déverrouillés par le même code à 6 caractères que nos points relais.",
     deposer: "Déposer dans un casier",
     voirCarte: "Voir la carte",

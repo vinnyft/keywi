@@ -1,6 +1,6 @@
 # TESTS.md — Scénario de test manuel de bout en bout
 
-Ce document décrit comment vérifier **tout le parcours Keywi** en local :
+Ce document décrit comment vérifier **tout le parcours KeyWe** en local :
 enregistrement d'une clé et paiement → dépôt scanné par le commerçant →
 case attribuée → notifications → retrait avec re-scan → case libérée →
 suivi temps réel côté hôte.
@@ -76,7 +76,7 @@ Mot de passe de tous les comptes : `keywi123456`.
 
 - Re-scanner le même badge → ✅ refus « déjà déposée »
   (`STATUT_INCOMPATIBLE`).
-- Scanner un badge inconnu (ex. `ZZZZZZZZ`) → ✅ refus « aucun badge Keywi »
+- Scanner un badge inconnu (ex. `ZZZZZZZZ`) → ✅ refus « aucun badge KeyWe »
   (`BADGE_INCONNU`).
 - Scanner `KWIG8H4J` (clé non payée du seed, attendue au Fournil des Arts)
   → ✅ refus « pas encore réglé » (`PAIEMENT_MANQUANT`) — depuis

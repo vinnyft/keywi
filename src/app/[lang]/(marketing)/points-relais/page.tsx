@@ -14,8 +14,8 @@ export async function generateMetadata({
     title: loc === "en" ? "Find a drop-off point" : "Trouver un point relais",
     description:
       loc === "en"
-        ? "Map of Keywi partner shops where you can drop off and pick up keys."
-        : "Carte des commerces partenaires Keywi où déposer et récupérer des clés.",
+        ? "Map of KeyWe partner shops where you can drop off and pick up keys."
+        : "Carte des commerces partenaires KeyWe où déposer et récupérer des clés.",
     alternates: alternatesLangues("/points-relais", loc),
   };
 }

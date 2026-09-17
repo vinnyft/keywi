@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/i18n";
 
 /**
- * Arbre de décision du bot d'assistance Keywi, bilingue.
+ * Arbre de décision du bot d'assistance KeyWe, bilingue.
  *
  * Volontairement sans IA : un arbre déterministe résout les
  * problèmes courants sans coût, sans hallucination et sans envoyer
@@ -42,7 +42,7 @@ export interface Noeud {
 }
 
 /** Adresse du service après-vente, repli quand l'arbre ne suffit pas. */
-export const EMAIL_SAV = "sav@keywi.fr";
+export const EMAIL_SAV = "sav@keywe.fr";
 
 export const RACINE = "accueil";
 
@@ -50,8 +50,8 @@ const SOURCE: Record<string, NoeudSrc> = {
   accueil: {
     id: "accueil",
     message: {
-      fr: "Bonjour 👋 Je suis l'assistant Keywi. Sur quoi puis-je vous aider ?",
-      en: "Hi 👋 I'm the Keywi assistant. How can I help?",
+      fr: "Bonjour 👋 Je suis l'assistant KeyWe. Sur quoi puis-je vous aider ?",
+      en: "Hi 👋 I'm the KeyWe assistant. How can I help?",
     },
     choix: [
       { libelle: { fr: "Déposer une clé", en: "Drop off a key" }, vers: "depot" },

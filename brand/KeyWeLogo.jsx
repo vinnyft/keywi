@@ -1,8 +1,8 @@
-// Keywi — composant logo React (drop-in).
-// Usage : <KeywiLogo size={48} />  ·  <KeywiLogo variant="dark" />  ·  <KeywiLogo withWordmark />
+// KeyWe — composant logo React (drop-in).
+// Usage : <KeyWeLogo size={48} />  ·  <KeyWeLogo variant="dark" />  ·  <KeyWeLogo withWordmark />
 // Le « K » utilise Bricolage Grotesque : charge la police dans ton app (voir README).
 
-export function KeywiMark({ size = 48, variant = "light", title = "Keywi" }) {
+export function KeyWeMark({ size = 48, variant = "light", title = "KeyWe" }) {
   const dark = variant === "dark";
   const keyFill  = dark ? "#C6F03A" : "#7CB518";
   const ringFill = dark ? "#C6F03A" : "#8A7252";
@@ -33,20 +33,20 @@ export function KeywiMark({ size = 48, variant = "light", title = "Keywi" }) {
   );
 }
 
-export function KeywiLogo({ size = 48, variant = "light", withWordmark = false }) {
-  if (!withWordmark) return <KeywiMark size={size} variant={variant} />;
+export function KeyWeLogo({ size = 48, variant = "light", withWordmark = false }) {
+  if (!withWordmark) return <KeyWeMark size={size} variant={variant} />;
   return (
     <span style={{ display: "inline-flex", alignItems: "center", gap: size * 0.27 }}>
-      <KeywiMark size={size} variant={variant} />
+      <KeyWeMark size={size} variant={variant} />
       <span style={{
         fontFamily: "'Bricolage Grotesque', sans-serif",
         fontWeight: 800,
         fontSize: size * 0.62,
         letterSpacing: "-0.02em",
         color: variant === "dark" ? "#FBFAF3" : "#14331E",
-      }}>Keywi</span>
+      }}>KeyWe</span>
     </span>
   );
 }
 
-export default KeywiLogo;
+export default KeyWeLogo;

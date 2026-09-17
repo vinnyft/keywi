@@ -13,7 +13,7 @@ export async function generateMetadata({
   return {
     title: "Contact",
     description:
-      loc === "en" ? "A question? The Keywi team is here to help." : "Une question ? L'équipe Keywi vous répond.",
+      loc === "en" ? "A question? The KeyWe team is here to help." : "Une question ? L'équipe KeyWe vous répond.",
     alternates: alternatesLangues("/contact", loc),
   };
 }
@@ -33,7 +33,7 @@ export default async function PageContact({
           h1: "Get in touch",
           lede: "A question about a drop-off, a pickup, or want to join the network? Pick the right channel.",
           emailTitre: "By email",
-          emailNote: "bonjour@keywi.fr — reply within 24 business hours",
+          emailNote: "bonjour@keywe.fr — reply within 24 business hours",
           faqTitre: "Frequently asked questions",
           faqNote: "The answer may already be in the FAQ",
           commercantTitre: "Are you a shop owner?",
@@ -43,7 +43,7 @@ export default async function PageContact({
           h1: "Nous contacter",
           lede: "Une question sur un dépôt, un retrait, ou l'envie de rejoindre le réseau ? Choisissez le bon canal.",
           emailTitre: "Par email",
-          emailNote: "bonjour@keywi.fr — réponse sous 24 h ouvrées",
+          emailNote: "bonjour@keywe.fr — réponse sous 24 h ouvrées",
           faqTitre: "Questions fréquentes",
           faqNote: "La réponse est peut-être déjà dans la FAQ",
           commercantTitre: "Vous êtes commerçant ?",
@@ -57,7 +57,7 @@ export default async function PageContact({
 
       <div className="mt-8 space-y-4">
         <a
-          href="mailto:bonjour@keywi.fr"
+          href="mailto:bonjour@keywe.fr"
           className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 hover:border-primaire"
         >
           <span className="inline-flex size-11 items-center justify-center rounded-xl bg-primaire-pale text-primaire-fonce">

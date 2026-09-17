@@ -28,7 +28,7 @@ export async function generateMetadata({
   };
 }
 
-/** Accueil du site public Keywi */
+/** Accueil du site public KeyWe */
 export default async function PageAccueil({
   params,
 }: {

@@ -26,8 +26,8 @@ export default function PageMotDePasseOublie() {
         </h1>
         <p role="status" className="mt-2 text-gray-600">
           {en
-            ? "If a Keywi account exists with this address, you've just received a link to choose a new password. It's valid for one hour."
-            : "Si un compte Keywi existe avec cette adresse, vous venez de recevoir un lien pour choisir un nouveau mot de passe. Il est valable une heure."}
+            ? "If a KeyWe account exists with this address, you've just received a link to choose a new password. It's valid for one hour."
+            : "Si un compte KeyWe existe avec cette adresse, vous venez de recevoir un lien pour choisir un nouveau mot de passe. Il est valable une heure."}
         </p>
         <Link
           href={l("/connexion")}

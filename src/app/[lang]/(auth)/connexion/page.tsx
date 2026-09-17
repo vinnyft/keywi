@@ -10,7 +10,7 @@ import { localise } from "@/lib/i18n";
 function textes(en: boolean) {
   return {
     h1: en ? "Log in" : "Connexion",
-    lede: en ? "Good to see you back on Keywi." : "Heureux de vous revoir sur Keywi.",
+    lede: en ? "Good to see you back on KeyWe." : "Heureux de vous revoir sur KeyWe.",
     methode: en ? "Login method" : "Méthode de connexion",
     motDePasseTab: en ? "Password" : "Mot de passe",
     lienTab: en ? "Magic link" : "Lien magique",

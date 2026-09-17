@@ -6,7 +6,7 @@ import "leaflet/dist/leaflet.css";
 
 /**
  * Carte Leaflet + OpenStreetMap des points relais.
- * Marqueur original Keywi (SVG inline — pas d'assets externes,
+ * Marqueur original KeyWe (SVG inline — pas d'assets externes,
  * évite aussi les soucis d'icônes Leaflet avec les bundlers).
  */
 

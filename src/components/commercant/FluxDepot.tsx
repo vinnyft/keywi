@@ -61,7 +61,7 @@ export function FluxDepot() {
         scannerAutre: "Scan another key",
         depotImpossible: "Drop-off failed",
         reessayer: "Try again",
-        badgeRefuse: "Tag rejected — check that it's a valid Keywi tag.",
+        badgeRefuse: "Tag rejected — check that it's a valid KeyWe tag.",
         confirmationEchec: "Confirmation failed.",
       }
     : {
@@ -84,7 +84,7 @@ export function FluxDepot() {
         scannerAutre: "Scanner une autre clé",
         depotImpossible: "Dépôt impossible",
         reessayer: "Réessayer",
-        badgeRefuse: "Badge refusé — vérifiez qu'il s'agit d'un badge Keywi valide.",
+        badgeRefuse: "Badge refusé — vérifiez qu'il s'agit d'un badge KeyWe valide.",
         confirmationEchec: "La confirmation a échoué.",
       };
 

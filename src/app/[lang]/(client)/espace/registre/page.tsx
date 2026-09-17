@@ -13,7 +13,7 @@ export async function generateMetadata({
 }
 
 /**
- * Keywi Pro — registre complet du parc de clés : recherche,
+ * KeyWe Pro — registre complet du parc de clés : recherche,
  * filtres (dont « en retard ») et export CSV de l'historique.
  */
 export default async function PageRegistre({
@@ -73,8 +73,8 @@ export default async function PageRegistre({
       </h1>
       <p className="mt-1 text-gray-600">
         {en
-          ? "Your entire key portfolio, filterable and exportable — the Keywi Pro view for property managers, agencies and hotels."
-          : "Tout votre parc de clés, filtrable et exportable — la vue Keywi Pro pour les conciergeries, agences et hôtels."}
+          ? "Your entire key portfolio, filterable and exportable — the KeyWe Pro view for property managers, agencies and hotels."
+          : "Tout votre parc de clés, filtrable et exportable — la vue KeyWe Pro pour les conciergeries, agences et hôtels."}
       </p>
 
       <div className="mt-6">

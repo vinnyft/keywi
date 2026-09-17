@@ -76,8 +76,8 @@ propre configuration.
 | --- | --- | --- |
 | Confirm email | **activé** | Sans lui, on s'inscrit avec l'adresse d'autrui, qui reçoit ensuite les notifications (déjà exigé côté code) |
 | Minimum password length | **8** | Aligné sur la validation du formulaire (déjà dans `config.toml`) |
-| Site URL | `https://keywi.fr` | Sert de liste blanche aux redirections des liens email |
-| Redirect URLs | `https://keywi.fr/**` | Idem |
+| Site URL | `https://keywe.fr` | Sert de liste blanche aux redirections des liens email |
+| Redirect URLs | `https://keywe.fr/**` | Idem |
 | SMTP | serveur dédié | Le SMTP par défaut de Supabase est bridé et non délivrable |
 | Captcha (hCaptcha / Turnstile) 🔑 | à envisager | Complète la limitation applicative sur inscription et connexion |
 
@@ -94,7 +94,7 @@ clés.
 1. 🔑 Créer le compte sur [stripe.com](https://stripe.com) et récupérer
    `sk_test_…` / `pk_test_…` (*Developers → API keys*).
 2. 🔑 Déclarer le webhook : *Developers → Webhooks → Add endpoint*
-   - URL : `https://keywi.fr/api/stripe/webhook`
+   - URL : `https://keywe.fr/api/stripe/webhook`
    - Événement : `checkout.session.completed`
    - Recopier le `whsec_…` dans `STRIPE_WEBHOOK_SECRET`.
 
@@ -143,12 +143,12 @@ indisponible qu'une fonction ouverte à tous.
 ## 5. Vérifications après déploiement
 
 ```bash
-curl -sI https://keywi.fr | grep -i "content-security-policy\|strict-transport"
+curl -sI https://keywe.fr | grep -i "content-security-policy\|strict-transport"
 ```
 
 - [ ] En-têtes de sécurité présents, HSTS inclus (absent en local, c'est normal)
-- [ ] `curl https://keywi.fr/api/cron/relances` → **401**
-- [ ] `curl -X POST https://keywi.fr/api/stripe/webhook -d '{}'` → **400**
+- [ ] `curl https://keywe.fr/api/cron/relances` → **401**
+- [ ] `curl -X POST https://keywe.fr/api/stripe/webhook -d '{}'` → **400**
 - [ ] `/api/dev/apercu-email` → **404** (route de développement)
 - [ ] Un vrai paiement de test aboutit et bascule la clé en « payée »
 - [ ] Six connexions ratées d'affilée → message de blocage

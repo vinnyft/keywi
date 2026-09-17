@@ -1,4 +1,4 @@
-# Keywi — Présentation du projet
+# KeyWe — Présentation du projet
 
 > Document de prise en main destiné à un nouvel associé / développeur.
 > Tu as ici **tout** pour comprendre le projet, le lancer et le déployer.
@@ -7,7 +7,7 @@
 
 ## 1. Le projet en une phrase
 
-**Keywi est une plateforme française de gestion de clés par points relais** :
+**KeyWe est une plateforme française de gestion de clés par points relais** :
 on dépose ses clés dans un commerce de quartier partenaire (café, librairie,
 pressing…), et on gère les accès à distance grâce à des codes de retrait.
 
@@ -122,14 +122,14 @@ Mot de passe commun : **`keywi123456`**
 
 Tout est expliqué dans **DEPLOIEMENT.md** : déploiement gratuit sur
 **Vercel** (le site) + **Supabase Cloud** (la base), avec une URL publique
-type `keywi.vercel.app`.
+type `keywe.vercel.app`.
 
 ---
 
 ## 6. Structure du code
 
 ```
-Keywi/
+KeyWe/
 ├── README.md            # doc technique de référence
 ├── DEPLOIEMENT.md       # guide de mise en ligne
 ├── TESTS.md             # scénario de test de bout en bout

@@ -3,7 +3,7 @@ import { defineConfig } from "vitest/config";
 /**
  * Tests d'intégration : ils s'exécutent contre la stack Supabase
  * locale (`supabase start`), pas contre des simulacres. La logique
- * critique de Keywi vit dans des fonctions Postgres — la tester
+ * critique de KeyWe vit dans des fonctions Postgres — la tester
  * ailleurs qu'en base ne prouverait rien.
  */
 export default defineConfig({

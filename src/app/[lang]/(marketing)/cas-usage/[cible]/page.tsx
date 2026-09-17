@@ -50,12 +50,12 @@ export default async function PageCasUsage({
       ? {
           deposer: "Drop off my keys",
           tarifs: "See pricing",
-          autres: "Keywi also fits…",
+          autres: "KeyWe also fits…",
         }
       : {
           deposer: "Déposer mes clés",
           tarifs: "Voir les tarifs",
-          autres: "Keywi s'adapte aussi à…",
+          autres: "KeyWe s'adapte aussi à…",
         };
   const autres = listeCasUsage(locale).filter((c) => c.slug !== cas.slug);
 

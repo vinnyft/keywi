@@ -13,8 +13,8 @@ export async function generateMetadata({
     title: loc === "en" ? "Legal notice" : "Mentions légales",
     description:
       loc === "en"
-        ? "Publisher, host and publication director of the Keywi website."
-        : "Éditeur, hébergeur et responsable de publication du site Keywi.",
+        ? "Publisher, host and publication director of the KeyWe website."
+        : "Éditeur, hébergeur et responsable de publication du site KeyWe.",
     alternates: alternatesLangues("/mentions-legales", loc),
   };
 }
@@ -37,10 +37,10 @@ export default async function PageMentionsLegales({
     {
       titre: en ? "Site publisher" : "Éditeur du site",
       lignes: [
-        en ? "Keywi — [legal form, e.g. SAS with share capital of €X]" : "Keywi — [forme sociale, ex. SAS au capital de X €]",
+        en ? "KeyWe — [legal form, e.g. SAS with share capital of €X]" : "KeyWe — [forme sociale, ex. SAS au capital de X €]",
         en ? "[Registered office address]" : "[Adresse du siège social]",
         en ? "[Trade register of … under number …] · [VAT number]" : "[RCS de … sous le numéro …] · [N° TVA intracommunautaire]",
-        "Contact : bonjour@keywi.fr",
+        "Contact : bonjour@keywe.fr",
       ],
     },
     {
@@ -72,11 +72,11 @@ export default async function PageMentionsLegales({
         maj: "Last updated",
         courtoisie: "Courtesy translation. The French version is the authoritative text.",
         piTitre: "Intellectual property",
-        pi: "The Keywi brand, logo, texts and site interface are protected. Any reproduction, even partial, requires prior authorisation.",
+        pi: "The KeyWe brand, logo, texts and site interface are protected. Any reproduction, even partial, requires prior authorisation.",
         donneesTitre: "Personal data and cookies",
         donneesAvant: "Details of processing, retention periods and your rights are in the ",
         donneesLien: "privacy policy",
-        donneesApres: ". Keywi sets no advertising or analytics cookies.",
+        donneesApres: ". KeyWe sets no advertising or analytics cookies.",
         signalTitre: "Reporting content",
         signalAvant: "Any clearly unlawful content can be reported to ",
         signalApres: ".",
@@ -87,11 +87,11 @@ export default async function PageMentionsLegales({
         maj: "Dernière mise à jour",
         courtoisie: null as string | null,
         piTitre: "Propriété intellectuelle",
-        pi: "La marque Keywi, le logo, les textes et l'interface du site sont protégés. Toute reproduction, même partielle, est soumise à autorisation préalable.",
+        pi: "La marque KeyWe, le logo, les textes et l'interface du site sont protégés. Toute reproduction, même partielle, est soumise à autorisation préalable.",
         donneesTitre: "Données personnelles et cookies",
         donneesAvant: "Le détail des traitements, des durées de conservation et de vos droits figure dans la ",
         donneesLien: "politique de confidentialité",
-        donneesApres: ". Keywi ne dépose aucun cookie publicitaire ni de mesure d'audience.",
+        donneesApres: ". KeyWe ne dépose aucun cookie publicitaire ni de mesure d'audience.",
         signalTitre: "Signalement d'un contenu",
         signalAvant: "Tout contenu manifestement illicite peut être signalé à ",
         signalApres: ".",
@@ -143,8 +143,8 @@ export default async function PageMentionsLegales({
           <h2 className="text-xl font-bold">{t.signalTitre}</h2>
           <p className="mt-2">
             {t.signalAvant}
-            <a className="underline" href="mailto:bonjour@keywi.fr">
-              bonjour@keywi.fr
+            <a className="underline" href="mailto:bonjour@keywe.fr">
+              bonjour@keywe.fr
             </a>
             {t.signalApres}
           </p>

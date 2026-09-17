@@ -102,7 +102,7 @@ export async function GET(request: Request) {
     .join("");
   return new NextResponse(
     `<body style="font-family:system-ui;max-width:560px;margin:40px auto;color:#3A5230">
-       <h1 style="font-size:20px">📧 Aperçu des emails Keywi (dev)</h1>
+       <h1 style="font-size:20px">📧 Aperçu des emails KeyWe (dev)</h1>
        <ul style="padding-left:18px">${liens}</ul>
      </body>`,
     { headers: { "Content-Type": "text/html; charset=utf-8" } }

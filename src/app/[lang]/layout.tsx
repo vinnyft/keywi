@@ -14,7 +14,7 @@ export function generateStaticParams() {
   return LOCALES.map((lang) => ({ lang }));
 }
 
-// Police d'affichage (titres, monogramme) — identité Keywi
+// Police d'affichage (titres, monogramme) — identité KeyWe
 const bricolage = Bricolage_Grotesque({
   variable: "--font-display",
   subsets: ["latin"],
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   // le build. Voir src/lib/site.ts.
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Keywi — Vos clés, en lieu sûr, près de chez vous",
-    template: "%s | Keywi",
+    default: "KeyWe — Vos clés, en lieu sûr, près de chez vous",
+    template: "%s | KeyWe",
   },
   description:
     "Déposez vos clés dans un commerce partenaire près de chez vous et gérez les accès à distance. Le réseau français de points relais pour clés.",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   // est posé page par page, pas ici (sinon tout pointerait vers « / »).
   openGraph: {
     type: "website",
-    siteName: "Keywi",
+    siteName: "KeyWe",
     locale: "fr_FR",
   },
   twitter: {
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   // Installation en application (PWA) sur iOS / Android / desktop
   appleWebApp: {
     capable: true,
-    title: "Keywi",
+    title: "KeyWe",
     statusBarStyle: "black-translucent",
   },
   icons: {

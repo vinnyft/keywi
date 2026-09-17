@@ -13,8 +13,8 @@ export async function generateMetadata({
     title: loc === "en" ? "Privacy policy" : "Politique de confidentialité",
     description:
       loc === "en"
-        ? "How Keywi protects and processes your personal data."
-        : "Comment Keywi protège et traite vos données personnelles.",
+        ? "How KeyWe protects and processes your personal data."
+        : "Comment KeyWe protège et traite vos données personnelles.",
     alternates: alternatesLangues("/confidentialite", loc),
   };
 }
@@ -29,7 +29,7 @@ function contenu(locale: Locale) {
       labelBase: "Legal basis:",
       labelDuree: "Retention:",
       responsableTitre: "Data controller",
-      responsableTexteAvant: "Keywi — [legal form, registered office, trade register]. For any question about your data: ",
+      responsableTexteAvant: "KeyWe — [legal form, registered office, trade register]. For any question about your data: ",
       responsableTexteApres: ".",
       traiteTitre: "What we process, and why",
       traiteLede: "We only collect what serves the service. No data is ever sold or used for advertising.",
@@ -49,14 +49,14 @@ function contenu(locale: Locale) {
       sousTraitants: [
         { nom: "Supabase", role: "Database and authentication hosting" },
         { nom: "Vercel", role: "Website and server-side processing hosting" },
-        { nom: "Stripe", role: "Payment collection (no banking data passes through Keywi)" },
+        { nom: "Stripe", role: "Payment collection (no banking data passes through KeyWe)" },
         { nom: "Resend", role: "Delivery of notification emails" },
         { nom: "OpenStreetMap", role: "Drop-off point map tiles — your IP address is sent to the tile server when the map is displayed" },
         { nom: "API Adresse (data.gouv.fr)", role: "Geocoding of drop-off-point addresses, called from our servers" },
       ],
       transferts: "The site's server processing runs in the Paris region. Some of these providers are established outside the European Union; transfers then rely on the European Commission's standard contractual clauses. The hosting region chosen for the database is [to be specified].",
       cookiesTitre: "Cookies",
-      cookiesTexte1: "Keywi sets no advertising or analytics cookies.",
+      cookiesTexte1: "KeyWe sets no advertising or analytics cookies.",
       cookiesTexte2: " The only cookies used carry your login session: strictly necessary to the service, they are exempt from consent (art. 82 of the French Data Protection Act). That's why you don't see a banner on this site.",
       securiteTitre: "Security",
       securite: "Access to data is partitioned at the database level itself: every request is filtered by row-level security rules, so a host cannot reach another's keyrings. The movement log is technically tamper-proof, pickup codes expire, and API keys are stored only as a fingerprint.",
@@ -82,7 +82,7 @@ function contenu(locale: Locale) {
     labelBase: "Base légale :",
     labelDuree: "Conservation :",
     responsableTitre: "Responsable du traitement",
-    responsableTexteAvant: "Keywi — [forme sociale, adresse du siège, RCS]. Pour toute question relative à vos données : ",
+    responsableTexteAvant: "KeyWe — [forme sociale, adresse du siège, RCS]. Pour toute question relative à vos données : ",
     responsableTexteApres: ".",
     traiteTitre: "Ce que nous traitons, et pourquoi",
     traiteLede: "Nous ne collectons que ce qui sert le service. Aucune donnée n'est revendue, ni utilisée à des fins publicitaires.",
@@ -102,14 +102,14 @@ function contenu(locale: Locale) {
     sousTraitants: [
       { nom: "Supabase", role: "Hébergement de la base de données et de l'authentification" },
       { nom: "Vercel", role: "Hébergement du site et des traitements serveur" },
-      { nom: "Stripe", role: "Encaissement des paiements (aucune donnée bancaire ne transite par Keywi)" },
+      { nom: "Stripe", role: "Encaissement des paiements (aucune donnée bancaire ne transite par KeyWe)" },
       { nom: "Resend", role: "Acheminement des emails de notification" },
       { nom: "OpenStreetMap", role: "Fonds de carte des points relais — votre adresse IP est transmise au serveur de tuiles lors de l'affichage de la carte" },
       { nom: "API Adresse (data.gouv.fr)", role: "Géocodage des adresses de points relais, appelé depuis nos serveurs" },
     ],
     transferts: "Les traitements serveur du site s'exécutent dans la région de Paris. Certains de ces prestataires sont établis hors de l'Union européenne ; les transferts s'appuient alors sur les clauses contractuelles types de la Commission européenne. La région d'hébergement retenue pour la base de données est [à préciser].",
     cookiesTitre: "Cookies",
-    cookiesTexte1: "Keywi ne dépose aucun cookie publicitaire ni de mesure d'audience.",
+    cookiesTexte1: "KeyWe ne dépose aucun cookie publicitaire ni de mesure d'audience.",
     cookiesTexte2: " Les seuls cookies utilisés portent votre session de connexion : strictement nécessaires au service, ils sont dispensés de consentement (art. 82 de la loi Informatique et Libertés). C'est pourquoi vous ne voyez pas de bandeau sur ce site.",
     securiteTitre: "Sécurité",
     securite: "L'accès aux données est cloisonné au niveau de la base elle-même : chaque requête est filtrée par des règles de sécurité au niveau des lignes, un hôte ne peut donc pas atteindre les trousseaux d'un autre. Le journal des mouvements est techniquement inaltérable, les codes de retrait expirent, et les clés d'API ne sont stockées que sous forme d'empreinte.",
@@ -155,7 +155,7 @@ export default async function PageConfidentialite({
           <h2 className="text-xl font-bold">{t.responsableTitre}</h2>
           <p className="mt-2">
             {t.responsableTexteAvant}
-            <a className="underline" href="mailto:bonjour@keywi.fr">bonjour@keywi.fr</a>
+            <a className="underline" href="mailto:bonjour@keywe.fr">bonjour@keywe.fr</a>
             {t.responsableTexteApres}
           </p>
         </section>
@@ -190,7 +190,7 @@ export default async function PageConfidentialite({
           <h2 className="text-xl font-bold">{t.beneficiairesTitre}</h2>
           <p className="mt-2">
             {t.beneficiairesAvant}
-            <a className="underline" href="mailto:bonjour@keywi.fr">bonjour@keywi.fr</a>
+            <a className="underline" href="mailto:bonjour@keywe.fr">bonjour@keywe.fr</a>
             {t.beneficiairesApres}
           </p>
         </section>
@@ -242,7 +242,7 @@ export default async function PageConfidentialite({
           </p>
           <p className="mt-3">
             {t.autresAvant}
-            <a className="underline" href="mailto:bonjour@keywi.fr">bonjour@keywi.fr</a>
+            <a className="underline" href="mailto:bonjour@keywe.fr">bonjour@keywe.fr</a>
             {t.autresMilieu}
             <a className="underline" href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noreferrer">
               {t.cnil}

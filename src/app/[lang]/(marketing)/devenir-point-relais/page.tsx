@@ -17,8 +17,8 @@ export async function generateMetadata({
     title: loc === "en" ? "Become a partner" : "Devenir point relais",
     description:
       loc === "en"
-        ? "Turn your shop into a Keywi drop-off point: extra income on every key movement."
-        : "Transformez votre commerce en point relais Keywi : un revenu complémentaire à chaque mouvement de clés.",
+        ? "Turn your shop into a KeyWe drop-off point: extra income on every key movement."
+        : "Transformez votre commerce en point relais KeyWe : un revenu complémentaire à chaque mouvement de clés.",
     alternates: alternatesLangues("/devenir-point-relais", loc),
   };
 }
@@ -33,7 +33,7 @@ function contenu(locale: Locale): {
 } {
   if (locale === "en") {
     return {
-      h1: "Become a Keywi drop-off point",
+      h1: "Become a KeyWe drop-off point",
       lede: "Your counter already has everything it needs. Join the network and help your neighbourhood — while topping up your month.",
       atouts: [
         { icone: Euro, titre: "Extra income", texte: "Up to €1.20 paid for each scanned drop-off, pickup or return, paid at the start of the following month." },
@@ -44,7 +44,7 @@ function contenu(locale: Locale): {
       formTitre: "Offer your shop",
       formLede: "Fill in this form: our team gets back to you within 48 business hours.",
       form: {
-        succes: "Application received! Our team will contact you within 48 business hours to finalise joining the Keywi network.",
+        succes: "Application received! Our team will contact you within 48 business hours to finalise joining the KeyWe network.",
         nomCommerce: "Shop name",
         nomCommercePlaceholder: "Corner Café",
         votreNom: "Your name",
@@ -64,7 +64,7 @@ function contenu(locale: Locale): {
     };
   }
   return {
-    h1: "Devenez point relais Keywi",
+    h1: "Devenez point relais KeyWe",
     lede: "Votre comptoir a déjà tout ce qu'il faut. Rejoignez le réseau et rendez service à votre quartier — tout en arrondissant vos fins de mois.",
     atouts: [
       { icone: Euro, titre: "Un revenu complémentaire", texte: "Jusqu'à 1,20 € reversé pour chaque dépôt, retrait ou retour scanné, versé en début de mois suivant." },
@@ -75,7 +75,7 @@ function contenu(locale: Locale): {
     formTitre: "Proposez votre commerce",
     formLede: "Remplissez ce formulaire : notre équipe vous recontacte sous 48 h ouvrées.",
     form: {
-      succes: "Candidature bien reçue ! Notre équipe vous recontacte sous 48 h ouvrées pour finaliser votre adhésion au réseau Keywi.",
+      succes: "Candidature bien reçue ! Notre équipe vous recontacte sous 48 h ouvrées pour finaliser votre adhésion au réseau KeyWe.",
       nomCommerce: "Nom du commerce",
       nomCommercePlaceholder: "Café du Coin",
       votreNom: "Votre nom",

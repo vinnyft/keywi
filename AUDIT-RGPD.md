@@ -1,4 +1,4 @@
-# Audit RGPD et sécurité — Keywi
+# Audit RGPD et sécurité — KeyWe
 
 Revue du code au 24 juillet 2026. Périmètre : schéma Postgres,
 politiques RLS, actions serveur, routes API, pages publiques.
@@ -6,7 +6,7 @@ politiques RLS, actions serveur, routes API, pages publiques.
 Le volet sécurité applicative (authentification, paiement, en-têtes,
 injections) est traité en fin de document, § « Sécurité applicative ».
 
-Keywi traite des données à faible volume mais à forte sensibilité
+KeyWe traite des données à faible volume mais à forte sensibilité
 d'usage : savoir qui détient les clés d'un logement, quand, et à qui
 elles ont été remises. Le cœur technique est solide — le cloisonnement
 est fait au bon endroit, dans la base. Ce qui manquait relevait de la
@@ -33,7 +33,7 @@ couche « droits des personnes » : information et effacement.
 
 ### 1. Aucun parcours d'effacement (art. 17) — **corrigé**
 
-La politique renvoyait vers `bonjour@keywi.fr`. Un droit qui suppose
+La politique renvoyait vers `bonjour@keywe.fr`. Un droit qui suppose
 d'écrire un email et d'attendre n'est pas un droit exerçable.
 
 Deux obstacles rendaient l'effacement techniquement impossible tel quel :
@@ -196,8 +196,8 @@ Seconde passe, centrée sur ce qu'un attaquant extérieur peut atteindre.
 | **Paiement simulé en production** | `lib/stripe.ts` | Une clé Stripe absente validait les dépôts d'office. `modePaiement()` renvoie maintenant `null` en production : le dépôt est refusé avant toute écriture. |
 | **Borne de casier ouverte** | `api/borne/[id]` | Route publique, sans authentification ni limite : 31⁶ codes se balaient à la vitesse du réseau, et chaque réussite ouvre une case contenant des clés de logement. Limitée à 15 essais / 10 min **par casier** — le seul angle qui résiste à une attaque distribuée. Un retrait réussi remet le compteur à zéro. |
 | **Bourrage de mot de passe** | `actions/auth.ts` | La limitation par IP de GoTrue ne voyait que l'IP du serveur Next : inopérante. Compteur applicatif en base (migration 0012), 5 essais / 15 min par compte, 3 demandes de réinitialisation / heure. |
-| **Redirection ouverte** | `actions/auth.ts` | `suivant.startsWith("/")` acceptait `//evil.com` : un lien de hameçonnage partant d'un vrai domaine Keywi. |
-| **Injection HTML dans les emails** | `lib/notifications.ts` | Nom de logement et de bénéficiaire réinjectés bruts dans le HTML envoyé à des tiers. Un logement nommé `<a href="…">Confirmez votre compte</a>` transformait une notification Keywi en support de hameçonnage, signée de notre domaine. Échappement systématique ; le sujet, qui est du texte, reste brut. |
+| **Redirection ouverte** | `actions/auth.ts` | `suivant.startsWith("/")` acceptait `//evil.com` : un lien de hameçonnage partant d'un vrai domaine KeyWe. |
+| **Injection HTML dans les emails** | `lib/notifications.ts` | Nom de logement et de bénéficiaire réinjectés bruts dans le HTML envoyé à des tiers. Un logement nommé `<a href="…">Confirmez votre compte</a>` transformait une notification KeyWe en support de hameçonnage, signée de notre domaine. Échappement systématique ; le sujet, qui est du texte, reste brut. |
 | **Aucun en-tête de sécurité** | `next.config.ts` | Ni CSP, ni HSTS, ni `frame-ancestors`. Ajoutés, avec une CSP qui n'autorise que `self`, Supabase et les tuiles OSM. |
 | **Fuite d'erreurs Postgres** | `api/borne/[id]` | Le message brut de la base repartait vers l'écran public. Journalisé côté serveur, message générique côté borne. |
 
