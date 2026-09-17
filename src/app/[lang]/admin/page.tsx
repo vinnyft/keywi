@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { actionDeconnexion } from "@/lib/actions/auth";
 import { actionTraiterCandidature } from "@/lib/actions/admin";
+import { actionDefinirObjectif } from "@/lib/actions/commercial";
 import { StatutCle } from "@/components/ui/StatutCle";
 import { Logo } from "@/components/ui/Logo";
 import { SelecteurLangue } from "@/components/ui/SelecteurLangue";
@@ -106,6 +108,54 @@ export default async function PageAdmin({
   const candidaturesEnAttente = (candidatures ?? []).filter(
     (c) => c.statut === "en_attente"
   );
+
+  // Suivi commercial : report hebdo (RPC) + liste des commerciaux
+  const [{ data: rapportCommercial }, { data: commerciaux }] = await Promise.all([
+    supabase.rpc("rapport_commercial_hebdo"),
+    supabase.from("profiles").select("id, nom").eq("role", "commercial").order("nom"),
+  ]);
+
+  const moisDefaut = new Date().toISOString().slice(0, 7); // AAAA-MM
+
+  const tc = en
+    ? {
+        titre: "Sales tracking",
+        ouvrir: "Open sales area →",
+        rapport: "This week (last 7 days)",
+        commercial: "Rep",
+        prospects: "New",
+        contacts: "Outreach",
+        rdv: "Meetings",
+        signes: "Signed",
+        actifs: "Active",
+        videRapport: "No sales activity yet.",
+        objectifs: "Set a monthly target",
+        choisir: "Rep",
+        mois: "Month",
+        cibleSignes: "Target signed",
+        cibleContacts: "Target outreach",
+        definir: "Save target",
+        aucunCommercial: "No sales rep account yet.",
+      }
+    : {
+        titre: "Suivi commercial",
+        ouvrir: "Ouvrir l'espace commercial →",
+        rapport: "Cette semaine (7 derniers jours)",
+        commercial: "Commercial",
+        prospects: "Ajoutés",
+        contacts: "Contacts",
+        rdv: "RDV",
+        signes: "Signés",
+        actifs: "Actifs",
+        videRapport: "Aucune activité commerciale pour l'instant.",
+        objectifs: "Définir un objectif mensuel",
+        choisir: "Commercial",
+        mois: "Mois",
+        cibleSignes: "Cible signés",
+        cibleContacts: "Cible contacts",
+        definir: "Enregistrer l'objectif",
+        aucunCommercial: "Aucun compte commercial pour l'instant.",
+      };
 
   return (
     <div className="min-h-screen bg-sable">
@@ -317,6 +367,132 @@ export default async function PageAdmin({
               </li>
             ))}
           </ul>
+        </section>
+
+        {/* ----- Suivi commercial ----- */}
+        <section aria-labelledby="titre-commercial">
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 id="titre-commercial" className="text-xl font-bold">
+              {tc.titre}
+            </h2>
+            <Link
+              href={l("/commercial")}
+              className="text-sm font-semibold text-primaire hover:text-primaire-fonce"
+            >
+              {tc.ouvrir}
+            </Link>
+          </div>
+
+          {/* Report hebdo */}
+          <p className="mt-3 text-sm text-gray-600">{tc.rapport}</p>
+          <div className="mt-2 overflow-x-auto rounded-xl border border-gray-200 bg-white">
+            <table className="w-full text-sm">
+              <thead className="bg-gray-50 text-left text-gray-600">
+                <tr>
+                  <th scope="col" className="px-4 py-2.5 font-medium">{tc.commercial}</th>
+                  <th scope="col" className="px-4 py-2.5 text-center font-medium">{tc.prospects}</th>
+                  <th scope="col" className="px-4 py-2.5 text-center font-medium">{tc.contacts}</th>
+                  <th scope="col" className="px-4 py-2.5 text-center font-medium">{tc.rdv}</th>
+                  <th scope="col" className="px-4 py-2.5 text-center font-medium">{tc.signes}</th>
+                  <th scope="col" className="px-4 py-2.5 text-center font-medium">{tc.actifs}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(rapportCommercial ?? []).length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-4 py-4 text-center text-gray-500">
+                      {tc.videRapport}
+                    </td>
+                  </tr>
+                ) : (
+                  (rapportCommercial ?? []).map((r) => (
+                    <tr key={r.commercial_id} className="border-t border-gray-100">
+                      <td className="px-4 py-2.5 font-semibold">{r.commercial_nom ?? "—"}</td>
+                      <td className="px-4 py-2.5 text-center">{r.prospects_ajoutes}</td>
+                      <td className="px-4 py-2.5 text-center">{r.contactes}</td>
+                      <td className="px-4 py-2.5 text-center">{r.rdv}</td>
+                      <td className="px-4 py-2.5 text-center font-semibold">{r.signes}</td>
+                      <td className="px-4 py-2.5 text-center">{r.actifs_total}</td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Définition d'objectif */}
+          <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
+            <p className="text-sm font-semibold text-encre">{tc.objectifs}</p>
+            {(commerciaux ?? []).length === 0 ? (
+              <p className="mt-2 text-sm text-gray-500">{tc.aucunCommercial}</p>
+            ) : (
+              <form
+                action={actionDefinirObjectif}
+                className="mt-3 flex flex-wrap items-end gap-3"
+              >
+                <div>
+                  <label htmlFor="obj_commercial" className="block text-xs font-medium text-gray-600">
+                    {tc.choisir}
+                  </label>
+                  <select
+                    id="obj_commercial"
+                    name="commercial_id"
+                    className="mt-1 rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                  >
+                    {(commerciaux ?? []).map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.nom ?? c.id.slice(0, 8)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div>
+                  <label htmlFor="obj_mois" className="block text-xs font-medium text-gray-600">
+                    {tc.mois}
+                  </label>
+                  <input
+                    id="obj_mois"
+                    name="mois"
+                    type="month"
+                    defaultValue={moisDefaut}
+                    className="mt-1 rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="obj_signes" className="block text-xs font-medium text-gray-600">
+                    {tc.cibleSignes}
+                  </label>
+                  <input
+                    id="obj_signes"
+                    name="cible_signes"
+                    type="number"
+                    min={0}
+                    defaultValue={0}
+                    className="mt-1 w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="obj_contacts" className="block text-xs font-medium text-gray-600">
+                    {tc.cibleContacts}
+                  </label>
+                  <input
+                    id="obj_contacts"
+                    name="cible_contacts"
+                    type="number"
+                    min={0}
+                    defaultValue={0}
+                    className="mt-1 w-24 rounded-lg border border-gray-300 px-3 py-2 text-sm"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="rounded-lg bg-encre px-4 py-2 text-sm font-semibold text-white hover:bg-encre-2"
+                >
+                  {tc.definir}
+                </button>
+              </form>
+            )}
+          </div>
         </section>
       </main>
     </div>

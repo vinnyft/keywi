@@ -13,7 +13,7 @@ import { LOCALE_DEFAUT, estLocale, localise, type Locale } from "@/lib/i18n";
  *     Un « /fr/… » explicite est redirigé vers l'URL nue (canonique).
  *
  *  2. **Accès.** Sur les espaces privés (/espace, /commercant,
- *     /admin, quel que soit le préfixe de langue), on rafraîchit la
+ *     /admin, /commercial, quel que soit le préfixe de langue), on rafraîchit la
  *     session Supabase et on renvoie les visiteurs non authentifiés
  *     vers la connexion. La vérification fine du rôle reste faite
  *     dans chaque page / RPC (la RLS Postgres est la source de vérité).
@@ -23,7 +23,7 @@ import { LOCALE_DEFAUT, estLocale, localise, type Locale } from "@/lib/i18n";
  * toucher à l'authentification, ce qui préserve sa mise en cache.
  */
 
-const PREFIXES_PROTEGES = ["/espace", "/commercant", "/admin"];
+const PREFIXES_PROTEGES = ["/espace", "/commercant", "/admin", "/commercial"];
 
 export async function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;

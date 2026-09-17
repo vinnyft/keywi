@@ -88,11 +88,15 @@ export type Database = {
           code_6: string
           created_at: string
           expire_at: string | null
+          heure_debut: string | null
+          heure_fin: string | null
           id: string
+          jeton: string
           key_id: string
           langue: string
           qr_payload: string
           statut: Database["public"]["Enums"]["access_code_status"]
+          usage_unique: boolean
         }
         Insert: {
           beneficiaire_email?: string | null
@@ -100,11 +104,15 @@ export type Database = {
           code_6: string
           created_at?: string
           expire_at?: string | null
+          heure_debut?: string | null
+          heure_fin?: string | null
           id?: string
+          jeton?: string
           key_id: string
           langue?: string
           qr_payload: string
           statut?: Database["public"]["Enums"]["access_code_status"]
+          usage_unique?: boolean
         }
         Update: {
           beneficiaire_email?: string | null
@@ -112,11 +120,15 @@ export type Database = {
           code_6?: string
           created_at?: string
           expire_at?: string | null
+          heure_debut?: string | null
+          heure_fin?: string | null
           id?: string
+          jeton?: string
           key_id?: string
           langue?: string
           qr_payload?: string
           statut?: Database["public"]["Enums"]["access_code_status"]
+          usage_unique?: boolean
         }
         Relationships: [
           {
@@ -386,6 +398,206 @@ export type Database = {
             columns: ["user_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      objectifs_commerciaux: {
+        Row: {
+          cible_contacts: number
+          cible_signes: number
+          commercial_id: string
+          created_at: string
+          id: string
+          mois: string
+        }
+        Insert: {
+          cible_contacts?: number
+          cible_signes?: number
+          commercial_id: string
+          created_at?: string
+          id?: string
+          mois: string
+        }
+        Update: {
+          cible_contacts?: number
+          cible_signes?: number
+          commercial_id?: string
+          created_at?: string
+          id?: string
+          mois?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "objectifs_commerciaux_commercial_id_fkey"
+            columns: ["commercial_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prospect_activites: {
+        Row: {
+          auteur_id: string | null
+          contenu: string
+          created_at: string
+          id: string
+          prospect_id: string
+          type: Database["public"]["Enums"]["type_activite"]
+        }
+        Insert: {
+          auteur_id?: string | null
+          contenu: string
+          created_at?: string
+          id?: string
+          prospect_id: string
+          type?: Database["public"]["Enums"]["type_activite"]
+        }
+        Update: {
+          auteur_id?: string | null
+          contenu?: string
+          created_at?: string
+          id?: string
+          prospect_id?: string
+          type?: Database["public"]["Enums"]["type_activite"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prospect_activites_auteur_id_fkey"
+            columns: ["auteur_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prospect_activites_prospect_id_fkey"
+            columns: ["prospect_id"]
+            isOneToOne: false
+            referencedRelation: "prospects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      prospects: {
+        Row: {
+          adresse: string | null
+          arrondissement: number | null
+          code_postal: string | null
+          commercial_id: string | null
+          contact_email: string | null
+          contact_nom: string | null
+          contact_tel: string | null
+          created_at: string
+          id: string
+          nom_commerce: string
+          notes: string | null
+          relay_point_id: string | null
+          source: string | null
+          statut: Database["public"]["Enums"]["statut_prospect"]
+          updated_at: string
+          ville: string
+        }
+        Insert: {
+          adresse?: string | null
+          arrondissement?: number | null
+          code_postal?: string | null
+          commercial_id?: string | null
+          contact_email?: string | null
+          contact_nom?: string | null
+          contact_tel?: string | null
+          created_at?: string
+          id?: string
+          nom_commerce: string
+          notes?: string | null
+          relay_point_id?: string | null
+          source?: string | null
+          statut?: Database["public"]["Enums"]["statut_prospect"]
+          updated_at?: string
+          ville?: string
+        }
+        Update: {
+          adresse?: string | null
+          arrondissement?: number | null
+          code_postal?: string | null
+          commercial_id?: string | null
+          contact_email?: string | null
+          contact_nom?: string | null
+          contact_tel?: string | null
+          created_at?: string
+          id?: string
+          nom_commerce?: string
+          notes?: string | null
+          relay_point_id?: string | null
+          source?: string | null
+          statut?: Database["public"]["Enums"]["statut_prospect"]
+          updated_at?: string
+          ville?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prospects_commercial_id_fkey"
+            columns: ["commercial_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prospects_relay_point_id_fkey"
+            columns: ["relay_point_id"]
+            isOneToOne: false
+            referencedRelation: "relay_points"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      relais_clients: {
+        Row: {
+          contact: string | null
+          cree_par: string | null
+          created_at: string
+          derniere_visite: string | null
+          id: string
+          nom: string
+          notes: string | null
+          relay_point_id: string
+          updated_at: string
+        }
+        Insert: {
+          contact?: string | null
+          cree_par?: string | null
+          created_at?: string
+          derniere_visite?: string | null
+          id?: string
+          nom: string
+          notes?: string | null
+          relay_point_id: string
+          updated_at?: string
+        }
+        Update: {
+          contact?: string | null
+          cree_par?: string | null
+          created_at?: string
+          derniere_visite?: string | null
+          id?: string
+          nom?: string
+          notes?: string | null
+          relay_point_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "relais_clients_cree_par_fkey"
+            columns: ["cree_par"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "relais_clients_relay_point_id_fkey"
+            columns: ["relay_point_id"]
+            isOneToOne: false
+            referencedRelation: "relay_points"
             referencedColumns: ["id"]
           },
         ]
@@ -662,6 +874,19 @@ export type Database = {
         Returns: Json
       }
       est_admin: { Args: never; Returns: boolean }
+      est_commercial: { Args: never; Returns: boolean }
+      rapport_commercial_hebdo: {
+        Args: never
+        Returns: {
+          commercial_id: string
+          commercial_nom: string
+          prospects_ajoutes: number
+          contactes: number
+          rdv: number
+          signes: number
+          actifs_total: number
+        }[]
+      }
       finaliser_suppression_auth: { Args: { p_user_id: string }; Returns: Json }
       generer_code_badge: { Args: never; Returns: string }
       generer_code_retrait: { Args: never; Returns: string }
@@ -709,6 +934,11 @@ export type Database = {
         Returns: string
       }
       relancer_retards: { Args: never; Returns: Json }
+      retrait_dans_plage: {
+        Args: { p_debut: string; p_fin: string }
+        Returns: boolean
+      }
+      retrait_public: { Args: { p_jeton: string }; Returns: Json }
       remuneration_mois: {
         Args: { p_mois?: string; p_relay_point_id: string }
         Returns: Json
@@ -774,7 +1004,15 @@ export type Database = {
       relay_status: "actif" | "inactif" | "en_attente"
       relay_type: "commerce" | "casier"
       slot_status: "libre" | "occupee"
-      user_role: "hote" | "voyageur" | "commercant" | "admin"
+      statut_prospect:
+        | "a_contacter"
+        | "contacte"
+        | "rdv"
+        | "signe"
+        | "actif"
+        | "perdu"
+      type_activite: "note" | "appel" | "visite" | "email" | "relance"
+      user_role: "hote" | "voyageur" | "commercant" | "admin" | "commercial"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -920,7 +1158,16 @@ export const Constants = {
       relay_status: ["actif", "inactif", "en_attente"],
       relay_type: ["commerce", "casier"],
       slot_status: ["libre", "occupee"],
-      user_role: ["hote", "voyageur", "commercant", "admin"],
+      statut_prospect: [
+        "a_contacter",
+        "contacte",
+        "rdv",
+        "signe",
+        "actif",
+        "perdu",
+      ],
+      type_activite: ["note", "appel", "visite", "email", "relance"],
+      user_role: ["hote", "voyageur", "commercant", "admin", "commercial"],
     },
   },
 } as const
