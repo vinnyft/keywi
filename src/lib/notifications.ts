@@ -23,7 +23,7 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const EXPEDITEUR = process.env.EMAIL_FROM ?? "KeyWe <notifications@keywe.fr>";
+const EXPEDITEUR = process.env.EMAIL_FROM ?? "KeyWe <notifications@keywe.io>";
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 /** URL publique localisée : `/espace` → `/en/espace` en anglais. */
@@ -287,7 +287,7 @@ function gabaritHtml(titre: string, corps: string, mentionTiers: string, en: boo
                        font-family:system-ui,-apple-system,'Segoe UI',sans-serif">
               ${mentionTiers}
               <p style="margin:0 0 6px;font-size:12px;color:${COULEURS.texteSecondaire}">
-                <a href="${lienSite("/", en)}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">keywe.fr</a>
+                <a href="${lienSite("/", en)}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">keywe.io</a>
                 &nbsp;·&nbsp;
                 <a href="${lienSite("/faq", en)}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">${faqLabel}</a>
                 &nbsp;·&nbsp;

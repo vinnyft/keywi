@@ -33,7 +33,7 @@ couche « droits des personnes » : information et effacement.
 
 ### 1. Aucun parcours d'effacement (art. 17) — **corrigé**
 
-La politique renvoyait vers `bonjour@keywe.fr`. Un droit qui suppose
+La politique renvoyait vers `bonjour@keywe.io`. Un droit qui suppose
 d'écrire un email et d'attendre n'est pas un droit exerçable.
 
 Deux obstacles rendaient l'effacement techniquement impossible tel quel :

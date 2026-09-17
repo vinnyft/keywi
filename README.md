@@ -155,7 +155,7 @@ supabase/
   sans rechargement.
 - **Assistant intégré** : un bot d'assistance (arbre de décision, sans
   IA ni appel réseau) répond aux questions courantes et bascule vers
-  `sav@keywe.fr` quand l'arbre ne suffit pas
+  `sav@keywe.io` quand l'arbre ne suffit pas
   (`src/content/assistance.ts`, `src/components/support/AssistanceBot.tsx`).
 - **Tenue en charge** : pages publiques statiques ou en ISR (carte des
   points relais), proxy d'authentification restreint aux espaces privés,

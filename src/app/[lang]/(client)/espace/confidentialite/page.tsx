@@ -230,8 +230,8 @@ export default async function PageConfidentialiteEspace({
         </h2>
         <p className="mt-1 text-sm text-primaire-fonce">
           {t.droitsTexte1}
-          <a className="underline" href="mailto:bonjour@keywe.fr">
-            bonjour@keywe.fr
+          <a className="underline" href="mailto:bonjour@keywe.io">
+            bonjour@keywe.io
           </a>
           {t.droitsTexte2}
           <Link className="underline" href={localise("/confidentialite", locale)}>

@@ -155,7 +155,7 @@ export default async function PageConfidentialite({
           <h2 className="text-xl font-bold">{t.responsableTitre}</h2>
           <p className="mt-2">
             {t.responsableTexteAvant}
-            <a className="underline" href="mailto:bonjour@keywe.fr">bonjour@keywe.fr</a>
+            <a className="underline" href="mailto:bonjour@keywe.io">bonjour@keywe.io</a>
             {t.responsableTexteApres}
           </p>
         </section>
@@ -190,7 +190,7 @@ export default async function PageConfidentialite({
           <h2 className="text-xl font-bold">{t.beneficiairesTitre}</h2>
           <p className="mt-2">
             {t.beneficiairesAvant}
-            <a className="underline" href="mailto:bonjour@keywe.fr">bonjour@keywe.fr</a>
+            <a className="underline" href="mailto:bonjour@keywe.io">bonjour@keywe.io</a>
             {t.beneficiairesApres}
           </p>
         </section>
@@ -242,7 +242,7 @@ export default async function PageConfidentialite({
           </p>
           <p className="mt-3">
             {t.autresAvant}
-            <a className="underline" href="mailto:bonjour@keywe.fr">bonjour@keywe.fr</a>
+            <a className="underline" href="mailto:bonjour@keywe.io">bonjour@keywe.io</a>
             {t.autresMilieu}
             <a className="underline" href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noreferrer">
               {t.cnil}

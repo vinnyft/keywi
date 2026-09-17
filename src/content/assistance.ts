@@ -42,7 +42,7 @@ export interface Noeud {
 }
 
 /** Adresse du service après-vente, repli quand l'arbre ne suffit pas. */
-export const EMAIL_SAV = "sav@keywe.fr";
+export const EMAIL_SAV = "sav@keywe.io";
 
 export const RACINE = "accueil";
 

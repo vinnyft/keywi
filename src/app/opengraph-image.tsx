@@ -70,7 +70,7 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", fontSize: 24, color: "#aec98a" }}>
-          keywe.fr
+          keywe.io
         </div>
       </div>
     ),

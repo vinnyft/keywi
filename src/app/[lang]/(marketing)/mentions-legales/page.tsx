@@ -40,7 +40,7 @@ export default async function PageMentionsLegales({
         en ? "KeyWe — [legal form, e.g. SAS with share capital of €X]" : "KeyWe — [forme sociale, ex. SAS au capital de X €]",
         en ? "[Registered office address]" : "[Adresse du siège social]",
         en ? "[Trade register of … under number …] · [VAT number]" : "[RCS de … sous le numéro …] · [N° TVA intracommunautaire]",
-        "Contact : bonjour@keywe.fr",
+        "Contact : bonjour@keywe.io",
       ],
     },
     {
@@ -143,8 +143,8 @@ export default async function PageMentionsLegales({
           <h2 className="text-xl font-bold">{t.signalTitre}</h2>
           <p className="mt-2">
             {t.signalAvant}
-            <a className="underline" href="mailto:bonjour@keywe.fr">
-              bonjour@keywe.fr
+            <a className="underline" href="mailto:bonjour@keywe.io">
+              bonjour@keywe.io
             </a>
             {t.signalApres}
           </p>

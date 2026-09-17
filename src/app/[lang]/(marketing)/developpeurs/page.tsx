@@ -166,7 +166,7 @@ export default async function PageDeveloppeurs({
             </p>
           </>
         )}
-        <Code>{`curl https://keywe.fr/api/v1/cles \\
+        <Code>{`curl https://keywe.io/api/v1/cles \\
   -H "Authorization: Bearer kw_live_your_key"`}</Code>
 
         <h2 className="mt-12 flex items-center gap-2 text-2xl font-black">
@@ -196,7 +196,7 @@ export default async function PageDeveloppeurs({
 
         <h3 className="mt-10 text-lg font-bold">{t.creerTitre}</h3>
         <p className="mt-2 text-gray-700">{t.creerLede}</p>
-        <Code>{`curl -X POST https://keywe.fr/api/v1/codes \\
+        <Code>{`curl -X POST https://keywe.io/api/v1/codes \\
   -H "Authorization: Bearer kw_live_your_key" \\
   -H "Content-Type: application/json" \\
   -d '{
