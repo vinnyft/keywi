@@ -7,7 +7,7 @@ import { actionInscription } from "@/lib/actions/auth";
 import { useLocale } from "@/lib/useLocale";
 import { localise } from "@/lib/i18n";
 
-/** Page d'inscription hôte / voyageur */
+/** Page d'inscription (propriétaire / hôte uniquement) */
 export default function PageInscription() {
   const locale = useLocale();
   const en = locale === "en";
@@ -94,20 +94,6 @@ export default function PageInscription() {
             className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2"
           />
         </div>
-
-        <fieldset>
-          <legend className="text-sm font-medium">{en ? "You are…" : "Vous êtes…"}</legend>
-          <div className="mt-2 grid grid-cols-2 gap-2">
-            <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm has-[:checked]:border-primaire has-[:checked]:bg-primaire-pale">
-              <input type="radio" name="role" value="hote" defaultChecked />
-              {en ? "Host / owner" : "Hôte / propriétaire"}
-            </label>
-            <label className="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm has-[:checked]:border-primaire has-[:checked]:bg-primaire-pale">
-              <input type="radio" name="role" value="voyageur" />
-              {en ? "Traveller / guest" : "Voyageur / invité"}
-            </label>
-          </div>
-        </fieldset>
 
         {etat.erreur && (
           <p role="alert" className="text-sm font-medium text-red-700">

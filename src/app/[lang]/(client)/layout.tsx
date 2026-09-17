@@ -9,9 +9,9 @@ import { AssistanceBot } from "@/components/support/AssistanceBot";
 import { estLocale, localise, type Locale } from "@/lib/i18n";
 
 /**
- * Gabarit de l'espace client (hôte / voyageur).
- * La protection d'accès est portée par le proxy ; ici on charge le
- * profil pour adapter la navigation au rôle.
+ * Gabarit de l'espace client (propriétaire / hôte).
+ * La protection d'accès est portée par le proxy ; seul le
+ * propriétaire des clés a un compte (le bénéficiaire reçoit un lien).
  */
 export default async function ClientLayout({
   children,
@@ -31,22 +31,10 @@ export default async function ClientLayout({
   } = await supabase.auth.getUser();
   if (!user) redirect(`${l("/connexion")}?suivant=${l("/espace")}`);
 
-  const { data: profil } = await supabase
-    .from("profiles")
-    .select("role, nom")
-    .eq("id", user.id)
-    .single();
-
-  const estHote = profil?.role !== "voyageur";
-
   const liens = [
     { href: "/espace", icone: KeyRound, libelle: en ? "My keys" : "Mes clés" },
-    ...(estHote
-      ? [
-          { href: "/espace/registre", icone: Table2, libelle: en ? "Register" : "Registre" },
-          { href: "/espace/deposer", icone: PackagePlus, libelle: en ? "Drop off" : "Déposer" },
-        ]
-      : []),
+    { href: "/espace/registre", icone: Table2, libelle: en ? "Register" : "Registre" },
+    { href: "/espace/deposer", icone: PackagePlus, libelle: en ? "Drop off" : "Déposer" },
     { href: "/espace/notifications", icone: Bell, libelle: "Notifications" },
     { href: "/espace/confidentialite", icone: ShieldCheck, libelle: en ? "My data" : "Mes données" },
   ];

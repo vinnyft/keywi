@@ -23,7 +23,7 @@ const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
   : null;
 
-const EXPEDITEUR = process.env.EMAIL_FROM ?? "Keywi <notifications@keywi.fr>";
+const EXPEDITEUR = process.env.EMAIL_FROM ?? "KeyWe <notifications@keywe.fr>";
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 /** URL publique localisée : `/espace` → `/en/espace` en anglais. */
@@ -60,7 +60,7 @@ export interface ContenuEmail {
  * utilisateur, puis réinjecté dans le HTML d'un email adressé à un
  * tiers. Sans cette passe, appeler son logement
  * `<a href="…">Confirmez votre compte</a>` suffit à transformer une
- * notification Keywi en support de hameçonnage, expédiée depuis
+ * notification KeyWe en support de hameçonnage, expédiée depuis
  * notre domaine et notre réputation d'envoi.
  */
 function echapper(valeur: string): string {
@@ -199,7 +199,7 @@ function encadre(html: string) {
  * Gabarit HTML commun, bilingue.
  *
  * `mentionTiers` : à activer pour les emails adressés à une personne
- * qui n'a pas de compte Keywi (bénéficiaire d'un code, prestataire
+ * qui n'a pas de compte KeyWe (bénéficiaire d'un code, prestataire
  * récurrent). L'article 14 du RGPD impose de l'informer du
  * traitement de ses données et de ses droits — c'est ce que la
  * ligne ajoutée au pied fait, en pointant vers la politique.
@@ -214,11 +214,11 @@ function gabarit(
     ? `<p style="margin:0 0 10px;font-size:12px;color:${COULEURS.texteSecondaire}">
          ${
            en
-             ? `You are receiving this email because a Keywi user shared an access with
+             ? `You are receiving this email because a KeyWe user shared an access with
                 you. Your name and email address are used only to send you this code and
                 to identify the handover. You can request their deletion at any time —
                 <a href="${lienSite("/confidentialite", true)}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">learn more</a>.`
-             : `Vous recevez cet email car un utilisateur de Keywi vous a partagé un
+             : `Vous recevez cet email car un utilisateur de KeyWe vous a partagé un
                 accès. Vos nom et adresse email servent uniquement à vous transmettre
                 ce code et à identifier la remise. Vous pouvez en demander
                 l'effacement à tout moment —
@@ -232,8 +232,8 @@ function gabarit(
 function gabaritHtml(titre: string, corps: string, mentionTiers: string, en: boolean): string {
   const tagline = en ? "Your keys, safe, close to home" : "Vos clés, en lieu sûr, près de chez vous";
   const piedTitre = en
-    ? "Keywi — the French network of key drop-off points."
-    : "Keywi — le réseau français de points relais pour clés.";
+    ? "KeyWe — the French network of key drop-off points."
+    : "KeyWe — le réseau français de points relais pour clés.";
   const piedAuto = en
     ? "Automated email — please do not reply."
     : "Email envoyé automatiquement, merci de ne pas y répondre.";
@@ -259,7 +259,7 @@ function gabaritHtml(titre: string, corps: string, mentionTiers: string, en: boo
                   </td>
                   <td style="padding-left:12px">
                     <span style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:22px;
-                                 font-weight:800;letter-spacing:.04em;color:#ffffff">Keywi</span><br>
+                                 font-weight:800;letter-spacing:.04em;color:#ffffff">KeyWe</span><br>
                     <span style="font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:12px;
                                  color:rgba(255,255,255,.65)">${tagline}</span>
                   </td>
@@ -287,7 +287,7 @@ function gabaritHtml(titre: string, corps: string, mentionTiers: string, en: boo
                        font-family:system-ui,-apple-system,'Segoe UI',sans-serif">
               ${mentionTiers}
               <p style="margin:0 0 6px;font-size:12px;color:${COULEURS.texteSecondaire}">
-                <a href="${lienSite("/", en)}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">keywi.fr</a>
+                <a href="${lienSite("/", en)}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">keywe.fr</a>
                 &nbsp;·&nbsp;
                 <a href="${lienSite("/faq", en)}" style="color:${COULEURS.primaire};text-decoration:none;font-weight:600">${faqLabel}</a>
                 &nbsp;·&nbsp;
@@ -496,11 +496,15 @@ export function contenuCodeRetrait(params: {
   code6: string;
   commerce: string | null;
   adresseCommerce: string | null;
+  lienRetrait?: string | null;
   cleEnDepot: boolean;
   locale?: Locale;
 }): ContenuEmail {
   const en = params.locale === "en";
   const p = proteger(params);
+  const lienBouton = params.lienRetrait
+    ? bouton(en ? "Open my pickup link" : "Ouvrir mon lien de retrait", params.lienRetrait)
+    : "";
   const disponibilite = p.cleEnDepot
     ? encadre(
         en
@@ -525,18 +529,20 @@ export function contenuCodeRetrait(params: {
       ? `Your pickup code for “${params.logement}”`
       : `Votre code de retrait pour « ${params.logement} »`,
     html: gabarit(
-      en ? "Your Keywi pickup code 🔑" : "Votre code de retrait Keywi 🔑",
+      en ? "Your KeyWe pickup code 🔑" : "Votre code de retrait KeyWe 🔑",
       en
         ? `<p style="margin:0 0 12px">Hello ${p.beneficiaireNom ?? ""},</p>
            <p style="margin:0 0 12px">A pickup code has been shared with you for the keys of
            <strong>${p.logement}</strong>:</p>
            ${blocCode(p.code6)}
-           ${disponibilite}`
+           ${disponibilite}
+           ${lienBouton}`
         : `<p style="margin:0 0 12px">Bonjour ${p.beneficiaireNom ?? ""},</p>
            <p style="margin:0 0 12px">Un code de retrait vous a été partagé pour les clés du logement
            <strong>${p.logement}</strong> :</p>
            ${blocCode(p.code6)}
-           ${disponibilite}`,
+           ${disponibilite}
+           ${lienBouton}`,
       { mentionTiers: true, locale: params.locale }
     ),
   };
@@ -680,14 +686,14 @@ export function contenuCandidatureValidee(params: {
   const p = proteger(params);
   return {
     sujet: en
-      ? `Welcome to the Keywi network, ${params.nomCommerce} 🎉`
-      : `Bienvenue dans le réseau Keywi, ${params.nomCommerce} 🎉`,
+      ? `Welcome to the KeyWe network, ${params.nomCommerce} 🎉`
+      : `Bienvenue dans le réseau KeyWe, ${params.nomCommerce} 🎉`,
     html: gabarit(
       en ? "Your application is accepted 🎉" : "Votre candidature est acceptée 🎉",
       en
         ? `<p style="margin:0 0 12px">Hello ${p.nomContact},</p>
            <p style="margin:0 0 12px">Great news: <strong>${p.nomCommerce}</strong>
-           is joining the Keywi network of drop-off points. The whole team welcomes you!</p>
+           is joining the KeyWe network of drop-off points. The whole team welcomes you!</p>
            ${encadre(
              `<strong>Next steps:</strong><br>
               1️⃣ A team member calls you within 48 h to set up a meeting.<br>
@@ -699,7 +705,7 @@ export function contenuCandidatureValidee(params: {
            ${bouton("Discover the partner programme", lienSite("/devenir-point-relais", true))}`
         : `<p style="margin:0 0 12px">Bonjour ${p.nomContact},</p>
            <p style="margin:0 0 12px">Excellente nouvelle : <strong>${p.nomCommerce}</strong>
-           rejoint le réseau de points relais Keywi. Toute l'équipe vous souhaite la bienvenue !</p>
+           rejoint le réseau de points relais KeyWe. Toute l'équipe vous souhaite la bienvenue !</p>
            ${encadre(
              `<strong>Les prochaines étapes :</strong><br>
               1️⃣ Un membre de l'équipe vous appelle sous 48 h pour convenir d'un rendez-vous.<br>
@@ -724,14 +730,14 @@ export function contenuCandidatureRefusee(params: {
   const p = proteger(params);
   return {
     sujet: en
-      ? `Your Keywi application — ${params.nomCommerce}`
-      : `Votre candidature Keywi — ${params.nomCommerce}`,
+      ? `Your KeyWe application — ${params.nomCommerce}`
+      : `Votre candidature KeyWe — ${params.nomCommerce}`,
     html: gabarit(
       en ? "Thank you for your application" : "Merci pour votre candidature",
       en
         ? `<p style="margin:0 0 12px">Hello ${p.nomContact},</p>
            <p style="margin:0 0 12px">Thank you for proposing <strong>${p.nomCommerce}</strong>
-           as a Keywi drop-off point. After review, we're unfortunately unable to add
+           as a KeyWe drop-off point. After review, we're unfortunately unable to add
            your business to the network right now.</p>
            ${encadre(
              `The most common reasons: an area not yet covered by our installation rounds,
@@ -742,7 +748,7 @@ export function contenuCandidatureRefusee(params: {
            ${bouton("Follow the network's roll-out", lienSite("/devenir-point-relais", true))}`
         : `<p style="margin:0 0 12px">Bonjour ${p.nomContact},</p>
            <p style="margin:0 0 12px">Merci d'avoir proposé <strong>${p.nomCommerce}</strong>
-           comme point relais Keywi. Après étude, nous ne sommes malheureusement pas en mesure
+           comme point relais KeyWe. Après étude, nous ne sommes malheureusement pas en mesure
            d'intégrer votre commerce au réseau pour le moment.</p>
            ${encadre(
              `Les raisons les plus fréquentes : une zone non encore couverte par nos tournées
@@ -773,14 +779,14 @@ export function contenuBienvenueCommercant(params: {
   const p = proteger(params);
   return {
     sujet: en
-      ? `Your Keywi drop-off point is live — ${params.nomCommerce}`
-      : `Votre point relais Keywi est ouvert — ${params.nomCommerce}`,
+      ? `Your KeyWe drop-off point is live — ${params.nomCommerce}`
+      : `Votre point relais KeyWe est ouvert — ${params.nomCommerce}`,
     html: gabarit(
       en ? "Your drop-off point is online 🎉" : "Votre point relais est en ligne 🎉",
       en
         ? `<p style="margin:0 0 12px">Hello ${p.nomContact},</p>
            <p style="margin:0 0 12px"><strong>${p.nomCommerce}</strong> is now
-           part of the Keywi network. Your counter already appears on the public map.</p>
+           part of the KeyWe network. Your counter already appears on the public map.</p>
            ${encadre(
              `📍 <strong>${p.nomCommerce}</strong><br>${p.adresse}<br>
               🗄️ <strong>${p.nbCases} numbered slots</strong> at your disposal`
@@ -794,7 +800,7 @@ export function contenuBienvenueCommercant(params: {
            scanned movement earns you money.</p>`
         : `<p style="margin:0 0 12px">Bonjour ${p.nomContact},</p>
            <p style="margin:0 0 12px"><strong>${p.nomCommerce}</strong> fait
-           désormais partie du réseau Keywi. Votre comptoir apparaît dès maintenant
+           désormais partie du réseau KeyWe. Votre comptoir apparaît dès maintenant
            sur la carte publique.</p>
            ${encadre(
              `📍 <strong>${p.nomCommerce}</strong><br>${p.adresse}<br>
