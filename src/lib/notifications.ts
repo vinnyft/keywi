@@ -673,6 +673,64 @@ export async function emailRappelRetour(
 }
 
 /* ------------------------------------------------------------------
+   Accusé de réception de candidature (envoyé depuis le formulaire
+   public « Devenir point relais », dès l'enregistrement)
+   ------------------------------------------------------------------ */
+
+/** Candidature enregistrée → accusé de réception au commerçant */
+export function contenuCandidatureRecue(params: {
+  nomContact: string;
+  nomCommerce: string;
+  locale?: Locale;
+}): ContenuEmail {
+  const en = params.locale === "en";
+  const p = proteger(params);
+  return {
+    sujet: en
+      ? `We've received your application — ${params.nomCommerce}`
+      : `Nous avons bien reçu votre candidature — ${params.nomCommerce}`,
+    html: gabarit(
+      en ? "Application received ✅" : "Candidature bien reçue ✅",
+      en
+        ? `<p style="margin:0 0 12px">Hello ${p.nomContact},</p>
+           <p style="margin:0 0 12px">Thank you for proposing <strong>${p.nomCommerce}</strong>
+           as a KeyWe drop-off point. Your application has reached us and our team is
+           reviewing it carefully.</p>
+           ${encadre(
+             `<strong>What happens next:</strong><br>
+              1️⃣ We review your application (area, footfall, opening hours).<br>
+              2️⃣ A team member gets back to you within 48 working hours.<br>
+              3️⃣ If it's a match, we install your kit and send your counter-app access.`
+           )}
+           <p style="margin:0">In the meantime, discover how the network works and how
+           drop-off points are paid.</p>
+           ${bouton("Discover the partner programme", lienSite("/devenir-point-relais", true))}`
+        : `<p style="margin:0 0 12px">Bonjour ${p.nomContact},</p>
+           <p style="margin:0 0 12px">Merci d'avoir proposé <strong>${p.nomCommerce}</strong>
+           comme point relais KeyWe. Votre candidature nous est bien parvenue et notre
+           équipe l'étudie avec attention.</p>
+           ${encadre(
+             `<strong>Les prochaines étapes :</strong><br>
+              1️⃣ Nous étudions votre candidature (zone, affluence, horaires).<br>
+              2️⃣ Un membre de l'équipe vous recontacte sous 48 h ouvrées.<br>
+              3️⃣ Si c'est validé, nous installons votre kit et vous recevez vos accès à l'application comptoir.`
+           )}
+           <p style="margin:0">En attendant, découvrez comment fonctionne le réseau et la
+           rémunération des points relais.</p>
+           ${bouton("Découvrir le programme partenaires", lienSite("/devenir-point-relais", false))}`,
+      { locale: params.locale }
+    ),
+  };
+}
+
+export async function emailCandidatureRecue(
+  params: Parameters<typeof contenuCandidatureRecue>[0] & { email: string }
+) {
+  const locale = params.locale ?? (await langueDestinataire(params.email));
+  await envoyerEmail(params.email, contenuCandidatureRecue({ ...params, locale }));
+}
+
+/* ------------------------------------------------------------------
    Réponses aux candidatures commerçants (envoyées depuis /admin)
    ------------------------------------------------------------------ */
 

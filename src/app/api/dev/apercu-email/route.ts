@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import {
+  contenuCandidatureRecue,
   contenuCandidatureRefusee,
   contenuCandidatureValidee,
   contenuClesDisponibles,
@@ -59,6 +60,11 @@ const GABARITS: Record<string, { libelle: string; contenu: () => ContenuEmail }>
         cleEnDepot: false,
         ...EXEMPLE,
       }),
+  },
+  "candidature-recue": {
+    libelle: "Accusé de réception de candidature (→ commerçant)",
+    contenu: () =>
+      contenuCandidatureRecue({ nomContact: "Jeanne Martin", nomCommerce: "Café du Coin" }),
   },
   "candidature-validee": {
     libelle: "Candidature validée (→ commerçant)",

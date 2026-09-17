@@ -8,6 +8,7 @@ import {
   emailDepotEffectue,
   emailRetourEffectue,
   emailClesDisponibles,
+  emailCandidatureRecue,
 } from "@/lib/notifications";
 import { TARIFS, getStripe, modePaiement } from "@/lib/stripe";
 import { localise, type Locale } from "@/lib/i18n";
@@ -191,6 +192,16 @@ export async function actionCandidature(
       envoye: false,
     };
   }
+
+  // Accusé de réception au commerçant (l'échec d'email ne bloque
+  // jamais la candidature, déjà enregistrée en base)
+  await emailCandidatureRecue({
+    email: champs.email,
+    nomContact: champs.nom_contact,
+    nomCommerce: champs.nom_commerce,
+    locale: en ? "en" : "fr",
+  });
+
   return { erreur: null, envoye: true };
 }
 
