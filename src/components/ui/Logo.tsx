@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 /**
- * Logo Keywi : symbole (kiwi + clé + monogramme « K ») + mot-symbole.
+ * Logo KeyWe : symbole (kiwi + clé + monogramme « K ») + mot-symbole.
  * Identité issue du kit de marque (chair verte + peau gris-brun).
  * `sombre` pour les fonds forêt (mark lime, texte crème), `taille`
  * règle la hauteur du symbole, `lien` la destination du clic.
@@ -19,7 +19,7 @@ function MarqueKiwi({ taille, sombre }: { taille: number; sombre: boolean }) {
       height={taille * 1.2}
       viewBox="0 0 200 240"
       role="img"
-      aria-label="Keywi"
+      aria-label="KeyWe"
       xmlns="http://www.w3.org/2000/svg"
     >
       <g fill={keyFill}>
@@ -71,7 +71,7 @@ export function Logo({
   return (
     <Link
       href={lien}
-      aria-label="Keywi — accueil"
+      aria-label="KeyWe — accueil"
       className="inline-flex items-center gap-2"
     >
       <MarqueKiwi taille={taille} sombre={sombre} />
@@ -81,7 +81,7 @@ export function Logo({
         }`}
         style={{ fontSize: taille * 0.62 }}
       >
-        Keywi
+        KeyWe
       </span>
     </Link>
   );

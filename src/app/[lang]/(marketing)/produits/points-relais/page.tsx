@@ -14,8 +14,8 @@ export async function generateMetadata({
     title: loc === "en" ? "Drop-off points" : "Points relais",
     description:
       loc === "en"
-        ? "The Keywi public drop-off network: neighbourhood shops equipped to keep and hand over your keys safely."
-        : "Le réseau public de points relais Keywi : des commerces de quartier équipés pour garder et remettre vos clés en toute sécurité.",
+        ? "The KeyWe public drop-off network: neighbourhood shops equipped to keep and hand over your keys safely."
+        : "Le réseau public de points relais KeyWe : des commerces de quartier équipés pour garder et remettre vos clés en toute sécurité.",
     alternates: alternatesLangues("/produits/points-relais", loc),
   };
 }
@@ -24,7 +24,7 @@ function contenu(locale: Locale) {
   if (locale === "en") {
     return {
       h1: "The drop-off network",
-      lede: "Neighbourhood shops selected and equipped by Keywi to keep your keyrings and hand them to the right people, on presentation of a code.",
+      lede: "Neighbourhood shops selected and equipped by KeyWe to keep your keyrings and hand them to the right people, on presentation of a code.",
       voirCarte: "See the network map",
       cards: [
         { icone: MapPin, titre: "Always a shop within reach", texte: "Cafés, bookshops, dry cleaners, grocers: the network leans on the extended hours of local shops, until 11pm for some." },
@@ -39,7 +39,7 @@ function contenu(locale: Locale) {
   }
   return {
     h1: "Le réseau de points relais",
-    lede: "Des commerces de quartier sélectionnés et équipés par Keywi pour garder vos trousseaux et les remettre aux bonnes personnes, sur présentation d'un code.",
+    lede: "Des commerces de quartier sélectionnés et équipés par KeyWe pour garder vos trousseaux et les remettre aux bonnes personnes, sur présentation d'un code.",
     voirCarte: "Voir la carte du réseau",
     cards: [
       { icone: MapPin, titre: "Toujours un commerce à portée", texte: "Cafés, librairies, pressings, épiceries : le réseau s'appuie sur les horaires étendus des commerces de proximité, jusqu'à 23 h pour certains." },

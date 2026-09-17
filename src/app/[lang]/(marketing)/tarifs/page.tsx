@@ -14,8 +14,8 @@ export async function generateMetadata({
     title: loc === "en" ? "Pricing" : "Tarifs",
     description:
       loc === "en"
-        ? "Keywi key drop-off, pay-as-you-go or on a host subscription."
-        : "Le dépôt de clés Keywi à l'unité ou en abonnement hôte.",
+        ? "KeyWe key drop-off, pay-as-you-go or on a host subscription."
+        : "Le dépôt de clés KeyWe à l'unité ou en abonnement hôte.",
     alternates: alternatesLangues("/tarifs", loc),
   };
 }

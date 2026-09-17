@@ -12,8 +12,8 @@ export async function generateMetadata({
     title: loc === "en" ? "FAQ" : "FAQ",
     description:
       loc === "en"
-        ? "Answers to the most common questions about Keywi."
-        : "Les réponses aux questions les plus fréquentes sur Keywi.",
+        ? "Answers to the most common questions about KeyWe."
+        : "Les réponses aux questions les plus fréquentes sur KeyWe.",
     alternates: alternatesLangues("/faq", loc),
   };
 }

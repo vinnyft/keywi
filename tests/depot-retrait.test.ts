@@ -3,7 +3,7 @@ import { admin, clientDe, monterContexte, creerCle, type Contexte } from "./aide
 
 /**
  * Cycle de vie d'un trousseau : dépôt au comptoir, code de retrait,
- * remise au bénéficiaire. C'est le cœur métier de Keywi — s'il
+ * remise au bénéficiaire. C'est le cœur métier de KeyWe — s'il
  * casse, le service ne rend plus aucun service.
  */
 describe("Dépôt et retrait au comptoir", () => {

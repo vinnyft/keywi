@@ -1,4 +1,4 @@
-# Keywi — kit d'identité
+# KeyWe — kit d'identité
 
 Assets prêts à intégrer dans l'app. Vert chair du kiwi + gris-brun de la peau.
 
@@ -11,7 +11,7 @@ Assets prêts à intégrer dans l'app. Vert chair du kiwi + gris-brun de la peau
 | `app-icon.svg` | Icône d'application 512×512 (kiwi plein cadre, coins squircle) |
 | `badge-seal.svg` | Sceau « Point relais agréé » (vitrine / app) |
 | `keyfob.svg` | Porte-clés physique (rond, gravure) |
-| `KeywiLogo.jsx` | Composant React du logo (light/dark, avec ou sans wordmark) |
+| `KeyWeLogo.jsx` | Composant React du logo (light/dark, avec ou sans wordmark) |
 | `tokens.css` | Variables CSS de couleurs, rayons, ombres, polices |
 | `tokens.json` | Mêmes tokens en JSON (config Tailwind, JS, etc.) |
 | `preview.html` | Aperçu de tous les assets |
@@ -45,10 +45,10 @@ Voir `tokens.css` / `tokens.json` pour la liste complète.
 ## React
 
 ```jsx
-import KeywiLogo, { KeywiMark } from "./keywi-assets/KeywiLogo.jsx";
+import KeyWeLogo, { KeyWeMark } from "./keywi-assets/KeyWeLogo.jsx";
 
-<KeywiLogo size={40} withWordmark />        // logo + texte
-<KeywiMark size={32} variant="dark" />      // symbole seul, fond sombre
+<KeyWeLogo size={40} withWordmark />        // logo + texte
+<KeyWeMark size={32} variant="dark" />      // symbole seul, fond sombre
 ```
 
 ## CSS tokens

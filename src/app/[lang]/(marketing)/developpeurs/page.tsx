@@ -14,8 +14,8 @@ export async function generateMetadata({
     title: loc === "en" ? "Developer API" : "API développeurs",
     description:
       loc === "en"
-        ? "The Keywi API: list your keys and create pickup codes programmatically. Automate your Airbnb or PMS check-ins."
-        : "L'API Keywi : listez vos clés et créez des codes de retrait par programmation. Automatisez vos check-in Airbnb ou PMS.",
+        ? "The KeyWe API: list your keys and create pickup codes programmatically. Automate your Airbnb or PMS check-ins."
+        : "L'API KeyWe : listez vos clés et créez des codes de retrait par programmation. Automatisez vos check-in Airbnb ou PMS.",
     alternates: alternatesLangues("/developpeurs", loc),
   };
 }
@@ -75,7 +75,7 @@ export default async function PageDeveloppeurs({
 
   const t = en
     ? {
-        lede: "Plug Keywi into your tools: generate a pickup code as soon as a booking is confirmed, track your keyrings' status in real time.",
+        lede: "Plug KeyWe into your tools: generate a pickup code as soon as a booking is confirmed, track your keyrings' status in real time.",
         genererCle: "Generate an API key",
         auth: "Authentication",
         endpointsTitre: "Endpoints",
@@ -90,7 +90,7 @@ export default async function PageDeveloppeurs({
         mesCles: "My API keys",
       }
     : {
-        lede: "Branchez Keywi sur vos outils : générez un code de retrait dès qu'une réservation est confirmée, suivez l'état de vos trousseaux en temps réel.",
+        lede: "Branchez KeyWe sur vos outils : générez un code de retrait dès qu'une réservation est confirmée, suivez l'état de vos trousseaux en temps réel.",
         genererCle: "Générer une clé API",
         auth: "Authentification",
         endpointsTitre: "Points d'entrée",
@@ -114,7 +114,7 @@ export default async function PageDeveloppeurs({
           <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-medium">
             <Terminal size={15} aria-hidden="true" /> API v1
           </p>
-          <h1 className="mt-4 text-4xl font-black">{en ? "Keywi API" : "API Keywi"}</h1>
+          <h1 className="mt-4 text-4xl font-black">{en ? "KeyWe API" : "API KeyWe"}</h1>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-white/80">{t.lede}</p>
           <Link
             href={l("/espace/api")}
@@ -166,7 +166,7 @@ export default async function PageDeveloppeurs({
             </p>
           </>
         )}
-        <Code>{`curl https://keywi.fr/api/v1/cles \\
+        <Code>{`curl https://keywe.io/api/v1/cles \\
   -H "Authorization: Bearer kw_live_your_key"`}</Code>
 
         <h2 className="mt-12 flex items-center gap-2 text-2xl font-black">
@@ -196,7 +196,7 @@ export default async function PageDeveloppeurs({
 
         <h3 className="mt-10 text-lg font-bold">{t.creerTitre}</h3>
         <p className="mt-2 text-gray-700">{t.creerLede}</p>
-        <Code>{`curl -X POST https://keywi.fr/api/v1/codes \\
+        <Code>{`curl -X POST https://keywe.io/api/v1/codes \\
   -H "Authorization: Bearer kw_live_your_key" \\
   -H "Content-Type: application/json" \\
   -d '{
@@ -210,7 +210,7 @@ export default async function PageDeveloppeurs({
         <Code>{`{
   "id": "c0000000-0000-4000-a000-000000000009",
   "code": "H7KM2P",
-  "qr_payload": "KEYWI:H7KM2P",
+  "qr_payload": "KEYWE:H7KM2P",
   "expire_le": "2026-07-30T10:00:00.000Z",
   "cle_en_depot": true
 }`}</Code>

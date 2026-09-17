@@ -74,8 +74,8 @@ export async function actionSupprimerCompte(
       erreur:
         r.message ??
         (en
-          ? "Deletion failed. Try again, or write to us at bonjour@keywi.fr."
-          : "La suppression a échoué. Réessayez, ou écrivez-nous à bonjour@keywi.fr."),
+          ? "Deletion failed. Try again, or write to us at bonjour@keywe.io."
+          : "La suppression a échoué. Réessayez, ou écrivez-nous à bonjour@keywe.io."),
     };
   }
 

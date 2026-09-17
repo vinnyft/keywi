@@ -8,11 +8,11 @@
  * localhost. On n'accepte donc `NEXT_PUBLIC_SITE_URL` que s'il s'agit
  * d'une URL https ; sinon on retombe sur le domaine de la marque.
  *
- * En production : définir `NEXT_PUBLIC_SITE_URL=https://keywi.fr`.
+ * En production : définir `NEXT_PUBLIC_SITE_URL=https://keywe.io`.
  */
 const brut = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 
 export const SITE_URL =
   brut && brut.startsWith("https://")
     ? brut.replace(/\/+$/, "")
-    : "https://keywi.fr";
+    : "https://keywe.io";

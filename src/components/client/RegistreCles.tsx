@@ -9,7 +9,7 @@ import { localise, type Locale } from "@/lib/i18n";
 import type { Database } from "@/lib/supabase/types";
 
 /**
- * Registre des trousseaux (Keywi Pro) : recherche, filtres par
+ * Registre des trousseaux (KeyWe Pro) : recherche, filtres par
  * statut / lieu / retard, et export CSV de l'historique.
  * Le filtrage est fait côté client : un parc d'hôte tient
  * largement en mémoire, et la réponse est instantanée.

@@ -82,15 +82,34 @@ function messages(locale: Locale) {
  * Chemin de redirection accepté après connexion. `startsWith("/")`
  * ne suffit pas : « //evil.com » et « /\evil.com » sont des URL
  * absolues pour un navigateur — laisser passer `suivant` (issu de
- * l'URL) offrirait une redirection ouverte. Repli localisé.
+ * l'URL) offrirait une redirection ouverte. À défaut de lien interne
+ * sûr, on renvoie le `repli` (calculé selon le rôle, voir plus bas).
  */
-function destinationSure(suivant: string, locale: Locale): string {
+function destinationSure(suivant: string, repli: string): string {
   const suspect = [...suivant].some(
     (c) => c === "\\" || c.charCodeAt(0) < 0x20 || c.charCodeAt(0) === 0x7f
   );
   const interne =
     suivant.startsWith("/") && !suivant.startsWith("//") && !suspect;
-  return interne ? suivant : localise("/espace", locale);
+  return interne ? suivant : repli;
+}
+
+/**
+ * Espace d'atterrissage par défaut selon le rôle : chaque identifiant
+ * ouvre son propre environnement. Un lien explicite (`suivant`) reste
+ * prioritaire sur ce repli.
+ */
+function cheminParRole(role: string | null | undefined): string {
+  switch (role) {
+    case "admin":
+      return "/admin";
+    case "commercant":
+      return "/commercant";
+    case "commercial":
+      return "/commercial";
+    default:
+      return "/espace"; // hote, voyageur
+  }
 }
 
 /** Callback des liens email, avec la langue préservée. */
@@ -135,7 +154,22 @@ export async function actionConnexion(
   }
 
   await reinitialiserLimite("connexion", email);
-  redirect(destinationSure(suivant, locale));
+
+  // Repli par rôle : sans lien explicite, chaque identifiant atterrit
+  // dans son environnement (espace client, comptoir, admin, commercial).
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  let role: string | null = null;
+  if (user) {
+    const { data: profil } = await supabase
+      .from("profiles")
+      .select("role")
+      .eq("id", user.id)
+      .single();
+    role = profil?.role ?? null;
+  }
+  redirect(destinationSure(suivant, localise(cheminParRole(role), locale)));
 }
 
 /** Envoi d'un lien magique (OTP par email) */
@@ -162,9 +196,11 @@ export async function actionLienMagique(
 type EtatInscription = { erreur: string | null; envoye: boolean };
 
 /**
- * Création de compte (hôte ou voyageur). La confirmation d'email est
- * exigée : aucune session n'est ouverte tant que le lien n'est pas
- * cliqué — on affiche donc « vérifiez vos emails ».
+ * Création de compte propriétaire (hôte). Seul le propriétaire des
+ * clés — celui qui paie l'abonnement — a un compte ; le bénéficiaire
+ * n'en a pas (il reçoit un lien de retrait). La confirmation d'email
+ * est exigée : aucune session n'est ouverte tant que le lien n'est
+ * pas cliqué — on affiche donc « vérifiez vos emails ».
  */
 export async function actionInscription(
   _etat: EtatInscription,
@@ -175,7 +211,7 @@ export async function actionInscription(
   const nom = String(formData.get("nom") ?? "").trim();
   const email = String(formData.get("email") ?? "").trim();
   const motDePasse = String(formData.get("mot_de_passe") ?? "");
-  const role = formData.get("role") === "voyageur" ? "voyageur" : "hote";
+  const role = "hote";
 
   if (motDePasse.length < 8) {
     return { erreur: m.mdpCourt, envoye: false };

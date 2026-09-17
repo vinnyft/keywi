@@ -4,12 +4,12 @@ import { ImageResponse } from "next/og";
  * Image de partage social (Open Graph), générée à la construction.
  *
  * Une seule carte, aux couleurs de la marque, pour tout le site :
- * quand un lien Keywi est partagé (WhatsApp, LinkedIn, iMessage,
+ * quand un lien KeyWe est partagé (WhatsApp, LinkedIn, iMessage,
  * Slack…), il affiche cette vignette au lieu d'un aperçu vide.
  * Rendu par Satori (next/og) — mise en page en flexbox uniquement,
  * police système par défaut, aucun asset externe.
  */
-export const alt = "Keywi — Vos clés, en lieu sûr, près de chez vous";
+export const alt = "KeyWe — Vos clés, en lieu sûr, près de chez vous";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -47,7 +47,7 @@ export default function OpengraphImage() {
             K
           </div>
           <div style={{ fontSize: 40, fontWeight: 800, letterSpacing: -1 }}>
-            Keywi
+            KeyWe
           </div>
         </div>
 
@@ -70,7 +70,7 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: "flex", fontSize: 24, color: "#aec98a" }}>
-          keywi.fr
+          keywe.io
         </div>
       </div>
     ),

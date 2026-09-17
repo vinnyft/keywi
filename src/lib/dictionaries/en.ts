@@ -13,7 +13,7 @@ export const en: Dictionnaire = {
     ouvrirMenu: "Open menu",
     fermerMenu: "Close menu",
     produitsItems: {
-      pointsRelais: { label: "Drop-off points", note: "The Keywi public network" },
+      pointsRelais: { label: "Drop-off points", note: "The KeyWe public network" },
       casiers: { label: "Smart lockers", note: "Coming soon" },
       logiciel: { label: "Key-tracking software", note: "Coming soon" },
     },
@@ -23,7 +23,7 @@ export const en: Dictionnaire = {
       "France's local shop network for keys. Drop off nearby, manage access remotely.",
     produits: "Products",
     casUsage: "Use cases",
-    keywi: "Keywi",
+    keywi: "KeyWe",
     pointsRelais: "Drop-off points",
     casiers: "Smart lockers",
     logicielSuivi: "Tracking software",
@@ -56,7 +56,7 @@ export const en: Dictionnaire = {
       {
         titre: "Drop off nearby",
         texte:
-          "Pick a partner shop on the map and drop off your keyring fitted with a Keywi tag.",
+          "Pick a partner shop on the map and drop off your keyring fitted with a KeyWe tag.",
       },
       {
         titre: "Share a code",
@@ -70,7 +70,7 @@ export const en: Dictionnaire = {
       },
     ],
     penseTitre: "Built for you",
-    commercantTitre: "A shop owner? Join the Keywi network.",
+    commercantTitre: "A shop owner? Join the KeyWe network.",
     commercantLede:
       "Turn your counter into a drop-off point: extra income on every handover, a simple app, no costly hardware.",
     devenirPointRelais: "Become a partner",

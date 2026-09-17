@@ -39,7 +39,7 @@ export function AssistanceBot() {
     ? {
         ouvrir: "Open help",
         fermer: "Close help",
-        titre: "Keywi assistant",
+        titre: "KeyWe assistant",
         recommencer: "Restart",
         close: "Close",
         aide: "Did this answer help?",
@@ -50,7 +50,7 @@ export function AssistanceBot() {
         envoyer: "Send",
         incompris:
           "I'm not sure I understood. Pick a topic below, or contact support.",
-        sujet: "Keywi help request",
+        sujet: "KeyWe help request",
         corpsIntro: "Hello,\n\nThe assistant didn't solve my problem.\n\n",
         corpsParcours: "My path in the assistant:\n",
         corpsQuestion: "My question:\n",
@@ -58,7 +58,7 @@ export function AssistanceBot() {
     : {
         ouvrir: "Ouvrir l'assistance",
         fermer: "Fermer l'assistance",
-        titre: "Assistant Keywi",
+        titre: "Assistant KeyWe",
         recommencer: "Recommencer",
         close: "Fermer",
         aide: "Cette réponse vous a-t-elle aidé ?",
@@ -69,7 +69,7 @@ export function AssistanceBot() {
         envoyer: "Envoyer",
         incompris:
           "Je ne suis pas sûr d'avoir compris. Choisissez un thème ci-dessous, ou contactez le SAV.",
-        sujet: "Demande d'aide Keywi",
+        sujet: "Demande d'aide KeyWe",
         corpsIntro: "Bonjour,\n\nL'assistant n'a pas résolu mon problème.\n\n",
         corpsParcours: "Mon parcours dans l'assistant :\n",
         corpsQuestion: "Ma question :\n",

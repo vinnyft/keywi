@@ -101,7 +101,7 @@ export default async function PageCertificat({
         titre: "Traceability certificate",
         emisLe: "Issued on",
         attestation:
-          "Keywi certifies that the keyring below underwent the listed movements. Each line is",
+          "KeyWe certifies that the keyring below underwent the listed movements. Each line is",
         attestationFort: "timestamped in the database and tamper-proof",
         attestationFin: ": the log forbids any rewrite after recording.",
         verifies: (n: number) =>
@@ -123,7 +123,7 @@ export default async function PageCertificat({
         titre: "Certificat de traçabilité",
         emisLe: "Émis le",
         attestation:
-          "Keywi atteste que le trousseau ci-dessous a fait l'objet des mouvements listés. Chaque ligne est",
+          "KeyWe atteste que le trousseau ci-dessous a fait l'objet des mouvements listés. Chaque ligne est",
         attestationFort: "horodatée en base et non modifiable",
         attestationFin: " : le journal interdit toute réécriture après enregistrement.",
         verifies: (n: number) =>

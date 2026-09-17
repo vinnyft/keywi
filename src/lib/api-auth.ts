@@ -4,7 +4,7 @@ import { createHash, randomBytes } from "node:crypto";
 import { createAdminClient } from "@/lib/supabase/admin";
 
 /**
- * Authentification de l'API publique Keywi.
+ * Authentification de l'API publique KeyWe.
  *
  * Une clé API a la forme `kw_live_<32 octets en base64url>`. Seul
  * son SHA-256 est stocké : la valeur en clair n'existe qu'une fois,

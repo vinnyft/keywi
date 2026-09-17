@@ -15,7 +15,7 @@ export const fr = {
     ouvrirMenu: "Ouvrir le menu",
     fermerMenu: "Fermer le menu",
     produitsItems: {
-      pointsRelais: { label: "Points relais", note: "Le réseau public Keywi" },
+      pointsRelais: { label: "Points relais", note: "Le réseau public KeyWe" },
       casiers: { label: "Casiers connectés", note: "Bientôt disponible" },
       logiciel: { label: "Logiciel de suivi de clés", note: "Bientôt disponible" },
     },
@@ -25,7 +25,7 @@ export const fr = {
       "Le réseau français de points relais pour clés. Déposez près de chez vous, gérez les accès à distance.",
     produits: "Produits",
     casUsage: "Cas d'usage",
-    keywi: "Keywi",
+    keywi: "KeyWe",
     pointsRelais: "Points relais",
     casiers: "Casiers connectés",
     logicielSuivi: "Logiciel de suivi",
@@ -58,7 +58,7 @@ export const fr = {
       {
         titre: "Déposez près de chez vous",
         texte:
-          "Choisissez un commerce partenaire sur la carte et déposez votre trousseau muni d'un badge Keywi.",
+          "Choisissez un commerce partenaire sur la carte et déposez votre trousseau muni d'un badge KeyWe.",
       },
       {
         titre: "Partagez un code",
@@ -72,7 +72,7 @@ export const fr = {
       },
     ],
     penseTitre: "Pensé pour vous",
-    commercantTitre: "Commerçant ? Rejoignez le réseau Keywi.",
+    commercantTitre: "Commerçant ? Rejoignez le réseau KeyWe.",
     commercantLede:
       "Transformez votre comptoir en point relais : un revenu complémentaire à chaque mouvement, une application simple, aucun matériel coûteux.",
     devenirPointRelais: "Devenir point relais",

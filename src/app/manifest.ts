@@ -1,14 +1,14 @@
 import type { MetadataRoute } from "next";
 
 /**
- * Manifeste PWA : l'application Keywi s'installe sur l'écran
+ * Manifeste PWA : l'application KeyWe s'installe sur l'écran
  * d'accueil (mobile et desktop) et s'ouvre en plein écran sur
  * l'entrée KeyHost / Guest.
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Keywi — Vos clés, en lieu sûr",
-    short_name: "Keywi",
+    name: "KeyWe — Vos clés, en lieu sûr",
+    short_name: "KeyWe",
     description:
       "Gérez vos clés par points relais : dépôts, codes de retrait et suivi en temps réel.",
     lang: "fr",

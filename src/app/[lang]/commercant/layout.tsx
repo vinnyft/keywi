@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { ScanLine, Grid3X3, History, Euro } from "lucide-react";
+import { ScanLine, Grid3X3, History, Euro, Users } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { SelecteurLangue } from "@/components/ui/SelecteurLangue";
 import { actionDeconnexion } from "@/lib/actions/auth";
@@ -47,6 +47,7 @@ export default async function CommercantLayout({
   const onglets = [
     { href: "/commercant", icone: ScanLine, libelle: en ? "Scan" : "Scanner" },
     { href: "/commercant/cases", icone: Grid3X3, libelle: en ? "My slots" : "Mes cases" },
+    { href: "/commercant/clients", icone: Users, libelle: en ? "Clients" : "Clients" },
     { href: "/commercant/historique", icone: History, libelle: en ? "History" : "Historique" },
     { href: "/commercant/remuneration", icone: Euro, libelle: en ? "Earnings" : "Gains" },
   ];
@@ -90,8 +91,8 @@ export default async function CommercantLayout({
         ) : (
           <p className="rounded-xl bg-ambre-pale p-4 text-ambre">
             {en
-              ? "Your shop account isn't linked to any drop-off point yet. Contact the Keywi team."
-              : "Votre compte commerçant n'est rattaché à aucun point relais. Contactez l'équipe Keywi."}
+              ? "Your shop account isn't linked to any drop-off point yet. Contact the KeyWe team."
+              : "Votre compte commerçant n'est rattaché à aucun point relais. Contactez l'équipe KeyWe."}
           </p>
         )}
       </main>
@@ -100,7 +101,7 @@ export default async function CommercantLayout({
         aria-label={en ? "Shop navigation" : "Navigation commerçant"}
         className="fixed inset-x-0 bottom-0 z-20 border-t border-gray-200 bg-white"
       >
-        <div className="mx-auto grid max-w-2xl grid-cols-4">
+        <div className="mx-auto grid max-w-2xl grid-cols-5">
           {onglets.map(({ href, icone: Icone, libelle }) => (
             <Link
               key={href}

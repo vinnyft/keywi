@@ -66,7 +66,7 @@ export function PiedDePage({
         </nav>
       </div>
       <div className="border-t border-white/10 py-4 text-center text-xs text-white/50">
-        © {new Date().getFullYear()} Keywi — {dict.droits}
+        © {new Date().getFullYear()} KeyWe — {dict.droits}
       </div>
     </footer>
   );

@@ -4,7 +4,7 @@ import type { Locale } from "@/lib/i18n";
 type KeyStatus = Database["public"]["Enums"]["key_status"];
 
 /**
- * Badge d'état d'une clé, aux couleurs du design system Keywi.
+ * Badge d'état d'une clé, aux couleurs du design system KeyWe.
  * Le libellé suit la langue (`locale`), la couleur est partagée.
  */
 const CLASSE: Record<KeyStatus, string> = {

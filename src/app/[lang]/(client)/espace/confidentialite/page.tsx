@@ -25,7 +25,7 @@ export async function generateMetadata({
 }
 
 /**
- * Inventaire de ce que Keywi détient sur l'utilisateur connecté.
+ * Inventaire de ce que KeyWe détient sur l'utilisateur connecté.
  *
  * Le RGPD donne des droits ; encore faut-il pouvoir les exercer
  * sans écrire à une adresse de contact. Cet écran rend l'accès
@@ -60,7 +60,7 @@ export default async function PageConfidentialiteEspace({
   const t = en
     ? {
         titre: "My data",
-        intro: "Everything Keywi holds about you, and what you can do with it. Member since ",
+        intro: "Everything KeyWe holds about you, and what you can do with it. Member since ",
         conservons: "What we keep",
         emporter: "Take my data with me",
         emporterAide:
@@ -91,7 +91,7 @@ export default async function PageConfidentialiteEspace({
       }
     : {
         titre: "Mes données",
-        intro: "Tout ce que Keywi détient à votre sujet, et ce que vous pouvez en faire. Membre depuis le ",
+        intro: "Tout ce que KeyWe détient à votre sujet, et ce que vous pouvez en faire. Membre depuis le ",
         conservons: "Ce que nous conservons",
         emporter: "Emporter mes données",
         emporterAide:
@@ -230,8 +230,8 @@ export default async function PageConfidentialiteEspace({
         </h2>
         <p className="mt-1 text-sm text-primaire-fonce">
           {t.droitsTexte1}
-          <a className="underline" href="mailto:bonjour@keywi.fr">
-            bonjour@keywi.fr
+          <a className="underline" href="mailto:bonjour@keywe.io">
+            bonjour@keywe.io
           </a>
           {t.droitsTexte2}
           <Link className="underline" href={localise("/confidentialite", locale)}>

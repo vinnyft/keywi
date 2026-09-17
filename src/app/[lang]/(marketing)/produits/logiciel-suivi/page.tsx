@@ -18,11 +18,11 @@ export async function generateMetadata({
   const { lang } = await params;
   const loc: Locale = estLocale(lang) ? lang : "fr";
   return {
-    title: loc === "en" ? "Keywi Pro — key-tracking software" : "Keywi Pro — logiciel de suivi de clés",
+    title: loc === "en" ? "KeyWe Pro — key-tracking software" : "KeyWe Pro — logiciel de suivi de clés",
     description:
       loc === "en"
-        ? "Keywi Pro: keyring register, return deadlines, automatic reminders and accounting export. For property managers, agencies and hotels."
-        : "Keywi Pro : registre des trousseaux, échéances de retour, relances automatiques et export comptable. Pour conciergeries, agences et hôtels.",
+        ? "KeyWe Pro: keyring register, return deadlines, automatic reminders and accounting export. For property managers, agencies and hotels."
+        : "KeyWe Pro : registre des trousseaux, échéances de retour, relances automatiques et export comptable. Pour conciergeries, agences et hôtels.",
     alternates: alternatesLangues("/produits/logiciel-suivi", loc),
   };
 }
@@ -31,7 +31,7 @@ function contenu(locale: Locale) {
   if (locale === "en") {
     return {
       badge: "Included in your dashboard",
-      h1: "Keywi Pro",
+      h1: "KeyWe Pro",
       lede: "The key-tracking software for those who manage a lot of them: property managers, estate agencies, hotels and operators.",
       registre: "Open my register",
       creerCompte: "Create an account",
@@ -42,13 +42,13 @@ function contenu(locale: Locale) {
         { icone: Download, titre: "Accounting export", texte: "Export the history to CSV in one click, ready for Excel: dates, locations, slots, recipients." },
       ],
       dejaTitre: "Already in your dashboard",
-      dejaTexte: "Keywi Pro isn't software to install: the register, deadlines and export are available from your very first drop-off, at no extra cost.",
+      dejaTexte: "KeyWe Pro isn't software to install: the register, deadlines and export are available from your very first drop-off, at no extra cost.",
       tarifs: "See pricing",
     };
   }
   return {
     badge: "Inclus dans votre espace",
-    h1: "Keywi Pro",
+    h1: "KeyWe Pro",
     lede: "Le logiciel de suivi de clés pour ceux qui en gèrent beaucoup : conciergeries, agences immobilières, hôtels et gestionnaires.",
     registre: "Ouvrir mon registre",
     creerCompte: "Créer un compte",
@@ -59,12 +59,12 @@ function contenu(locale: Locale) {
       { icone: Download, titre: "Export comptable", texte: "Sortez l'historique en CSV en un clic, prêt pour Excel : dates, lieux, cases, bénéficiaires." },
     ],
     dejaTitre: "Déjà dans votre espace",
-    dejaTexte: "Keywi Pro n'est pas un logiciel à installer : le registre, les échéances et l'export sont accessibles dès votre première clé déposée, sans supplément.",
+    dejaTexte: "KeyWe Pro n'est pas un logiciel à installer : le registre, les échéances et l'export sont accessibles dès votre première clé déposée, sans supplément.",
     tarifs: "Voir les tarifs",
   };
 }
 
-/** Page produit : Keywi Pro (logiciel de suivi de clés) */
+/** Page produit : KeyWe Pro (logiciel de suivi de clés) */
 export default async function PageLogicielSuivi({
   params,
 }: {

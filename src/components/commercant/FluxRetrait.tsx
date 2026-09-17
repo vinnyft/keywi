@@ -45,7 +45,7 @@ export function FluxRetrait() {
         accueil: "Home",
         codeTitre: "Customer's pickup code",
         codeIntro:
-          "The customer shows you a 6-character code or a QR code (content “Keywi:XXXXXX”).",
+          "The customer shows you a 6-character code or a QR code (content “KeyWe:XXXXXX”).",
         codeLabel: "6-character pickup code",
         rechercher: "Find the key",
         rechercheAria: "Search in progress",
@@ -71,7 +71,7 @@ export function FluxRetrait() {
         accueil: "Accueil",
         codeTitre: "Code de retrait du client",
         codeIntro:
-          "Le client vous présente un code à 6 caractères ou un QR code (contenu « Keywi:XXXXXX »).",
+          "Le client vous présente un code à 6 caractères ou un QR code (contenu « KeyWe:XXXXXX »).",
         codeLabel: "Code de retrait à 6 caractères",
         rechercher: "Rechercher la clé",
         rechercheAria: "Recherche en cours",

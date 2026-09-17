@@ -13,9 +13,11 @@ import { TARIFS, getStripe, modePaiement } from "@/lib/stripe";
 import { localise, type Locale } from "@/lib/i18n";
 
 /**
- * Actions de l'espace client (hôte / voyageur) et candidature
- * publique « Devenir point relais ».
+ * Actions de l'espace client (hôte) et candidature publique
+ * « Devenir point relais ».
  */
+
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 type EtatCode = { erreur: string | null; code: string | null };
 type EtatCandidature = { erreur: string | null; envoye: boolean };
@@ -34,6 +36,10 @@ export async function actionCreerCode(
   const jours = Number(formData.get("validite_jours") ?? "0");
   const expireAt =
     jours > 0 ? new Date(Date.now() + jours * 86_400_000).toISOString() : null;
+  // Mode de retrait choisi par le propriétaire (défaut : réutilisable)
+  const usageUnique = formData.get("mode_retrait") === "unique";
+  const heureDebut = String(formData.get("heure_debut") ?? "").trim() || null;
+  const heureFin = String(formData.get("heure_fin") ?? "").trim() || null;
   // Langue choisie par l'hôte au partage : sert à l'email immédiat et,
   // stockée sur le code, aux emails ultérieurs au bénéficiaire.
   const locale: Locale = formData.get("locale") === "en" ? "en" : "fr";
@@ -51,15 +57,28 @@ export async function actionCreerCode(
     return { erreur: "Impossible de générer le code. Réessayez.", code: null };
   }
 
-  // Mémorise la langue du bénéficiaire sur le code (service role : la
-  // RLS ne rend pas access_codes modifiable par l'hôte directement).
+  // Options de retrait + langue mémorisées sur le code, et récupération
+  // du jeton du lien public (service role : la RLS ne rend pas
+  // access_codes modifiable par l'hôte directement).
+  let jeton: string | null = null;
   if (r.code_6) {
-    await createAdminClient()
+    const { data: maj } = await createAdminClient()
       .from("access_codes")
-      .update({ langue: locale })
+      .update({
+        langue: locale,
+        usage_unique: usageUnique,
+        heure_debut: heureDebut,
+        heure_fin: heureFin,
+      })
       .eq("key_id", keyId)
-      .eq("code_6", r.code_6);
+      .eq("code_6", r.code_6)
+      .select("jeton")
+      .single();
+    jeton = maj?.jeton ?? null;
   }
+  const lienRetrait = jeton
+    ? `${SITE}${localise(`/retrait/${jeton}`, locale)}`
+    : null;
 
   // Envoi du code par email au bénéficiaire (si renseigné)
   if (email) {
@@ -85,6 +104,7 @@ export async function actionCreerCode(
       adresseCommerce: relais
         ? `${relais.adresse}, ${relais.code_postal} ${relais.ville}`
         : null,
+      lienRetrait,
       cleEnDepot: Boolean((data as { cle_en_depot?: boolean }).cle_en_depot),
       locale,
     });
@@ -283,7 +303,7 @@ export async function actionDeposerCle(input: {
             currency: "eur",
             unit_amount: montant,
             product_data: {
-              name: en ? "Keywi key drop-off (one-off)" : TARIFS.depotUnitaire.libelle,
+              name: en ? "KeyWe key drop-off (one-off)" : TARIFS.depotUnitaire.libelle,
             },
           },
         },
