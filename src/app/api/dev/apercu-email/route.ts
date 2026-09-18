@@ -9,6 +9,9 @@ import {
   contenuDepotEffectue,
   contenuRetourEffectue,
   contenuRetraitEffectue,
+  contenuRapportAdmin,
+  contenuRapportCommercial,
+  contenuRapportRelais,
   type ContenuEmail,
 } from "@/lib/notifications";
 
@@ -91,6 +94,46 @@ const GABARITS: Record<string, { libelle: string; contenu: () => ContenuEmail }>
     libelle: "Candidature refusée (→ commerçant)",
     contenu: () =>
       contenuCandidatureRefusee({ nomContact: "Jeanne Martin", nomCommerce: "Café du Coin" }),
+  },
+  "rapport-admin": {
+    libelle: "Rapport hebdo (→ admin)",
+    contenu: () =>
+      contenuRapportAdmin({
+        nouveaux_relais: 4,
+        total_relais_actifs: 37,
+        relais_inactifs: 2,
+        candidatures_semaine: 9,
+        candidatures_en_attente: 3,
+        depots_semaine: 58,
+        retraits_semaine: 51,
+        cles_en_depot: 22,
+        nouveaux_hotes: 12,
+        ca_centimes_semaine: 48900,
+      }),
+  },
+  "rapport-commercial": {
+    libelle: "Rapport hebdo (→ commercial)",
+    contenu: () =>
+      contenuRapportCommercial({
+        commercialNom: "Marie",
+        prospectsAjoutes: 14,
+        contactes: 22,
+        rdv: 6,
+        signes: 3,
+        actifsTotal: 11,
+        cibleSignes: 5,
+      }),
+  },
+  "rapport-relais": {
+    libelle: "Rapport hebdo (→ relais)",
+    contenu: () =>
+      contenuRapportRelais({
+        relaisNom: "Librairie du Marais",
+        mouvementsSemaine: 12,
+        clesEnGestion: 4,
+        caMoisCentimes: 3600,
+        nbMouvementsMois: 41,
+      }),
   },
 };
 
