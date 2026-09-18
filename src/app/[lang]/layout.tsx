@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import { Bricolage_Grotesque, DM_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SITE_URL } from "@/lib/site";
 import { LOCALES, estLocale, type Locale } from "@/lib/i18n";
 import "../globals.css";
@@ -92,6 +93,7 @@ export default async function RootLayout({
         </a>
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
