@@ -967,3 +967,160 @@ export async function emailReponseCandidature(params: {
       : contenuCandidatureRefusee({ ...params, locale });
   await envoyerEmail(params.email, contenu);
 }
+
+/* ------------------------------------------------------------------
+   Rapports hebdomadaires (envoyés le lundi par le cron
+   /api/cron/rapports-hebdo). Internes à l'équipe et aux partenaires
+   francophones : rédigés en français.
+   ------------------------------------------------------------------ */
+
+/** Montant en centimes → « 12,50 € ». */
+function euros(centimes: number): string {
+  return `${(centimes / 100).toLocaleString("fr-FR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })} €`;
+}
+
+/** Une ligne « Libellé : valeur » pour les encadrés de rapport. */
+function ligneStat(libelle: string, valeur: string | number): string {
+  return `<strong>${libelle} :</strong> ${valeur}`;
+}
+
+/** Date du jour (« 18 septembre 2026 ») pour l'en-tête des rapports. */
+function dateDuJour(): string {
+  return new Date().toLocaleDateString("fr-FR", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+/** Rapport hebdomadaire global → équipe admin */
+export function contenuRapportAdmin(k: {
+  nouveaux_relais: number;
+  total_relais_actifs: number;
+  relais_inactifs: number;
+  candidatures_semaine: number;
+  candidatures_en_attente: number;
+  depots_semaine: number;
+  retraits_semaine: number;
+  cles_en_depot: number;
+  nouveaux_hotes: number;
+  ca_centimes_semaine: number;
+}): ContenuEmail {
+  return {
+    sujet: `Rapport hebdo KeyWe — ${dateDuJour()}`,
+    html: gabarit(
+      "Votre rapport de la semaine 📊",
+      `<p style="margin:0 0 12px">Bonjour, voici l'activité KeyWe des 7 derniers jours.</p>
+       ${encadre(
+         `<u>Réseau</u><br>
+          ${ligneStat("Nouveaux points relais", k.nouveaux_relais)}<br>
+          ${ligneStat("Total relais actifs", k.total_relais_actifs)}<br>
+          ${ligneStat("Relais inactifs (churn)", k.relais_inactifs)}<br>
+          ${ligneStat("Candidatures reçues", k.candidatures_semaine)}<br>
+          ${ligneStat("Candidatures en attente", k.candidatures_en_attente)}`
+       )}
+       ${encadre(
+         `<u>Activité clés</u><br>
+          ${ligneStat("Dépôts", k.depots_semaine)}<br>
+          ${ligneStat("Retraits", k.retraits_semaine)}<br>
+          ${ligneStat("Clés actuellement en dépôt", k.cles_en_depot)}<br>
+          ${ligneStat("Nouveaux hôtes", k.nouveaux_hotes)}`
+       )}
+       ${encadre(
+         `<u>Business</u><br>
+          ${ligneStat("CA encaissé (semaine)", euros(k.ca_centimes_semaine))}`
+       )}
+       ${bouton("Ouvrir l'espace admin", lienSite("/admin", false))}`,
+      { locale: "fr" }
+    ),
+  };
+}
+
+export async function emailRapportAdmin(
+  k: Parameters<typeof contenuRapportAdmin>[0]
+) {
+  const destinataires = await emailsAdmins();
+  if (destinataires.length === 0) return;
+  const contenu = contenuRapportAdmin(k);
+  for (const email of destinataires) {
+    await envoyerEmail(email, contenu);
+  }
+}
+
+/** Rapport hebdomadaire de prospection → un commercial */
+export function contenuRapportCommercial(params: {
+  commercialNom: string | null;
+  prospectsAjoutes: number;
+  contactes: number;
+  rdv: number;
+  signes: number;
+  actifsTotal: number;
+  cibleSignes: number;
+}): ContenuEmail {
+  const p = proteger(params);
+  const objectif =
+    params.cibleSignes > 0
+      ? `${ligneStat("Objectif du mois", `${params.signes} / ${params.cibleSignes} signés`)}`
+      : `${ligneStat("Objectif du mois", "non défini")}`;
+  return {
+    sujet: `Votre semaine de prospection KeyWe — ${dateDuJour()}`,
+    html: gabarit(
+      "Votre semaine de prospection 📈",
+      `<p style="margin:0 0 12px">Bonjour ${p.commercialNom ?? ""}, voici votre activité des 7 derniers jours.</p>
+       ${encadre(
+         `${ligneStat("Nouveaux prospects", params.prospectsAjoutes)}<br>
+          ${ligneStat("Prospects contactés", params.contactes)}<br>
+          ${ligneStat("RDV obtenus", params.rdv)}<br>
+          ${ligneStat("Points relais signés", params.signes)}<br>
+          ${ligneStat("Relais actifs (total)", params.actifsTotal)}`
+       )}
+       ${encadre(objectif)}
+       ${bouton("Ouvrir mon pipeline", lienSite("/commercial", false))}`,
+      { locale: "fr" }
+    ),
+  };
+}
+
+export async function emailRapportCommercial(
+  params: Parameters<typeof contenuRapportCommercial>[0] & { email: string }
+) {
+  await envoyerEmail(params.email, contenuRapportCommercial(params));
+}
+
+/** Rapport hebdomadaire d'activité → un point relais (commerçant) */
+export function contenuRapportRelais(params: {
+  relaisNom: string;
+  mouvementsSemaine: number;
+  clesEnGestion: number;
+  caMoisCentimes: number;
+  nbMouvementsMois: number;
+}): ContenuEmail {
+  const p = proteger(params);
+  return {
+    sujet: `Votre semaine chez KeyWe — ${dateDuJour()}`,
+    html: gabarit(
+      "Votre activité de la semaine 🗝️",
+      `<p style="margin:0 0 12px">Bonjour, voici l'activité de <strong>${p.relaisNom}</strong>.</p>
+       ${encadre(
+         `${ligneStat("Mouvements cette semaine", params.mouvementsSemaine)}<br>
+          ${ligneStat("Clés actuellement en gestion", params.clesEnGestion)}`
+       )}
+       ${encadre(
+         `<u>Rémunération du mois en cours</u><br>
+          ${ligneStat("Mouvements du mois", params.nbMouvementsMois)}<br>
+          ${ligneStat("Rémunération estimée", euros(params.caMoisCentimes))}`
+       )}
+       ${bouton("Voir ma rémunération", lienSite("/commercant/remuneration", false))}`,
+      { locale: "fr" }
+    ),
+  };
+}
+
+export async function emailRapportRelais(
+  params: Parameters<typeof contenuRapportRelais>[0] & { email: string }
+) {
+  await envoyerEmail(params.email, contenuRapportRelais(params));
+}

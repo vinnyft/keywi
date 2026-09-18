@@ -896,6 +896,33 @@ export type Database = {
           actifs_total: number
         }[]
       }
+      rapport_admin_hebdo: { Args: never; Returns: Json }
+      rapport_commercial_hebdo_tous: {
+        Args: never
+        Returns: {
+          commercial_id: string
+          commercial_nom: string | null
+          commercial_email: string | null
+          prospects_ajoutes: number
+          contactes: number
+          rdv: number
+          signes: number
+          actifs_total: number
+          cible_signes: number
+        }[]
+      }
+      rapport_relais_hebdo_tous: {
+        Args: never
+        Returns: {
+          relay_point_id: string
+          relais_nom: string
+          owner_email: string | null
+          mouvements_semaine: number
+          cles_en_gestion: number
+          ca_mois_centimes: number
+          nb_mouvements_mois: number
+        }[]
+      }
       finaliser_suppression_auth: { Args: { p_user_id: string }; Returns: Json }
       generer_code_badge: { Args: never; Returns: string }
       generer_code_retrait: { Args: never; Returns: string }
