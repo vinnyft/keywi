@@ -79,6 +79,7 @@ const GABARITS: Record<string, { libelle: string; contenu: () => ContenuEmail }>
         codePostal: "75011",
         ville: "Paris",
         message: "Bar-tabac ouvert 7j/7, grande réserve derrière le comptoir.",
+        commercialCode: "KW-MARIE",
       }),
   },
   "candidature-validee": {

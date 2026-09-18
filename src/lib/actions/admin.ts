@@ -53,7 +53,9 @@ export async function actionTraiterCandidature(formData: FormData) {
     .from("candidatures_commercants")
     .update({ statut: decision })
     .eq("id", id)
-    .select("email, nom_contact, nom_commerce, adresse, code_postal, ville, telephone")
+    .select(
+      "email, nom_contact, nom_commerce, adresse, code_postal, ville, telephone, commercial_code"
+    )
     .single();
 
   if (!candidature) {
@@ -109,6 +111,20 @@ export async function actionTraiterCandidature(formData: FormData) {
     candidature.ville
   );
 
+  // 2 bis. Commercial signataire : on résout le code saisi sur la
+  //   candidature (ex. KW-MARIE) vers l'id du commercial, pour la
+  //   rémunération, les rapports et les alertes de capacité.
+  let commercialId: string | null = null;
+  if (candidature.commercial_code) {
+    const { data: com } = await admin
+      .from("profiles")
+      .select("id")
+      .eq("code_commercial", candidature.commercial_code)
+      .eq("role", "commercial")
+      .maybeSingle();
+    commercialId = com?.id ?? null;
+  }
+
   // 3. Point relais actif — le trigger generer_cases crée les cases
   const { error: erreurRelais } = await admin.from("relay_points").insert({
     nom: candidature.nom_commerce,
@@ -119,6 +135,7 @@ export async function actionTraiterCandidature(formData: FormData) {
     lng,
     capacite: CASES_PAR_DEFAUT,
     owner_id: commercantId,
+    commercial_id: commercialId,
     statut: "actif",
     type: "commerce",
   });

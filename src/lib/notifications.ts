@@ -761,6 +761,7 @@ export function contenuNouvelleCandidatureAdmin(params: {
   codePostal: string;
   ville: string;
   message: string | null;
+  commercialCode?: string | null;
 }): ContenuEmail {
   const p = proteger(params);
   const lignes = [
@@ -769,6 +770,7 @@ export function contenuNouvelleCandidatureAdmin(params: {
     `<strong>Email :</strong> ${p.email}`,
     p.telephone ? `<strong>Téléphone :</strong> ${p.telephone}` : null,
     `<strong>Adresse :</strong> ${p.adresse}, ${p.codePostal} ${p.ville}`,
+    p.commercialCode ? `<strong>Code commercial :</strong> ${p.commercialCode}` : null,
     p.message ? `<strong>Message :</strong> ${p.message}` : null,
   ]
     .filter(Boolean)

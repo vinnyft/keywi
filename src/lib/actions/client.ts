@@ -170,6 +170,10 @@ export async function actionCandidature(
     code_postal: String(formData.get("code_postal") ?? "").trim(),
     ville: String(formData.get("ville") ?? "").trim() || "Paris",
     message: String(formData.get("message") ?? "").trim() || null,
+    // Code du commercial qui a démarché le commerçant (facultatif).
+    // Normalisé en MAJ ; résolu en commercial_id à la validation admin.
+    commercial_code:
+      String(formData.get("code_commercial") ?? "").trim().toUpperCase() || null,
   };
 
   if (!champs.nom_commerce || !champs.nom_contact || !champs.email) {
@@ -213,6 +217,7 @@ export async function actionCandidature(
     codePostal: champs.code_postal,
     ville: champs.ville,
     message: champs.message,
+    commercialCode: champs.commercial_code,
   });
 
   return { erreur: null, envoye: true };
