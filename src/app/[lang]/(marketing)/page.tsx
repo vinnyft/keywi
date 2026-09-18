@@ -12,46 +12,7 @@ import { createClient } from "@/lib/supabase/server";
 import { listeCasUsage } from "@/content/cas-usage";
 import { estLocale, localise, type Locale } from "@/lib/i18n";
 import { getDictionnaire } from "@/lib/dictionaries";
-
-/**
- * Tranche de kiwi « juicy » (clin d'œil KeyWe → Kiwi), en décor du
- * hero. SVG pur : chair dégradée citron vert, cœur crème, pépins.
- * `id` unique par instance pour le dégradé radial.
- */
-function KiwiSlice({ id, className = "" }: { id: string; className?: string }) {
-  const seeds = Array.from({ length: 18 }, (_, i) => {
-    const a = (i / 18) * Math.PI * 2;
-    const x = 50 + 30 * Math.cos(a);
-    const y = 50 + 30 * Math.sin(a);
-    return { x, y, deg: (a * 180) / Math.PI + 90 };
-  });
-  return (
-    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
-      <defs>
-        <radialGradient id={id} cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="#F1F9D6" />
-          <stop offset="38%" stopColor="#C6EE73" />
-          <stop offset="100%" stopColor="#96D62B" />
-        </radialGradient>
-      </defs>
-      <circle cx="50" cy="50" r="48" fill="#6E5228" />
-      <circle cx="50" cy="50" r="44.5" fill="#A9C64B" />
-      <circle cx="50" cy="50" r="41" fill={`url(#${id})`} />
-      {seeds.map((s, i) => (
-        <ellipse
-          key={i}
-          cx={s.x}
-          cy={s.y}
-          rx="1.5"
-          ry="3"
-          fill="#243318"
-          transform={`rotate(${s.deg} ${s.x} ${s.y})`}
-        />
-      ))}
-      <circle cx="50" cy="50" r="8.5" fill="#FCFEF4" />
-    </svg>
-  );
-}
+import { KiwiSlice } from "@/components/marketing/KiwiSlice";
 
 export async function generateMetadata({
   params,
@@ -94,19 +55,23 @@ export default async function PageAccueil({
     <>
       {/* Hero */}
       <section className="relative overflow-hidden bg-encre text-white">
-        {/* Décor : kiwis juicy (clin d'œil KeyWe → Kiwi) */}
+        {/* Décor : glows épicés + kiwis juicy (clin d'œil KeyWe → Kiwi) */}
         <div aria-hidden className="pointer-events-none absolute inset-0">
+          {/* glow « sanglant » orange-rouge */}
+          <div className="absolute inset-0 bg-[radial-gradient(58%_55%_at_78%_12%,rgba(255,77,26,0.55),transparent_60%)]" />
+          {/* glow « vert pétant » citron vert */}
+          <div className="absolute inset-0 bg-[radial-gradient(55%_50%_at_6%_98%,rgba(200,245,63,0.4),transparent_55%)]" />
           <KiwiSlice
             id="kiwi-a"
-            className="absolute -right-16 -top-20 w-64 rotate-12 opacity-90 drop-shadow-xl sm:w-80"
+            className="absolute -right-16 -top-20 w-64 rotate-12 opacity-95 drop-shadow-2xl sm:w-80"
           />
           <KiwiSlice
             id="kiwi-b"
-            className="absolute -bottom-16 -left-14 w-52 -rotate-12 opacity-90 drop-shadow-xl"
+            className="absolute -bottom-16 -left-14 w-52 -rotate-12 opacity-95 drop-shadow-2xl"
           />
           <KiwiSlice
             id="kiwi-c"
-            className="absolute bottom-8 right-10 hidden w-16 rotate-45 opacity-70 lg:block"
+            className="absolute right-10 top-1/2 hidden w-16 rotate-45 opacity-80 lg:block"
           />
         </div>
         <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 lg:grid-cols-2">
@@ -117,7 +82,9 @@ export default async function PageAccueil({
             <h1 className="mt-4 text-4xl font-black leading-tight sm:text-5xl">
               {t.titre1}
               <br />
-              <span className="text-lime">{t.titre2}</span>
+              <span className="bg-gradient-to-r from-lime via-[#eaff66] to-menthe bg-clip-text text-transparent drop-shadow-[0_0_22px_rgba(200,245,63,0.45)]">
+                {t.titre2}
+              </span>
             </h1>
             <p className="mt-4 max-w-md text-lg text-white/80">{t.lede}</p>
             <div className="mt-8 flex flex-wrap gap-3">
@@ -129,7 +96,7 @@ export default async function PageAccueil({
               </Link>
               <Link
                 href={l("/points-relais")}
-                className="inline-flex items-center gap-2 rounded-lg border border-white/30 px-5 py-3 font-semibold hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-lg bg-corail px-5 py-3 font-semibold text-white hover:bg-corail-fonce"
               >
                 {t.voirCarte}
               </Link>
