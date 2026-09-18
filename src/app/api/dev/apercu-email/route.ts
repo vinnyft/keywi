@@ -12,6 +12,8 @@ import {
   contenuRapportAdmin,
   contenuRapportCommercial,
   contenuRapportRelais,
+  contenuAlerteCapacite,
+  contenuCapaciteRelais,
   type ContenuEmail,
 } from "@/lib/notifications";
 
@@ -133,6 +135,30 @@ const GABARITS: Record<string, { libelle: string; contenu: () => ContenuEmail }>
         clesEnGestion: 4,
         caMoisCentimes: 3600,
         nbMouvementsMois: 41,
+      }),
+  },
+  "capacite-equipe": {
+    libelle: "Alerte capacité 80% (→ admin / commercial)",
+    contenu: () =>
+      contenuAlerteCapacite({
+        relaisNom: "Librairie du Marais",
+        adresse: "24 rue de Bretagne",
+        ville: "Paris",
+        pourcent: 85,
+        occupees: 17,
+        capacite: 20,
+        commercialNom: "Marie",
+        cheminEspace: "/admin",
+      }),
+  },
+  "capacite-relais": {
+    libelle: "Alerte capacité 80% (→ relais)",
+    contenu: () =>
+      contenuCapaciteRelais({
+        relaisNom: "Librairie du Marais",
+        pourcent: 85,
+        occupees: 17,
+        capacite: 20,
       }),
   },
 };

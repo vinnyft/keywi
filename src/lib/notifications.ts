@@ -1124,3 +1124,92 @@ export async function emailRapportRelais(
 ) {
   await envoyerEmail(params.email, contenuRapportRelais(params));
 }
+
+/* ------------------------------------------------------------------
+   Alerte de capacité (relais ≥ 80 % des cases occupées).
+   Deux angles : action interne (admin + commercial signataire) et
+   information au relais. Français.
+   ------------------------------------------------------------------ */
+
+/** Alerte capacité → équipe (admin + commercial) : planifier un RDV */
+export function contenuAlerteCapacite(params: {
+  relaisNom: string;
+  adresse: string;
+  ville: string;
+  pourcent: number;
+  occupees: number;
+  capacite: number;
+  commercialNom?: string | null;
+  cheminEspace: string; // "/admin" ou "/commercial"
+}): ContenuEmail {
+  const p = proteger(params);
+  return {
+    sujet: `⚠️ ${params.relaisNom} à ${params.pourcent}% — nouvelle boîte à prévoir`,
+    html: gabarit(
+      "Un point relais arrive à saturation 📦",
+      `<p style="margin:0 0 12px">Le point relais <strong>${p.relaisNom}</strong> a atteint
+       <strong>${params.pourcent}%</strong> de cases occupées
+       (${params.occupees}/${params.capacite}).</p>
+       ${encadre(
+         `📍 <strong>${p.relaisNom}</strong><br>${p.adresse}, ${p.ville}` +
+           (p.commercialNom ? `<br>👤 Commercial signataire : <strong>${p.commercialNom}</strong>` : "")
+       )}
+       <p style="margin:0">Il faut planifier un rendez-vous pour installer une
+       <strong>nouvelle boîte à clés</strong> et des <strong>badges supplémentaires</strong>,
+       afin que le relais puisse continuer à accueillir des dépôts.</p>
+       ${bouton("Ouvrir mon espace", lienSite(params.cheminEspace, false))}`,
+      { locale: "fr" }
+    ),
+  };
+}
+
+/** Alerte capacité → le relais lui-même : information + à recontacter */
+export function contenuCapaciteRelais(params: {
+  relaisNom: string;
+  pourcent: number;
+  occupees: number;
+  capacite: number;
+}): ContenuEmail {
+  const p = proteger(params);
+  return {
+    sujet: `Votre point relais KeyWe se remplit (${params.pourcent}%)`,
+    html: gabarit(
+      "Votre point relais tourne bien 📦",
+      `<p style="margin:0 0 12px">Bonne nouvelle : <strong>${p.relaisNom}</strong> est très
+       sollicité ! Vous êtes à <strong>${params.pourcent}%</strong> de cases occupées
+       (${params.occupees}/${params.capacite}).</p>
+       ${encadre(
+         `Notre équipe va vous contacter pour installer une <strong>boîte à clés
+          supplémentaire</strong> et de <strong>nouveaux badges</strong> — sans frais pour
+          vous — afin de continuer à accueillir des dépôts (et vos revenus qui vont avec).`
+       )}
+       ${bouton("Voir mon comptoir", lienSite("/commercant", false))}`,
+      { locale: "fr" }
+    ),
+  };
+}
+
+/** Envoie l'alerte capacité à l'équipe : tous les admins + le commercial signataire. */
+export async function emailAlerteCapaciteEquipe(
+  params: Omit<Parameters<typeof contenuAlerteCapacite>[0], "cheminEspace"> & {
+    commercialEmail?: string | null;
+  }
+) {
+  const admins = await emailsAdmins();
+  const contenuAdmin = contenuAlerteCapacite({ ...params, cheminEspace: "/admin" });
+  for (const email of admins) {
+    await envoyerEmail(email, contenuAdmin);
+  }
+  if (params.commercialEmail) {
+    await envoyerEmail(
+      params.commercialEmail,
+      contenuAlerteCapacite({ ...params, cheminEspace: "/commercial" })
+    );
+  }
+}
+
+export async function emailCapaciteRelais(
+  params: Parameters<typeof contenuCapaciteRelais>[0] & { email: string }
+) {
+  await envoyerEmail(params.email, contenuCapaciteRelais(params));
+}
