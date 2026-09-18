@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   contenuCandidatureRecue,
+  contenuNouvelleCandidatureAdmin,
   contenuCandidatureRefusee,
   contenuCandidatureValidee,
   contenuClesDisponibles,
@@ -65,6 +66,20 @@ const GABARITS: Record<string, { libelle: string; contenu: () => ContenuEmail }>
     libelle: "Accusé de réception de candidature (→ commerçant)",
     contenu: () =>
       contenuCandidatureRecue({ nomContact: "Jeanne Martin", nomCommerce: "Café du Coin" }),
+  },
+  "candidature-admin": {
+    libelle: "Nouvelle candidature (→ admin)",
+    contenu: () =>
+      contenuNouvelleCandidatureAdmin({
+        nomCommerce: "Café du Coin",
+        nomContact: "Jeanne Martin",
+        email: "contact@cafeducoin.fr",
+        telephone: "01 23 45 67 89",
+        adresse: "12 rue de la République",
+        codePostal: "75011",
+        ville: "Paris",
+        message: "Bar-tabac ouvert 7j/7, grande réserve derrière le comptoir.",
+      }),
   },
   "candidature-validee": {
     libelle: "Candidature validée (→ commerçant)",

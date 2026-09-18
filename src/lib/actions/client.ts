@@ -9,6 +9,7 @@ import {
   emailRetourEffectue,
   emailClesDisponibles,
   emailCandidatureRecue,
+  emailNouvelleCandidatureAdmin,
 } from "@/lib/notifications";
 import { TARIFS, getStripe, modePaiement } from "@/lib/stripe";
 import { localise, type Locale } from "@/lib/i18n";
@@ -200,6 +201,18 @@ export async function actionCandidature(
     nomContact: champs.nom_contact,
     nomCommerce: champs.nom_commerce,
     locale: en ? "en" : "fr",
+  });
+
+  // Alerte interne à l'équipe admin, pour réagir vite sur la candidature
+  await emailNouvelleCandidatureAdmin({
+    nomCommerce: champs.nom_commerce,
+    nomContact: champs.nom_contact,
+    email: champs.email,
+    telephone: champs.telephone,
+    adresse: champs.adresse,
+    codePostal: champs.code_postal,
+    ville: champs.ville,
+    message: champs.message,
   });
 
   return { erreur: null, envoye: true };
