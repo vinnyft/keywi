@@ -13,6 +13,46 @@ import { listeCasUsage } from "@/content/cas-usage";
 import { estLocale, localise, type Locale } from "@/lib/i18n";
 import { getDictionnaire } from "@/lib/dictionaries";
 
+/**
+ * Tranche de kiwi « juicy » (clin d'œil KeyWe → Kiwi), en décor du
+ * hero. SVG pur : chair dégradée citron vert, cœur crème, pépins.
+ * `id` unique par instance pour le dégradé radial.
+ */
+function KiwiSlice({ id, className = "" }: { id: string; className?: string }) {
+  const seeds = Array.from({ length: 18 }, (_, i) => {
+    const a = (i / 18) * Math.PI * 2;
+    const x = 50 + 30 * Math.cos(a);
+    const y = 50 + 30 * Math.sin(a);
+    return { x, y, deg: (a * 180) / Math.PI + 90 };
+  });
+  return (
+    <svg viewBox="0 0 100 100" className={className} aria-hidden="true">
+      <defs>
+        <radialGradient id={id} cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stopColor="#F1F9D6" />
+          <stop offset="38%" stopColor="#C6EE73" />
+          <stop offset="100%" stopColor="#96D62B" />
+        </radialGradient>
+      </defs>
+      <circle cx="50" cy="50" r="48" fill="#6E5228" />
+      <circle cx="50" cy="50" r="44.5" fill="#A9C64B" />
+      <circle cx="50" cy="50" r="41" fill={`url(#${id})`} />
+      {seeds.map((s, i) => (
+        <ellipse
+          key={i}
+          cx={s.x}
+          cy={s.y}
+          rx="1.5"
+          ry="3"
+          fill="#243318"
+          transform={`rotate(${s.deg} ${s.x} ${s.y})`}
+        />
+      ))}
+      <circle cx="50" cy="50" r="8.5" fill="#FCFEF4" />
+    </svg>
+  );
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -53,8 +93,23 @@ export default async function PageAccueil({
   return (
     <>
       {/* Hero */}
-      <section className="bg-encre text-white">
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 lg:grid-cols-2">
+      <section className="relative overflow-hidden bg-encre text-white">
+        {/* Décor : kiwis juicy (clin d'œil KeyWe → Kiwi) */}
+        <div aria-hidden className="pointer-events-none absolute inset-0">
+          <KiwiSlice
+            id="kiwi-a"
+            className="absolute -right-16 -top-20 w-64 rotate-12 opacity-90 drop-shadow-xl sm:w-80"
+          />
+          <KiwiSlice
+            id="kiwi-b"
+            className="absolute -bottom-16 -left-14 w-52 -rotate-12 opacity-90 drop-shadow-xl"
+          />
+          <KiwiSlice
+            id="kiwi-c"
+            className="absolute bottom-8 right-10 hidden w-16 rotate-45 opacity-70 lg:block"
+          />
+        </div>
+        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-10 px-4 py-20 lg:grid-cols-2">
           <div>
             <p className="inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm font-medium">
               <ShieldCheck size={15} aria-hidden="true" /> {t.badge}

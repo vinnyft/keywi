@@ -229,7 +229,7 @@ export function RegistreCles({ lignes }: { lignes: LigneRegistre[] }) {
                   <td className="px-4 py-3 text-gray-600">
                     {l.lieu ?? "—"}
                     {l.lieuType === "casier" && (
-                      <span className="ml-1.5 rounded-full bg-skin px-1.5 py-0.5 text-[10px] font-bold text-white">
+                      <span className="ml-1.5 rounded-full bg-skin px-1.5 py-0.5 text-[10px] font-bold text-encre">
                         24/7
                       </span>
                     )}

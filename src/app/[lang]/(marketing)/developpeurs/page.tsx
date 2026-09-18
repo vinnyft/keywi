@@ -181,7 +181,7 @@ export default async function PageDeveloppeurs({
             >
               <span
                 className={`rounded-md px-2 py-1 font-mono text-xs font-bold text-white ${
-                  e.methode === "GET" ? "bg-primaire" : "bg-skin"
+                  e.methode === "GET" ? "bg-primaire" : "bg-corail"
                 }`}
               >
                 {e.methode}
