@@ -9,6 +9,7 @@ import {
   emailRetourEffectue,
   emailClesDisponibles,
   emailCandidatureRecue,
+  emailNouvelleCandidatureAdmin,
 } from "@/lib/notifications";
 import { TARIFS, getStripe, modePaiement } from "@/lib/stripe";
 import { localise, type Locale } from "@/lib/i18n";
@@ -169,6 +170,10 @@ export async function actionCandidature(
     code_postal: String(formData.get("code_postal") ?? "").trim(),
     ville: String(formData.get("ville") ?? "").trim() || "Paris",
     message: String(formData.get("message") ?? "").trim() || null,
+    // Code du commercial qui a démarché le commerçant (facultatif).
+    // Normalisé en MAJ ; résolu en commercial_id à la validation admin.
+    commercial_code:
+      String(formData.get("code_commercial") ?? "").trim().toUpperCase() || null,
   };
 
   if (!champs.nom_commerce || !champs.nom_contact || !champs.email) {
@@ -200,6 +205,19 @@ export async function actionCandidature(
     nomContact: champs.nom_contact,
     nomCommerce: champs.nom_commerce,
     locale: en ? "en" : "fr",
+  });
+
+  // Alerte interne à l'équipe admin, pour réagir vite sur la candidature
+  await emailNouvelleCandidatureAdmin({
+    nomCommerce: champs.nom_commerce,
+    nomContact: champs.nom_contact,
+    email: champs.email,
+    telephone: champs.telephone,
+    adresse: champs.adresse,
+    codePostal: champs.code_postal,
+    ville: champs.ville,
+    message: champs.message,
+    commercialCode: champs.commercial_code,
   });
 
   return { erreur: null, envoye: true };

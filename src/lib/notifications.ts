@@ -735,6 +735,71 @@ export async function emailCandidatureRecue(
 }
 
 /* ------------------------------------------------------------------
+   Notifications internes à l'équipe (comptes rôle « admin »)
+   ------------------------------------------------------------------ */
+
+/** Emails de tous les comptes admin — destinataires des alertes internes. */
+async function emailsAdmins(): Promise<string[]> {
+  try {
+    const admin = createAdminClient();
+    const { data } = await admin.from("profiles").select("email").eq("role", "admin");
+    return (data ?? [])
+      .map((p) => p.email)
+      .filter((e): e is string => Boolean(e));
+  } catch {
+    return [];
+  }
+}
+
+/** Nouvelle candidature point relais → alerte à l'équipe admin */
+export function contenuNouvelleCandidatureAdmin(params: {
+  nomCommerce: string;
+  nomContact: string;
+  email: string;
+  telephone: string | null;
+  adresse: string;
+  codePostal: string;
+  ville: string;
+  message: string | null;
+  commercialCode?: string | null;
+}): ContenuEmail {
+  const p = proteger(params);
+  const lignes = [
+    `<strong>Commerce :</strong> ${p.nomCommerce}`,
+    `<strong>Contact :</strong> ${p.nomContact}`,
+    `<strong>Email :</strong> ${p.email}`,
+    p.telephone ? `<strong>Téléphone :</strong> ${p.telephone}` : null,
+    `<strong>Adresse :</strong> ${p.adresse}, ${p.codePostal} ${p.ville}`,
+    p.commercialCode ? `<strong>Code commercial :</strong> ${p.commercialCode}` : null,
+    p.message ? `<strong>Message :</strong> ${p.message}` : null,
+  ]
+    .filter(Boolean)
+    .join("<br>");
+  return {
+    sujet: `Nouvelle candidature point relais — ${params.nomCommerce} (${params.ville})`,
+    html: gabarit(
+      "Nouvelle candidature point relais 📥",
+      `<p style="margin:0 0 12px">Un commerçant vient de postuler pour devenir point relais KeyWe.</p>
+       ${encadre(lignes)}
+       <p style="margin:0">Validez ou refusez cette candidature depuis l'espace admin.</p>
+       ${bouton("Traiter la candidature", lienSite("/admin", false))}`,
+      { locale: "fr" }
+    ),
+  };
+}
+
+export async function emailNouvelleCandidatureAdmin(
+  params: Parameters<typeof contenuNouvelleCandidatureAdmin>[0]
+) {
+  const destinataires = await emailsAdmins();
+  if (destinataires.length === 0) return;
+  const contenu = contenuNouvelleCandidatureAdmin(params);
+  for (const email of destinataires) {
+    await envoyerEmail(email, contenu);
+  }
+}
+
+/* ------------------------------------------------------------------
    Réponses aux candidatures commerçants (envoyées depuis /admin)
    ------------------------------------------------------------------ */
 

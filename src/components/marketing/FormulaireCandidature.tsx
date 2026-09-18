@@ -18,6 +18,8 @@ export interface TextesCandidature {
   ville: string;
   message: string;
   messagePlaceholder: string;
+  codeCommercial: string;
+  codeCommercialAide: string;
   envoyer: string;
   envoi: string;
   obligatoires: string;
@@ -101,6 +103,19 @@ export function FormulaireCandidature({
           {t.message}
         </label>
         <textarea id="message" name="message" rows={3} className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2" placeholder={t.messagePlaceholder} />
+      </div>
+      <div>
+        <label htmlFor="code_commercial" className="block text-sm font-medium">
+          {t.codeCommercial}
+        </label>
+        <input
+          id="code_commercial"
+          name="code_commercial"
+          className="mt-1 w-full rounded-lg border border-gray-300 px-3 py-2 uppercase placeholder:normal-case"
+          placeholder="KW-XXXX"
+          autoComplete="off"
+        />
+        <p className="mt-1 text-xs text-gray-500">{t.codeCommercialAide}</p>
       </div>
 
       {etat.erreur && (

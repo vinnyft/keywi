@@ -39,6 +39,8 @@ export default async function PageCommercial({
         aucun: "No prospect yet — add your first one.",
         arr: "arr.",
         total: "prospects",
+        codeTitre: "Your referral code",
+        codeAide: "Give it to the shops you canvass so they're linked to you when they apply.",
       }
     : {
         titre: "Mes prospects",
@@ -51,6 +53,8 @@ export default async function PageCommercial({
         aucun: "Aucun prospect — ajoutez le premier.",
         arr: "arr.",
         total: "prospects",
+        codeTitre: "Votre code de parrainage",
+        codeAide: "Donnez-le aux commerçants que vous démarchez : ils vous seront rattachés à leur candidature.",
       };
 
   const supabase = await createClient();
@@ -58,7 +62,7 @@ export default async function PageCommercial({
     data: { user },
   } = await supabase.auth.getUser();
 
-  const [{ data: prospects }, { data: objectif }] = await Promise.all([
+  const [{ data: prospects }, { data: objectif }, { data: profil }] = await Promise.all([
     supabase.from("prospects").select("*").order("updated_at", { ascending: false }),
     user
       ? supabase
@@ -68,7 +72,15 @@ export default async function PageCommercial({
           .eq("mois", moisCourantISO())
           .maybeSingle()
       : Promise.resolve({ data: null }),
+    user
+      ? supabase
+          .from("profiles")
+          .select("code_commercial")
+          .eq("id", user.id)
+          .maybeSingle()
+      : Promise.resolve({ data: null }),
   ]);
+  const codeParrainage = profil?.code_commercial ?? null;
 
   const liste = prospects ?? [];
   const parStatut = (s: StatutProspect) => liste.filter((p) => p.statut === s);
@@ -92,6 +104,17 @@ export default async function PageCommercial({
           + {t.ajouter}
         </Link>
       </div>
+
+      {/* Code de parrainage à communiquer aux commerçants démarchés */}
+      {codeParrainage && (
+        <div className="rounded-xl border border-primaire/30 bg-primaire/5 p-4">
+          <p className="text-sm font-semibold text-encre">{t.codeTitre}</p>
+          <p className="mt-1 font-mono text-2xl font-bold tracking-wider text-primaire">
+            {codeParrainage}
+          </p>
+          <p className="mt-1 text-xs text-gray-600">{t.codeAide}</p>
+        </div>
+      )}
 
       {/* Objectif du mois */}
       <div className="rounded-xl border border-gray-200 bg-white p-4">

@@ -188,6 +188,7 @@ export type Database = {
         Row: {
           adresse: string
           code_postal: string
+          commercial_code: string | null
           created_at: string
           email: string
           id: string
@@ -201,6 +202,7 @@ export type Database = {
         Insert: {
           adresse: string
           code_postal: string
+          commercial_code?: string | null
           created_at?: string
           email: string
           id?: string
@@ -214,6 +216,7 @@ export type Database = {
         Update: {
           adresse?: string
           code_postal?: string
+          commercial_code?: string | null
           created_at?: string
           email?: string
           id?: string
@@ -653,6 +656,7 @@ export type Database = {
       profiles: {
         Row: {
           anonymise_le: string | null
+          code_commercial: string | null
           created_at: string
           email: string | null
           id: string
@@ -663,6 +667,7 @@ export type Database = {
         }
         Insert: {
           anonymise_le?: string | null
+          code_commercial?: string | null
           created_at?: string
           email?: string | null
           id: string
@@ -673,6 +678,7 @@ export type Database = {
         }
         Update: {
           anonymise_le?: string | null
+          code_commercial?: string | null
           created_at?: string
           email?: string | null
           id?: string
@@ -688,6 +694,7 @@ export type Database = {
           adresse: string
           capacite: number
           code_postal: string
+          commercial_id: string | null
           created_at: string
           description: string | null
           horaires: Json
@@ -705,6 +712,7 @@ export type Database = {
           adresse: string
           capacite?: number
           code_postal: string
+          commercial_id?: string | null
           created_at?: string
           description?: string | null
           horaires?: Json
@@ -722,6 +730,7 @@ export type Database = {
           adresse?: string
           capacite?: number
           code_postal?: string
+          commercial_id?: string | null
           created_at?: string
           description?: string | null
           horaires?: Json
