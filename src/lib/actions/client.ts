@@ -18,7 +18,7 @@ import { localise, type Locale } from "@/lib/i18n";
  * « Devenir point relais ».
  */
 
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 type EtatCode = { erreur: string | null; code: string | null };
 type EtatCandidature = { erreur: string | null; envoye: boolean };
@@ -224,7 +224,7 @@ export async function actionDeposerCle(input: {
   logement: string;
   locale?: Locale;
 }): Promise<ResultatDepot> {
-  const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const SITE = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
   const en = input.locale === "en";
   const locale: Locale = en ? "en" : "fr";
   const logement = input.logement.trim();
