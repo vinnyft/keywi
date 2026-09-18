@@ -693,6 +693,7 @@ export type Database = {
         Row: {
           adresse: string
           capacite: number
+          capacite_alertee_le: string | null
           code_postal: string
           commercial_id: string | null
           created_at: string
@@ -711,6 +712,7 @@ export type Database = {
         Insert: {
           adresse: string
           capacite?: number
+          capacite_alertee_le?: string | null
           code_postal: string
           commercial_id?: string | null
           created_at?: string
@@ -729,6 +731,7 @@ export type Database = {
         Update: {
           adresse?: string
           capacite?: number
+          capacite_alertee_le?: string | null
           code_postal?: string
           commercial_id?: string | null
           created_at?: string
@@ -921,6 +924,21 @@ export type Database = {
           cles_en_gestion: number
           ca_mois_centimes: number
           nb_mouvements_mois: number
+        }[]
+      }
+      verifier_capacite_relais: {
+        Args: never
+        Returns: {
+          relay_point_id: string
+          relais_nom: string
+          adresse: string
+          ville: string
+          capacite: number
+          occupees: number
+          pourcent: number
+          owner_email: string | null
+          commercial_email: string | null
+          commercial_nom: string | null
         }[]
       }
       finaliser_suppression_auth: { Args: { p_user_id: string }; Returns: Json }
