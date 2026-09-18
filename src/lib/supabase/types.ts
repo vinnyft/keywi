@@ -244,6 +244,7 @@ export type Database = {
           relay_point_id: string | null
           retard_notifie: boolean
           slot_id: string | null
+          souffrance_alertee_le: string | null
           statut: Database["public"]["Enums"]["key_status"]
           updated_at: string
         }
@@ -261,6 +262,7 @@ export type Database = {
           relay_point_id?: string | null
           retard_notifie?: boolean
           slot_id?: string | null
+          souffrance_alertee_le?: string | null
           statut?: Database["public"]["Enums"]["key_status"]
           updated_at?: string
         }
@@ -278,6 +280,7 @@ export type Database = {
           relay_point_id?: string | null
           retard_notifie?: boolean
           slot_id?: string | null
+          souffrance_alertee_le?: string | null
           statut?: Database["public"]["Enums"]["key_status"]
           updated_at?: string
         }
@@ -939,6 +942,32 @@ export type Database = {
           owner_email: string | null
           commercial_email: string | null
           commercial_nom: string | null
+        }[]
+      }
+      verifier_cles_souffrance: {
+        Args: { p_jours?: number }
+        Returns: {
+          key_id: string
+          logement: string
+          relais_nom: string | null
+          adresse: string | null
+          ville: string | null
+          jours: number
+          owner_email: string | null
+        }[]
+      }
+      rapport_hote_hebdo_tous: {
+        Args: never
+        Returns: {
+          hote_email: string | null
+          hote_nom: string | null
+          logement: string
+          statut: string
+          relais_nom: string | null
+          relais_ville: string | null
+          derniere_action: string | null
+          derniere_action_le: string | null
+          en_retard: boolean
         }[]
       }
       finaliser_suppression_auth: { Args: { p_user_id: string }; Returns: Json }
