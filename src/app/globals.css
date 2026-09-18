@@ -2,51 +2,51 @@
 
 /* ============================================================
    KeyWe — design system
-   Palette « Détente » : sauge (#AEC98A), vert pâle (#D9E3C2),
-   beige (#E8DFCF), vert profond (#5C7A4A). Doux et naturel.
-   Contrastes AA vérifiés.
+   Palette « Spicy » : vert vif (#12A150), vert profond (#0F3D24),
+   accent épicé corail (#F0532B), pop citron vert (#B8F14E).
+   Frais, dynamique, contrasté. Ancrage nature conservé.
    ============================================================ */
 
 @theme {
-  /* Fonds sombres & texte → vert sauge profond (dérivé plus foncé) */
-  --color-encre: #3a5230;
-  --color-encre-2: #46663b;
+  /* Fonds sombres & texte → vert forêt profond, plus contrasté */
+  --color-encre: #0f3d24;
+  --color-encre-2: #17512f;
 
-  /* Couleur principale (CTA) → vert Détente */
-  --color-primaire: #5c7a4a;
-  --color-primaire-fonce: #4c6a3c;
-  --color-primaire-pale: #d9e3c2;
+  /* Couleur principale (CTA) → vert vif et frais */
+  --color-primaire: #12a150;
+  --color-primaire-fonce: #0c8340;
+  --color-primaire-pale: #d3f5de;
 
-  /* Accent secondaire */
-  --color-corail: #5c7a4a;
-  --color-corail-fonce: #4c6a3c;
+  /* Accent secondaire → ÉPICÉ (corail/orange) pour l'énergie */
+  --color-corail: #f0532b;
+  --color-corail-fonce: #d5431c;
 
-  /* Sauge clair — accent doux sur fond sombre */
-  --color-lime: #aec98a;
-  --color-lime-fonce: #9bb977;
+  /* Pop citron vert — accent vif sur fond sombre */
+  --color-lime: #b8f14e;
+  --color-lime-fonce: #9bd92e;
 
-  /* Sauge clair / vert pâle (alias) */
-  --color-skin: #aec98a;
-  --color-skin-light: #d9e3c2;
+  /* Citron vert / vert pâle (alias) */
+  --color-skin: #b8f14e;
+  --color-skin-light: #d3f5de;
 
   /* Succès */
-  --color-menthe: #0fa86c;
-  --color-menthe-pale: #e2f7ee;
+  --color-menthe: #10b981;
+  --color-menthe-pale: #d6fbec;
 
-  /* Avertissement / états « en attente / retour » */
-  --color-ambre: #b45309;
-  --color-ambre-pale: #fef3c7;
+  /* Avertissement / états « en attente / retour » → orange épicé */
+  --color-ambre: #ea580c;
+  --color-ambre-pale: #ffead5;
 
-  /* Surfaces */
-  --color-paper: #fbfaf3;
-  --color-sable: #e8dfcf;
+  /* Surfaces → nettes et fraîches */
+  --color-paper: #fcfefb;
+  --color-sable: #e9f5e1;
 
   /* Polices */
   --font-sans: var(--font-body), "DM Sans", system-ui, sans-serif;
   --font-display: var(--font-display), "Bricolage Grotesque", sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Menlo", monospace;
 
-  --radius-carte: 1rem;
+  --radius-carte: 1.25rem;
 }
 
 body {
