@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/ui/Logo";
+import { KiwiSlice } from "@/components/marketing/KiwiSlice";
 import { listeCasUsage } from "@/content/cas-usage";
 import { localise, type Locale } from "@/lib/i18n";
 import type { Dictionnaire } from "@/lib/dictionaries";
@@ -16,8 +17,21 @@ export function PiedDePage({
   const casUsage = listeCasUsage(locale);
 
   return (
-    <footer className="bg-encre text-white">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
+    <footer className="relative overflow-hidden bg-encre text-white">
+      {/* Décor : glows épicés + kiwis juicy (écho du hero) */}
+      <div aria-hidden className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(50%_120%_at_85%_0%,rgba(255,77,26,0.5),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(45%_120%_at_5%_100%,rgba(200,245,63,0.32),transparent_55%)]" />
+        <KiwiSlice
+          id="kiwi-foot-a"
+          className="absolute -right-14 -top-16 w-52 rotate-12 opacity-90 drop-shadow-2xl"
+        />
+        <KiwiSlice
+          id="kiwi-foot-b"
+          className="absolute -bottom-16 -left-12 w-44 -rotate-12 opacity-85 drop-shadow-2xl"
+        />
+      </div>
+      <div className="relative z-10 mx-auto grid max-w-6xl gap-8 px-4 py-12 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <Logo taille={32} sombre lien={l("/")} />
           <p className="mt-3 text-sm text-white/70">{dict.tagline}</p>
@@ -65,7 +79,7 @@ export function PiedDePage({
           </ul>
         </nav>
       </div>
-      <div className="border-t border-white/10 py-4 text-center text-xs text-white/50">
+      <div className="relative z-10 border-t border-white/10 py-4 text-center text-xs text-white/50">
         © {new Date().getFullYear()} KeyWe — {dict.droits}
       </div>
     </footer>

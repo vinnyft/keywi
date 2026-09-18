@@ -17,16 +17,16 @@
   --color-primaire-fonce: #0c8340;
   --color-primaire-pale: #d3f5de;
 
-  /* Accent secondaire → ÉPICÉ (corail/orange) pour l'énergie */
-  --color-corail: #f0532b;
-  --color-corail-fonce: #d5431c;
+  /* Accent secondaire → ÉPICÉ+++ (orange-rouge chaud) pour le peps */
+  --color-corail: #ff4d1a;
+  --color-corail-fonce: #e63c0b;
 
-  /* Pop citron vert — accent vif sur fond sombre */
-  --color-lime: #b8f14e;
-  --color-lime-fonce: #9bd92e;
+  /* Pop citron vert électrique — accent vif sur fond sombre */
+  --color-lime: #c8f53f;
+  --color-lime-fonce: #a9e018;
 
   /* Citron vert / vert pâle (alias) */
-  --color-skin: #b8f14e;
+  --color-skin: #c8f53f;
   --color-skin-light: #d3f5de;
 
   /* Succès */
