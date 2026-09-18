@@ -1213,3 +1213,131 @@ export async function emailCapaciteRelais(
 ) {
   await envoyerEmail(params.email, contenuCapaciteRelais(params));
 }
+
+/* ------------------------------------------------------------------
+   Clé en souffrance (case immobilisée trop longtemps).
+   Deux destinataires : le relais (libérer la case) et l'admin
+   (supervision). Français.
+   ------------------------------------------------------------------ */
+
+/** Clé en souffrance → relais / admin */
+export function contenuCleSouffrance(params: {
+  logement: string;
+  relaisNom: string | null;
+  adresse: string | null;
+  ville: string | null;
+  jours: number;
+  cheminEspace: string; // "/admin" ou "/commercant"
+}): ContenuEmail {
+  const p = proteger(params);
+  const lieu = p.relaisNom
+    ? `📍 <strong>${p.relaisNom}</strong>${p.adresse ? `<br>${p.adresse}, ${p.ville ?? ""}` : ""}`
+    : "";
+  return {
+    sujet: `🗝️ Clé en souffrance — ${params.logement} (${params.jours} j)`,
+    html: gabarit(
+      "Une clé occupe une case depuis longtemps 🗝️",
+      `<p style="margin:0 0 12px">La clé du logement <strong>${p.logement}</strong> est présente
+       au point relais depuis <strong>${params.jours} jours</strong> sans avoir été récupérée —
+       elle immobilise une case.</p>
+       ${lieu ? encadre(lieu) : ""}
+       <p style="margin:0">Relancez le bénéficiaire ou contactez le support pour libérer la case.</p>
+       ${bouton("Ouvrir mon espace", lienSite(params.cheminEspace, false))}`,
+      { locale: "fr" }
+    ),
+  };
+}
+
+/** Envoie l'alerte « clé en souffrance » aux admins + au relais concerné. */
+export async function emailCleSouffrance(
+  params: Omit<Parameters<typeof contenuCleSouffrance>[0], "cheminEspace"> & {
+    ownerEmail?: string | null;
+  }
+) {
+  const admins = await emailsAdmins();
+  const contenuAdmin = contenuCleSouffrance({ ...params, cheminEspace: "/admin" });
+  for (const email of admins) {
+    await envoyerEmail(email, contenuAdmin);
+  }
+  if (params.ownerEmail) {
+    await envoyerEmail(
+      params.ownerEmail,
+      contenuCleSouffrance({ ...params, cheminEspace: "/commercant" })
+    );
+  }
+}
+
+/* ------------------------------------------------------------------
+   Récap hebdomadaire des clés d'un hôte (« overdue »).
+   ------------------------------------------------------------------ */
+
+export interface LigneCleHote {
+  logement: string;
+  statut: string;
+  relaisNom: string | null;
+  relaisVille: string | null;
+  derniereAction: string | null;
+  derniereActionLe: string | null;
+  enRetard: boolean;
+}
+
+/** Récap hebdo de l'état des clés → hôte */
+export function contenuRapportHote(params: {
+  hoteNom: string | null;
+  cles: LigneCleHote[];
+}): ContenuEmail {
+  const statutLabel: Record<string, string> = {
+    deposee: "déposée",
+    prete_retrait: "prête au retrait",
+    retour: "de retour",
+  };
+  const actionLabel: Record<string, string> = {
+    depot: "déposée",
+    retrait: "retirée",
+    retour: "de retour",
+  };
+  const cartes = params.cles
+    .map((c) => {
+      const logement = echapper(c.logement);
+      const statut = statutLabel[c.statut] ?? c.statut;
+      const lieu = c.relaisNom
+        ? echapper(`${c.relaisNom}${c.relaisVille ? ` (${c.relaisVille})` : ""}`)
+        : "—";
+      const quand = c.derniereActionLe
+        ? new Date(c.derniereActionLe).toLocaleDateString("fr-FR", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })
+        : null;
+      const action = c.derniereAction ? actionLabel[c.derniereAction] ?? c.derniereAction : null;
+      const retard = c.enRetard
+        ? ` · <strong style="color:#b45309">⏰ en retard</strong>`
+        : "";
+      const mouvement =
+        action && quand
+          ? `<br>Dernier mouvement : ${action} le ${quand}`
+          : "";
+      return encadre(
+        `🔑 <strong>${logement}</strong> — ${statut}${retard}<br>📍 ${lieu}${mouvement}`
+      );
+    })
+    .join("");
+  return {
+    sujet: "Le point hebdo de vos clés KeyWe",
+    html: gabarit(
+      "L'état de vos clés cette semaine 🔑",
+      `<p style="margin:0 0 12px">Bonjour ${echapper(params.hoteNom ?? "")}, voici l'état de vos
+       clés actuellement en circulation.</p>
+       ${cartes}
+       ${bouton("Gérer mes clés", lienSite("/espace", false))}`,
+      { locale: "fr" }
+    ),
+  };
+}
+
+export async function emailRapportHote(
+  params: Parameters<typeof contenuRapportHote>[0] & { email: string }
+) {
+  await envoyerEmail(params.email, contenuRapportHote(params));
+}

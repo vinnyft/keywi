@@ -14,6 +14,8 @@ import {
   contenuRapportRelais,
   contenuAlerteCapacite,
   contenuCapaciteRelais,
+  contenuCleSouffrance,
+  contenuRapportHote,
   type ContenuEmail,
 } from "@/lib/notifications";
 
@@ -159,6 +161,45 @@ const GABARITS: Record<string, { libelle: string; contenu: () => ContenuEmail }>
         pourcent: 85,
         occupees: 17,
         capacite: 20,
+      }),
+  },
+  "cle-souffrance": {
+    libelle: "Clé en souffrance (→ relais / admin)",
+    contenu: () =>
+      contenuCleSouffrance({
+        logement: "Studio République",
+        relaisNom: "Librairie du Marais",
+        adresse: "24 rue de Bretagne",
+        ville: "Paris",
+        jours: 34,
+        cheminEspace: "/commercant",
+      }),
+  },
+  "rapport-hote": {
+    libelle: "Récap hebdo des clés (→ hôte)",
+    contenu: () =>
+      contenuRapportHote({
+        hoteNom: "Vincent",
+        cles: [
+          {
+            logement: "Studio République",
+            statut: "prete_retrait",
+            relaisNom: "Librairie du Marais",
+            relaisVille: "Paris",
+            derniereAction: "depot",
+            derniereActionLe: "2026-09-14T10:00:00.000Z",
+            enRetard: false,
+          },
+          {
+            logement: "T2 Bastille",
+            statut: "retour",
+            relaisNom: "Café du Coin",
+            relaisVille: "Paris",
+            derniereAction: "retour",
+            derniereActionLe: "2026-08-20T16:30:00.000Z",
+            enRetard: true,
+          },
+        ],
       }),
   },
 };

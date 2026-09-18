@@ -4,15 +4,18 @@ import {
   emailRapportAdmin,
   emailRapportCommercial,
   emailRapportRelais,
+  emailRapportHote,
+  type LigneCleHote,
 } from "@/lib/notifications";
 import { verifierCron } from "@/lib/cron-auth";
 
 /**
  * Rapports hebdomadaires, envoyés le lundi (cron Vercel).
- * Trois destinataires distincts, chacun avec ses agrégats :
+ * Quatre destinataires distincts, chacun avec ses agrégats :
  *   - admin      → indicateurs globaux (rapport_admin_hebdo)
  *   - commercial → pipeline de prospection (rapport_commercial_hebdo_tous)
  *   - relais     → activité + rémunération (rapport_relais_hebdo_tous)
+ *   - hôte       → état de ses clés « en cours » (rapport_hote_hebdo_tous)
  *
  *   GET /api/cron/rapports-hebdo
  * Protégé par CRON_SECRET : Authorization: Bearer <CRON_SECRET>.
@@ -61,10 +64,35 @@ export async function GET(request: Request) {
     });
   }
 
+  // 4. Un récap par hôte (regroupe ses clés « en cours »)
+  const { data: lignesHote } = await admin.rpc("rapport_hote_hebdo_tous");
+  const parHote = new Map<
+    string,
+    { nom: string | null; cles: LigneCleHote[] }
+  >();
+  for (const l of lignesHote ?? []) {
+    if (!l.hote_email) continue;
+    const entree = parHote.get(l.hote_email) ?? { nom: l.hote_nom, cles: [] };
+    entree.cles.push({
+      logement: l.logement,
+      statut: l.statut,
+      relaisNom: l.relais_nom,
+      relaisVille: l.relais_ville,
+      derniereAction: l.derniere_action,
+      derniereActionLe: l.derniere_action_le,
+      enRetard: l.en_retard,
+    });
+    parHote.set(l.hote_email, entree);
+  }
+  for (const [email, { nom, cles }] of parHote) {
+    await emailRapportHote({ email, hoteNom: nom, cles });
+  }
+
   return NextResponse.json({
     ok: true,
     admin_envoye: Boolean(kpis),
     commerciaux: listeCommerciaux.length,
     relais: listeRelais.length,
+    hotes: parHote.size,
   });
 }
